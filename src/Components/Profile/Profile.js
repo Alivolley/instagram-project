@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import PostCard from "../PostCard/PostCard";
 import "./Profile.css";
 
 export default function Profile() {
@@ -72,6 +73,23 @@ export default function Profile() {
                   </svg>
                   SAVED
                </NavLink>
+            </div>
+            <div className="row">
+               <div className=" col-4 ">
+                  <PostCard picture={`pics/post-1.jpg`} />
+               </div>
+               <div className=" col-4 ">
+                  <PostCard picture={`pics/post-2.jpg`} />
+               </div>
+               <div className=" col-4 ">
+                  <PostCard picture={`pics/post-3.jpg`} />
+               </div>
+               <div className=" col-4 ">
+                  <PostCard picture={`pics/post-4.jpg`} />
+               </div>
+               <div className=" col-4 ">
+                  <PostCard picture={`pics/post-5.jpg`} />
+               </div>
             </div>
          </div>
       </>

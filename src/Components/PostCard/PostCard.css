@@ -1,0 +1,40 @@
+.postcard {
+   width: 100%;
+   margin-top: 3rem;
+   cursor: pointer;
+   position: relative;
+}
+
+.postcard-img {
+   width: 100%;
+   height: 100%;
+}
+
+.postcard-img-cover {
+   background-color: rgba(0, 0, 0, 0.432);
+   width: 100%;
+   height: 100%;
+   display: none;
+   align-items: center;
+   justify-content: center;
+   gap: 3rem;
+   position: absolute;
+   top: 0;
+}
+
+.postcard-likes,
+.postcard-comment {
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 0.5rem;
+}
+
+.postcard-icon {
+   font-size: 2.3rem;
+}
+
+.postcard:hover .postcard-img-cover {
+   display: flex;
+}
