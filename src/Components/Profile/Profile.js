@@ -1,13 +1,18 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import PostCard from "../PostCard/PostCard";
 import "./Profile.css";
 
 export default function Profile() {
+   const [modalImgShow, setModalImgShow] = useState(false);
+
+   const toggleMenu = () => {
+      setModalImgShow((prev) => !prev);
+   };
    return (
       <>
          <div className="profile-info">
-            <img className="profile-img" src="pics/profile-photo.jpg" alt="" />
+            <img className="profile-img" src="pics/profile-photo.jpg" alt="" onClick={toggleMenu} />
             <div className="row profile-account__details ">
                <div className="col-12 profile-account__header ">
                   <p className="profile-account__name ">ali_azghandi8</p>
@@ -29,14 +34,14 @@ export default function Profile() {
                      <span className="profile-account__posts-count">5</span>
                      Posts
                   </div>
-                  <div className="profile-account__followers">
+                  <Link to="/" className="profile-account__followers">
                      <span className="profile-account__followers-count">300</span>
                      Followers
-                  </div>
-                  <div className="profile-account__following">
+                  </Link>
+                  <Link to="/" className="profile-account__following">
                      <span className="profile-account__following-count">248</span>
                      Following
-                  </div>
+                  </Link>
                </div>
 
                <div className="col-12 profile-user__details ">
@@ -90,6 +95,20 @@ export default function Profile() {
                <div className=" col-4 ">
                   <PostCard picture={`pics/post-5.jpg`} />
                </div>
+            </div>
+         </div>
+
+         <div className={`${modalImgShow ? "profile-img-modal-wrapper profile-img-modal-wrapper--show" : "profile-img-modal-wrapper"}`}>
+            <div className="profile-img-modal">
+               <h2 className="img-modal__title">Change Profile Photo</h2>
+               <hr />
+               <p className="img-modal__upload-photo">Upload Photo</p>
+               <hr />
+               <p className="img-modal__remove-photo">Remove Current Photo</p>
+               <hr />
+               <p className="img-modal__cancel" onClick={toggleMenu}>
+                  Cancel
+               </p>
             </div>
          </div>
       </>

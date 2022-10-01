@@ -37,6 +37,7 @@
 .header-right-menu {
    display: flex;
    gap: 2.2rem;
+   position: relative;
 }
 
 .header-right-menu__picture {
@@ -56,6 +57,46 @@
    bottom: 0;
    left: 0;
    right: 0;
+   z-index: 1;
+}
+
+.header-collapse__menu {
+   position: absolute;
+   top: 3.5rem;
+   right: 0;
+   background-color: white;
+   box-shadow: 0px 3px 13px 3px #dbdbdb;
+   padding: 0;
+   padding-top: 1.5rem;
+   list-style: none;
+   display: none;
+   z-index: 2;
+}
+
+.header-collapse__menu--show {
+   display: block;
+}
+
+.header-collapse__item {
+   padding: 1rem 13rem 1rem 1.8rem;
+   cursor: pointer;
+   color: black;
+   text-decoration: none;
+   font-size: 1.4rem;
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+}
+
+.header-collapse__item:hover {
+   color: black;
+}
+
+.header-collapse__line {
+   background-color: #dbdbdb;
+   height: 0.1rem;
+   width: 100%;
+   margin: 0.7rem 0;
 }
 
 .header-svg {

@@ -11,6 +11,7 @@
    width: 7.5rem;
    height: 7.5rem;
    border-radius: 50%;
+   cursor: pointer;
 }
 
 .profile-account__header {
@@ -34,6 +35,7 @@
 }
 
 .profile-setting__btn {
+   cursor: pointer;
 }
 
 .profile-account__status {
@@ -45,9 +47,18 @@
 }
 
 .profile-account__followers {
+   text-decoration: none;
+   color: black;
 }
 
 .profile-account__following {
+   text-decoration: none;
+   color: black;
+}
+
+.profile-account__followers:hover,
+.profile-account__following:hover {
+   color: black;
 }
 
 .profile-account__posts-count,
@@ -113,4 +124,52 @@
    right: 0;
    height: 0.2rem;
    background-color: black;
+}
+
+.profile-img-modal-wrapper {
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   background-color: rgba(0, 0, 0, 0.432);
+   z-index: 3;
+   display: none;
+   align-items: center;
+   justify-content: center;
+}
+
+.profile-img-modal-wrapper--show {
+   display: flex;
+}
+
+.profile-img-modal {
+   background-color: white;
+   width: 40rem;
+   text-align: center;
+   border-radius: 1rem;
+   font-size: 1.4rem;
+}
+
+.img-modal__title {
+   padding: 3rem 0 1.5rem 0;
+}
+
+.img-modal__upload-photo {
+   padding: 0.5rem 0;
+   font-weight: 700;
+   cursor: pointer;
+   color: #0095f6;
+}
+
+.img-modal__remove-photo {
+   padding: 0.5rem 0;
+   font-weight: 700;
+   cursor: pointer;
+   color: #ed4956;
+}
+
+.img-modal__cancel {
+   padding: 0.5rem 0;
+   cursor: pointer;
 }
