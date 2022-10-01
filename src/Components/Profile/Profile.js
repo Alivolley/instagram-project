@@ -9,6 +9,11 @@ export default function Profile() {
    const toggleMenu = () => {
       setModalImgShow((prev) => !prev);
    };
+
+   const closeChangeProfileModal = (e) => {
+      e.target.className === "profile-img-modal-wrapper profile-img-modal-wrapper--show" && setModalImgShow(false);
+   };
+
    return (
       <>
          <div className="profile-info">
@@ -98,14 +103,14 @@ export default function Profile() {
             </div>
          </div>
 
-         <div className={`${modalImgShow ? "profile-img-modal-wrapper profile-img-modal-wrapper--show" : "profile-img-modal-wrapper"}`}>
+         <div className={`${modalImgShow ? "profile-img-modal-wrapper profile-img-modal-wrapper--show" : "profile-img-modal-wrapper"}`} onClick={closeChangeProfileModal}>
             <div className="profile-img-modal">
                <h2 className="img-modal__title">Change Profile Photo</h2>
-               <hr />
+               <hr className="img-modal__line" />
                <p className="img-modal__upload-photo">Upload Photo</p>
-               <hr />
+               <hr className="img-modal__line" />
                <p className="img-modal__remove-photo">Remove Current Photo</p>
-               <hr />
+               <hr className="img-modal__line" />
                <p className="img-modal__cancel" onClick={toggleMenu}>
                   Cancel
                </p>

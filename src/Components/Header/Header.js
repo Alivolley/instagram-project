@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
@@ -8,6 +8,18 @@ export default function Header() {
    const toggleMenu = () => {
       setCollapseShow((prev) => !prev);
    };
+
+   window.addEventListener("click", (e) => {
+      if (
+         e.target.className !== "header-collapse__item" &&
+         e.target.className !== "header-collapse__line" &&
+         e.target.className !== "header-collapse__menu" &&
+         e.target.className !== "header-right-menu__picture" &&
+         e.target.className !== "header-collapse__menu header-collapse__menu--show"
+      ) {
+         setCollapseShow(false);
+      }
+   });
 
    return (
       <header className="header container">
