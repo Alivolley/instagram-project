@@ -1,0 +1,116 @@
+.profile-info {
+   display: flex;
+   gap: 3rem;
+   margin: 1.6rem;
+}
+
+.profile-account__details {
+}
+
+.profile-img {
+   width: 7.5rem;
+   height: 7.5rem;
+   border-radius: 50%;
+}
+
+.profile-account__header {
+}
+
+.profile-account__name {
+   font-size: 2.8rem;
+   font-weight: 100;
+}
+
+.profile-edit__btn {
+   border: 0.1rem solid #dbdbdb;
+   background-color: transparent;
+   font-size: 1.4rem;
+   font-weight: 600;
+   border-radius: 0.4rem;
+   display: inline-block;
+   width: 20rem;
+   height: 3rem;
+   margin-right: 2rem;
+}
+
+.profile-setting__btn {
+}
+
+.profile-account__status {
+   display: none;
+   margin-bottom: 3rem;
+}
+
+.profile-account__posts {
+}
+
+.profile-account__followers {
+}
+
+.profile-account__following {
+}
+
+.profile-account__posts-count,
+.profile-account__followers-count,
+.profile-account__following-count {
+   font-weight: 600;
+   margin-right: 0.5rem;
+}
+
+.profile-user__details {
+   font-size: 1.4rem;
+   margin-left: -8.8rem;
+   padding-top: 3rem;
+}
+
+.profile-user__name {
+   display: block;
+   font-weight: 600;
+}
+
+.profile-user__bio {
+   display: block;
+}
+
+.account-files {
+}
+
+.account-files__linkes {
+   display: flex;
+   justify-content: center;
+   gap: 4rem;
+   margin-top: 18rem;
+   border-top: 0.1rem solid #dbdbdb;
+   padding-top: 2rem;
+}
+
+.account-posts__btn,
+.account-saved__btn {
+   position: relative;
+   color: #8e909c;
+   font-size: 1.2rem;
+   text-decoration: none;
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+}
+
+.account-posts__btn:hover,
+.account-saved__btn:hover {
+   color: black;
+}
+
+.account-files__linkes .active {
+   color: black;
+   font-weight: 600;
+}
+
+.account-files__linkes .active::after {
+   content: "";
+   position: absolute;
+   top: -2.1rem;
+   left: 0;
+   right: 0;
+   height: 0.2rem;
+   background-color: black;
+}

@@ -7,6 +7,46 @@
 /* md */
 
 @media (min-width: 768px) {
+   .header-search {
+      display: flex;
+   }
+
+   .profile {
+      gap: 3rem;
+      margin-left: 6rem;
+      margin-top: 5rem;
+   }
+
+   .profile-img {
+      width: 15rem;
+      height: 15rem;
+      margin-right: 5rem;
+   }
+
+   .profile-account__header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+   }
+
+   .profile-edit__btn {
+      width: auto;
+      height: auto;
+      margin-right: 0;
+      padding: 0.3rem 1.5rem;
+   }
+
+   .profile-account__status {
+      display: flex;
+      gap: 4rem;
+   }
+
+   .profile-user__details {
+      margin-left: 0;
+      padding-top: 0;
+      font-size: 1.6rem;
+   }
 }
 
 /* lg */
@@ -17,7 +57,7 @@
 /* xl */
 
 @media (min-width: 1200px) {
-   body {
+   .App {
       padding: 0 31.5rem !important;
    }
 }

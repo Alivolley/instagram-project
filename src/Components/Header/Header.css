@@ -10,7 +10,7 @@
 }
 
 .header-search {
-   display: flex;
+   display: none;
    background-color: #efefef;
    width: 26.8rem;
    height: 3.6rem;
