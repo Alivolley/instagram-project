@@ -4,20 +4,34 @@ import "./Header.css";
 
 export default function Header() {
    const [collapseShow, setCollapseShow] = useState(false);
+   const [lastActiveShow, setLastActiveShow] = useState(false);
 
    const toggleMenu = () => {
       setCollapseShow((prev) => !prev);
    };
 
+   const showLastActivity = () => {
+      setLastActiveShow((prev) => !prev);
+   };
+
    window.addEventListener("click", (e) => {
       if (
+         e.target.id !== "header-svg" &&
          e.target.className !== "header-collapse__item" &&
          e.target.className !== "header-collapse__line" &&
          e.target.className !== "header-collapse__menu" &&
          e.target.className !== "header-right-menu__picture" &&
-         e.target.className !== "header-collapse__menu header-collapse__menu--show"
+         e.target.className !== "header-collapse__menu header-collapse__menu--show" &&
+         e.target.className !== "lastActivity-btn" &&
+         e.target.className !== "lastActivity-describe" &&
+         e.target.className !== "lastActivity-username" &&
+         e.target.className !== "lastActivity-img" &&
+         e.target.className !== "lastActivity-item" &&
+         e.target.className !== "header-lastActivity" &&
+         e.target.className !== "header-lastActivity header-lastActivity--show"
       ) {
          setCollapseShow(false);
+         setLastActiveShow(false);
       }
    });
 
@@ -126,15 +140,24 @@ export default function Header() {
                </svg>
             </Link>
 
-            <Link to="/">
-               <svg aria-label="Activity Feed" className="header-svg _ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                  <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
-               </svg>
-            </Link>
+            <svg
+               id="header-svg"
+               aria-label="Activity Feed"
+               className="header-svg _ab6-"
+               color="#262626"
+               fill="#262626"
+               height="24"
+               role="img"
+               viewBox="0 0 24 24"
+               width="24"
+               onClick={showLastActivity}
+            >
+               <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
+            </svg>
 
-            <img src="pics/profile-photo.jpg" alt="" className="header-right-menu__picture" onClick={toggleMenu} />
+            <img src="/pics/profile-photo.jpg" alt="" className="header-right-menu__picture" onClick={toggleMenu} />
             <ul className={`${collapseShow ? "header-collapse__menu header-collapse__menu--show" : "header-collapse__menu"}`}>
-               <Link to="/profile" className="header-collapse__item">
+               <Link to="/profile/posts" className="header-collapse__item">
                   <svg aria-label="Profile" className="_ab6-" color="#262626" fill="#262626" height="16" role="img" viewBox="0 0 24 24" width="16">
                      <circle cx="12.004" cy="12.004" fill="none" r="10.5" stroke="currentColor" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="2"></circle>
                      <path
@@ -149,7 +172,7 @@ export default function Header() {
                   </svg>
                   Profile
                </Link>
-               <Link to="/" className="header-collapse__item">
+               <Link to="/profile/saved" className="header-collapse__item">
                   <svg aria-label="Saved" className="_ab6-" color="#262626" fill="#262626" height="16" role="img" viewBox="0 0 24 24" width="16">
                      <polygon
                         fill="none"
@@ -177,6 +200,51 @@ export default function Header() {
                </li>
                <li className="header-collapse__line"></li>
                <li className="header-collapse__item">Log Out</li>
+            </ul>
+
+            <ul className={`${lastActiveShow ? "header-lastActivity header-lastActivity--show" : "header-lastActivity"}`}>
+               <Link to="/" className="lastActivity-item">
+                  <img src="/pics/post-1.jpg" alt="" className="lastActivity-img" />
+                  <p className="lastActivity-username">javad2233 </p>
+                  <p className="lastActivity-describe">start following you</p>
+                  <button className="lastActivity-btn">follow</button>
+               </Link>
+               <Link to="/" className="lastActivity-item">
+                  <img src="/pics/post-2.jpg" alt="" className="lastActivity-img" />
+                  <p className="lastActivity-username">javad2233 </p>
+                  <p className="lastActivity-describe">start following you</p>
+                  <button className="lastActivity-btn">follow</button>
+               </Link>
+               <Link to="/" className="lastActivity-item">
+                  <img src="/pics/post-3.jpg" alt="" className="lastActivity-img" />
+                  <p className="lastActivity-username">javad2233 </p>
+                  <p className="lastActivity-describe">start following you</p>
+                  <button className="lastActivity-btn">follow</button>
+               </Link>
+               <Link to="/" className="lastActivity-item">
+                  <img src="/pics/post-4.jpg" alt="" className="lastActivity-img" />
+                  <p className="lastActivity-username">javad2233 </p>
+                  <p className="lastActivity-describe">start following you</p>
+                  <button className="lastActivity-btn">follow</button>
+               </Link>
+               <Link to="/" className="lastActivity-item">
+                  <img src="/pics/post-5.jpg" alt="" className="lastActivity-img" />
+                  <p className="lastActivity-username">javad2233 </p>
+                  <p className="lastActivity-describe">start following you</p>
+                  <button className="lastActivity-btn">follow</button>
+               </Link>
+               <Link to="/" className="lastActivity-item">
+                  <img src="/pics/post-1.jpg" alt="" className="lastActivity-img" />
+                  <p className="lastActivity-username">javad2233 </p>
+                  <p className="lastActivity-describe">start following you</p>
+                  <button className="lastActivity-btn">follow</button>
+               </Link>
+               <Link to="/" className="lastActivity-item">
+                  <img src="/pics/post-2.jpg" alt="" className="lastActivity-img" />
+                  <p className="lastActivity-username">javad2233 </p>
+                  <p className="lastActivity-describe">start following you</p>
+                  <button className="lastActivity-btn">follow</button>
+               </Link>
             </ul>
          </div>
          <div className="header-line"></div>

@@ -132,7 +132,7 @@
    bottom: 0;
    right: 0;
    left: 0;
-   background-color: rgba(0, 0, 0, 0.432);
+   background-color: rgba(0, 0, 0, 0.5);
    z-index: 3;
    display: none;
    align-items: center;

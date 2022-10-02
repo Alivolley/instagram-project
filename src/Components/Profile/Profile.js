@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import PostCard from "../PostCard/PostCard";
 import "./Profile.css";
 
@@ -17,7 +17,7 @@ export default function Profile() {
    return (
       <>
          <div className="profile-info">
-            <img className="profile-img" src="pics/profile-photo.jpg" alt="" onClick={toggleMenu} />
+            <img className="profile-img" src="/pics/profile-photo.jpg" alt="" onClick={toggleMenu} />
             <div className="row profile-account__details ">
                <div className="col-12 profile-account__header ">
                   <p className="profile-account__name ">ali_azghandi8</p>
@@ -60,7 +60,7 @@ export default function Profile() {
 
          <div className="account-files">
             <div className="account-files__linkes">
-               <NavLink to="/profile" className="account-posts__btn">
+               <NavLink to="posts" className="account-posts__btn">
                   <svg aria-label="" className="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img" viewBox="0 0 24 24" width="12">
                      <rect fill="none" height="18" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" width="18" x="3" y="3"></rect>
                      <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="9.015" x2="9.015" y1="3" y2="21"></line>
@@ -70,7 +70,7 @@ export default function Profile() {
                   </svg>
                   POSTS
                </NavLink>
-               <NavLink to="/saved" className="account-saved__btn">
+               <NavLink to="saved" className="account-saved__btn">
                   <svg aria-label="" className="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img" viewBox="0 0 24 24" width="12">
                      <polygon
                         fill="none"
@@ -85,21 +85,7 @@ export default function Profile() {
                </NavLink>
             </div>
             <div className="row">
-               <div className=" col-4 ">
-                  <PostCard picture={`pics/post-1.jpg`} />
-               </div>
-               <div className=" col-4 ">
-                  <PostCard picture={`pics/post-2.jpg`} />
-               </div>
-               <div className=" col-4 ">
-                  <PostCard picture={`pics/post-3.jpg`} />
-               </div>
-               <div className=" col-4 ">
-                  <PostCard picture={`pics/post-4.jpg`} />
-               </div>
-               <div className=" col-4 ">
-                  <PostCard picture={`pics/post-5.jpg`} />
-               </div>
+               <Outlet />
             </div>
          </div>
 
