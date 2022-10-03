@@ -1,0 +1,81 @@
+.homePostCard {
+   border: 0.1rem solid #dbdbdb;
+   border-radius: 1rem;
+   margin-top: 3rem;
+}
+
+.homePostCard-header {
+   display: flex;
+   align-items: center;
+   padding: 1rem;
+}
+
+.homePostCard-header__img {
+   width: 4.2rem;
+   height: 4.2rem;
+   border-radius: 50%;
+}
+
+.homePostCard-header__name {
+   margin-left: 1rem;
+   font-size: 1.4rem;
+}
+
+.homePostCard-header__more {
+   margin-left: auto;
+}
+
+.homePostCard-images {
+}
+
+.homePostCard-img-slide {
+   width: 100%;
+   padding: 0 !important;
+}
+
+.swiper-pagination-bullet {
+   border: 0.1rem solid white !important;
+}
+
+.homePostCard-options {
+   padding: 1rem;
+   display: flex;
+}
+
+.homePostCard-like {
+}
+
+.homePostCard-comment {
+   margin-left: 1.5rem;
+}
+
+.homePostCard-share {
+   margin-left: 1.5rem;
+}
+
+.homePostCard-save {
+   margin-left: auto;
+}
+
+.homePostCard-likes-count {
+   padding: 1rem;
+   font-size: 1.4rem;
+   font-weight: 600;
+}
+
+.homePostCard-caption {
+   padding: 1rem;
+   font-size: 1.4rem;
+}
+
+.homePostCard-view-comments {
+   padding: 1rem;
+   font-size: 1.4rem;
+   color: #8e8e8e;
+}
+
+.homePostCard-posted-at {
+   padding: 1rem;
+   font-size: 1rem;
+   color: #b3b3b3;
+}

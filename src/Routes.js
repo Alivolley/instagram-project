@@ -4,8 +4,10 @@ import MainPosts from "./Components/MainPosts/MainPosts";
 import SavedPosts from "./Components/SavedPosts/SavedPosts";
 import Direct from "./Components/Direct/Direct";
 import DirectEmptySide from "./Components/DirectEmptySide/DirectEmptySide";
+import Home from "./Components/Home/Home";
 
 export let Routes = [
+   { path: "/", element: <Home /> },
    { path: "/explore", element: <Explore /> },
    {
       path: "/profile/*",

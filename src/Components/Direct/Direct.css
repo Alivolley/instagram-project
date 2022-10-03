@@ -21,6 +21,7 @@
 }
 
 .direct-new-message {
+   cursor: pointer;
 }
 
 .contacts-list {
