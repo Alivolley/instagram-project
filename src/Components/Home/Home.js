@@ -12,7 +12,7 @@ export default function Home() {
    return (
       <div className="container">
          <div className="row">
-            <div className="col-12 col-md-7">
+            <div className="col-12 col-lg-7">
                <div className="home-stories">
                   <Swiper slidesPerView={6} slidesPerGroup={4} spaceBetween={20} navigation={true} modules={[Navigation]} className="mySwiper">
                      <SwiperSlide>
@@ -130,7 +130,64 @@ export default function Home() {
                   <HomePostCard />
                </div>
             </div>
-            <div className="col-12 col-md-5 home-right-side">shit</div>
+            <div className="col-12 col-lg-5 home-right-side">
+               <div className="home-right-side__header">
+                  <h2 className="home-right-side__title">Suggestions For You</h2>
+                  <Link to="/" className="home-right-side__seeAll">
+                     See All
+                  </Link>
+               </div>
+               <div className="home-right-side__suggestion">
+                  <img src="/pics/post-1.jpg" alt="" className="home-right-side__img" />
+                  <div className="home-right-side__details">
+                     <Link to="/" className="home-right-side__name">
+                        alivolley88
+                     </Link>
+                     <p className="home-right-side__status">Followed by alii_rizvandi + 9 more</p>
+                  </div>
+                  <p className="home-right-side__btn">Follow</p>
+               </div>
+               <div className="home-right-side__suggestion">
+                  <img src="/pics/post-2.jpg" alt="" className="home-right-side__img" />
+                  <div className="home-right-side__details">
+                     <Link to="/" className="home-right-side__name">
+                        alivolley88
+                     </Link>
+                     <p className="home-right-side__status">Follows you</p>
+                  </div>
+                  <p className="home-right-side__btn">Follow</p>
+               </div>
+               <div className="home-right-side__suggestion">
+                  <img src="/pics/post-3.jpg" alt="" className="home-right-side__img" />
+                  <div className="home-right-side__details">
+                     <Link to="/" className="home-right-side__name">
+                        alivolley88
+                     </Link>
+                     <p className="home-right-side__status">Followed by dkht_albana6 + 17 more</p>
+                  </div>
+                  <p className="home-right-side__btn">Follow</p>
+               </div>
+               <div className="home-right-side__suggestion">
+                  <img src="/pics/post-4.jpg" alt="" className="home-right-side__img" />
+                  <div className="home-right-side__details">
+                     <Link to="/" className="home-right-side__name">
+                        alivolley88
+                     </Link>
+                     <p className="home-right-side__status">New to Instagram</p>
+                  </div>
+                  <p className="home-right-side__btn">Follow</p>
+               </div>
+               <div className="home-right-side__suggestion">
+                  <img src="/pics/post-5.jpg" alt="" className="home-right-side__img" />
+                  <div className="home-right-side__details">
+                     <Link to="/" className="home-right-side__name">
+                        alivolley88
+                     </Link>
+                     <p className="home-right-side__status">Follows you</p>
+                  </div>
+                  <p className="home-right-side__btn">Follow</p>
+               </div>
+            </div>
          </div>
       </div>
    );

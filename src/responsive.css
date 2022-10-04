@@ -53,6 +53,9 @@
 /* lg */
 
 @media (min-width: 992px) {
+   .home-right-side {
+      display: block;
+   }
 }
 
 /* xl */
