@@ -1,0 +1,81 @@
+.login-wrapper {
+   display: flex;
+   justify-content: center;
+}
+
+.login {
+   width: 35rem;
+   margin-top: 3rem;
+   border: 0.1rem solid #dbdbdb;
+   border-radius: 1rem;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 5rem;
+}
+
+.login-svg {
+}
+
+.login-form {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+
+.login-form__email,
+.login-form__password,
+.login-form__submit {
+   width: 100%;
+   background-color: #fafafa;
+   border: 0.1rem solid #dbdbdb;
+   height: 3.8rem;
+   border-radius: 0.3rem;
+}
+
+.login-form__email::placeholder,
+.login-form__password::placeholder {
+   font-size: 1.2rem;
+}
+
+.login-form__email {
+   padding: 1.5rem;
+   font-size: 1.4rem;
+   margin-top: 3rem;
+}
+
+.login-form__password {
+   padding: 1.5rem;
+   font-size: 1.4rem;
+}
+
+.login-form__email-validation,
+.login-form__password-validation {
+   font-size: 1.1rem;
+   color: #ff3041;
+   font-weight: 600;
+   display: flex;
+}
+
+.login-form__submit {
+   background-color: #0f9bf6;
+   color: white;
+   font-weight: 600;
+   margin-top: 3rem;
+}
+
+.login-form__goSignUp {
+   margin-top: 3rem;
+   font-size: 1.5rem;
+}
+
+.login-form__goSignUp-btn {
+   text-decoration: none;
+}
+
+.login-password-visiblity {
+   font-size: 1.8rem;
+   color: black;
+   cursor: pointer;
+   margin-left: auto;
+}

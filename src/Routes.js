@@ -5,10 +5,14 @@ import SavedPosts from "./Components/SavedPosts/SavedPosts";
 import Direct from "./Components/Direct/Direct";
 import DirectEmptySide from "./Components/DirectEmptySide/DirectEmptySide";
 import Home from "./Components/Home/Home";
+import SignUp from "./Components/SignUp/SignUp";
+import Login from "./Components/Login/Login";
 
 export let Routes = [
    { path: "/", element: <Home /> },
    { path: "/explore", element: <Explore /> },
+   { path: "/signup", element: <SignUp /> },
+   { path: "/login", element: <Login /> },
    {
       path: "/profile/*",
       element: <Profile />,

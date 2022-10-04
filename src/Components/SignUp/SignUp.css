@@ -1,0 +1,104 @@
+.signUp-wrapper {
+   display: flex;
+   justify-content: center;
+}
+
+.signUp {
+   width: 35rem;
+   margin-top: 3rem;
+   border: 0.1rem solid #dbdbdb;
+   border-radius: 1rem;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 5rem;
+}
+
+.signUp-svg {
+}
+
+.signUp-title {
+   color: #8e8e8e;
+   text-align: center;
+   font-size: 1.6rem;
+   margin-bottom: 4rem;
+   margin-top: 1.3rem;
+}
+
+.signUp-form {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+
+.signUp-form__email,
+.signUp-form__username,
+.signUp-form__password,
+.signUp-form__confirm,
+.signUp-form__submit {
+   width: 100%;
+   background-color: #fafafa;
+   border: 0.1rem solid #dbdbdb;
+   height: 3.8rem;
+   border-radius: 0.3rem;
+}
+
+.signUp-form__email::placeholder,
+.signUp-form__username::placeholder,
+.signUp-form__password::placeholder,
+.signUp-form__confirm::placeholder {
+   font-size: 1.2rem;
+}
+
+.signUp-form__email {
+   padding: 1.5rem;
+   font-size: 1.4rem;
+}
+
+.signUp-form__username {
+   padding: 1.5rem;
+   font-size: 1.4rem;
+}
+
+.signUp-form__password {
+   padding: 1.5rem;
+   font-size: 1.4rem;
+}
+
+.signUp-form__confirm {
+   padding: 1.5rem;
+   font-size: 1.4rem;
+}
+
+.signUp-form__email-validation,
+.signUp-form__username-validation,
+.signUp-form__password-validation,
+.signUp-form__confirm-validation {
+   font-size: 1.1rem;
+   color: #ff3041;
+   font-weight: 600;
+   display: flex;
+}
+
+.signUp-form__submit {
+   background-color: #0f9bf6;
+   color: white;
+   font-weight: 600;
+   margin-top: 3rem;
+}
+
+.signUp-form__gologin {
+   margin-top: 3rem;
+   font-size: 1.5rem;
+}
+
+.signUp-form__gologin-btn {
+   text-decoration: none;
+}
+
+.signup-password-visiblity {
+   font-size: 1.8rem;
+   color: black;
+   cursor: pointer;
+   margin-left: auto;
+}
