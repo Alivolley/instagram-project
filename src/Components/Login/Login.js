@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AlertModal from "../AlertModal/AlertModal";
+import Cookies from "js-cookie";
 import "./Login.css";
 
 export default function Login() {
@@ -9,6 +12,10 @@ export default function Login() {
    const [showPass, setShowPass] = useState(false);
    const [notValidEmail, setNotValidEmail] = useState(false);
    const [passwordValueCheck, setPasswordValueCheck] = useState(false);
+   const [alertModalShow, setAlertModalShow] = useState(false);
+   const [modalText, setModalText] = useState();
+
+   let navigation = useNavigate();
 
    const changevisibilty = () => {
       setShowPass((prev) => !prev);
@@ -22,8 +29,7 @@ export default function Login() {
       !passwordValue ? setPasswordValueCheck(true) : setPasswordValueCheck(false);
 
       if (validateEmail && passwordValue) {
-         // setModalText(<Loading change={true} />);
-         // setShowModal(true);
+         setAlertModalShow(true);
          let usernameInfo = { email: emailValue, password: passwordValue };
          fetch("https://javadinstagram.pythonanywhere.com/login/", {
             headers: {
@@ -33,28 +39,33 @@ export default function Login() {
             body: JSON.stringify(usernameInfo),
          })
             .then((res) => {
-               // if (res.status === 200) {
-               console.log(res);
-               return res.json();
-               // } else {
-               //    setModalText("!!! Password or Email is wrong .");
-               // }
+               if (res.status === 200) {
+                  console.log(res);
+                  return res.json();
+               } else {
+                  setModalText("!!! Password or Email is wrong .");
+               }
             })
             .then((data) => {
-               // Cookies.set("refresh", data.refresh, { expires: 1 });
-               // Cookies.set("access", data.access, { expires: 1 });
-               // setModalText("You logged in successfully :)");
+               Cookies.set("refresh", data.refresh, { expires: 1 });
+               Cookies.set("access", data.access, { expires: 1 });
+               setModalText("You logged in successfully :)");
 
-               // setTimeout(() => {
-               //    navigation("/dashboard");
-               // }, 1500);
+               setTimeout(() => {
+                  navigation("/");
+               }, 1500);
                console.log(data);
             })
             .catch((err) => {
                console.log(err);
-               // setModalText("!!! Password or Email is wrong .")
+               setModalText("!!! Password or Email is wrong .");
             });
       }
+   };
+
+   const closeAlertModal = () => {
+      setAlertModalShow(false);
+      setModalText("");
    };
 
    return (
@@ -97,6 +108,11 @@ export default function Login() {
                </Link>
             </p>
          </div>
+         <AlertModal
+            show={alertModalShow}
+            handleClose={closeAlertModal}
+            text={!modalText ? <Spinner className="spiner--handle" animation="border" variant="primary" /> : modalText}
+         />
       </div>
    );
 }
