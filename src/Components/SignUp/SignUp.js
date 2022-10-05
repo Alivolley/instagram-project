@@ -1,14 +1,27 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 import "./SignUp.css";
+import { Navigation } from "swiper";
+import AlertModal from "../AlertModal/AlertModal";
 
 export default function SignUp() {
    const [usernameValue, setUsernameValue] = useState("");
    const [emailValue, setEmailValue] = useState("");
    const [passwordValue, setPasswordValue] = useState("");
    const [confirmValue, setConfirmValue] = useState("");
+   const [phoneNumber, setPhoneNumber] = useState("");
    const [showPass, setShowPass] = useState(false);
+   const [notValidEmail, setNotValidEmail] = useState(false);
+   const [notValidPass, setNotValidPass] = useState(false);
+   const [notValueUsername, setNotValueUsername] = useState(false);
+   const [passwordValueCheck, setPasswordValueCheck] = useState(false);
+   const [phoneNumberValueCheck, setPhoneNumberValueCheck] = useState(false);
+   const [alertModalShow, setAlertModalShow] = useState(false);
+   const [modalText, setModalText] = useState();
+
+   let navigation = useNavigate();
 
    const changevisibilty = () => {
       setShowPass((prev) => !prev);
@@ -16,43 +29,54 @@ export default function SignUp() {
 
    const checkForm = (e) => {
       e.preventDefault();
-      let pattern = /[a-z0-9]+@[a-z]{5,6}\.[a-z]{2,3}/g;
+      let pattern = /^[a-z0-9]+@[a-z]{5,6}\.[a-z]{2,3}$/g;
+      let patternPhone = /^[0-9]{11,11}$/g;
+
       let validateEmail = pattern.test(emailValue);
-      //   !validateEmail ? setNotValidEmail(true) : setNotValidEmail(false);
-      //   passwordValue !== confirmValue ? setNotValidPass(true) : setNotValidPass(false);
-      //   if (validateEmail && passwordValue && confirmValue && passwordValue === confirmValue && usernameValue) {
-      //  setModalText(<Loading change={true} />);
-      //  setShowModal(true);
-      let usernameInfo = { username: usernameValue, email: emailValue, password: passwordValue, password2: passwordValue };
-      fetch("https://djangorest.pythonanywhere.com/accounts/register/", {
-         headers: {
-            "Content-Type": "application/json",
-         },
-         method: "POST",
-         body: JSON.stringify(usernameInfo),
-      })
-         .then((res) => {
-            console.log(res);
-            //    if (res.statusText === "Created") {
-            //       setModalText("You regitered successfully :) . Now you must login");
-            //       setTimeout(() => {
-            //          navigation("/login");
-            //       }, 2000);
-            //    } else if (res.statusText === "Conflict") {
-            //       setModalText("!!! A user exist with this information");
-            //    } else {
-            //       setModalText("!!! error occurred");
-            //    }
+      let validatePhone = patternPhone.test(phoneNumber);
+      !validateEmail ? setNotValidEmail(true) : setNotValidEmail(false);
+      !usernameValue ? setNotValueUsername(true) : setNotValueUsername(false);
+      !passwordValue && !confirmValue ? setPasswordValueCheck(true) : setPasswordValueCheck(false);
+      !validatePhone ? setPhoneNumberValueCheck(true) : setPhoneNumberValueCheck(false);
+      passwordValue !== confirmValue ? setNotValidPass(true) : setNotValidPass(false);
+      if (validateEmail && validatePhone && passwordValue && confirmValue && passwordValue === confirmValue && usernameValue) {
+         //  setModalText(<Loading change={true} />);
+         setAlertModalShow(true);
+         let usernameInfo = { username: usernameValue, email: emailValue, password: passwordValue, password2: passwordValue, phone_number: phoneNumber };
+         fetch("https://javadinstagram.pythonanywhere.com/register/", {
+            headers: {
+               "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(usernameInfo),
          })
-         .catch((err) => {
-            console.log(err);
-            //    if (err.statusText === "Conflict") {
-            //       setModalText("!!! A user exist with this information");
-            //    } else {
-            //       setModalText("!!! error occurred");
-            //    }
-         });
-      //   }
+            .then((res) => {
+               console.log(res);
+               if (res.statusText === "Created") {
+                  setModalText("You regitered successfully :) . Now you must login");
+                  setTimeout(() => {
+                     navigation("/login");
+                  }, 2000);
+               } else if (res.statusText === "Conflict") {
+                  setModalText("!!! A user exist with this information");
+               } else {
+                  setModalText("!!! error occurred");
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+               if (err.statusText === "Conflict") {
+                  setModalText("!!! A user exist with this information");
+               } else {
+                  setModalText("!!! error occurred");
+               }
+            });
+      }
+   };
+
+   const closeAlertModal = () => {
+      setAlertModalShow(false);
+      setModalText("");
    };
 
    return (
@@ -69,7 +93,9 @@ export default function SignUp() {
             <h2 className="signUp-title">Sign up to see photos and videos from your friends.</h2>
             <form className="signUp-form" onSubmit={checkForm}>
                <input type="text" className="signUp-form__email" placeholder="Email" value={emailValue.toLowerCase()} onChange={(e) => setEmailValue(e.target.value)} />
-               <p className="signUp-form__email-validation">Insert a valid email</p>
+
+               <p className="signUp-form__email-validation">{notValidEmail && "Insert a valid email"}</p>
+
                <input
                   type="text"
                   className="signUp-form__username"
@@ -77,16 +103,28 @@ export default function SignUp() {
                   value={usernameValue.toLowerCase()}
                   onChange={(e) => setUsernameValue(e.target.value)}
                />
-               <p className="signUp-form__username-validation">Insert a valid username</p>
+               <p className="signUp-form__username-validation">{notValueUsername && "Username can't be empty"}</p>
+
+               <input
+                  type="text"
+                  className="signUp-form__number"
+                  maxLength={11}
+                  placeholder="Phone number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+               />
+               <p className="signUp-form__number-validation">{phoneNumberValueCheck && "Must be only 11 numbers"}</p>
+
                <input
                   type={`${showPass ? "text" : "password"}`}
                   className="signUp-form__password"
+                  maxLength={8}
                   placeholder="Password"
                   value={passwordValue.toLowerCase()}
                   onChange={(e) => setPasswordValue(e.target.value)}
                />
                <p className="signUp-form__password-validation">
-                  Password must be 8 character{" "}
+                  {passwordValueCheck && "Password required"}
                   {showPass ? (
                      <AiOutlineEye className="signup-password-visiblity" onClick={changevisibilty} />
                   ) : (
@@ -96,27 +134,35 @@ export default function SignUp() {
                <input
                   type={`${showPass ? "text" : "password"}`}
                   className="signUp-form__confirm"
+                  maxLength={8}
                   placeholder="Confirm password"
                   value={confirmValue.toLowerCase()}
                   onChange={(e) => setConfirmValue(e.target.value)}
                />
                <p className="signUp-form__confirm-validation">
-                  Passwords are not matched{" "}
+                  {notValidPass && "Passwords are not matched"}
+                  {passwordValueCheck && "Password required"}
                   {showPass ? (
                      <AiOutlineEye className="signup-password-visiblity" onClick={changevisibilty} />
                   ) : (
                      <AiOutlineEyeInvisible className="signup-password-visiblity" onClick={changevisibilty} />
                   )}
                </p>
+
                <input type="submit" value="Sign up" className="signUp-form__submit" />
             </form>
             <p className="signUp-form__gologin">
                Have an account?{" "}
-               <Link to="/" className="signUp-form__gologin-btn">
+               <Link to="/login" className="signUp-form__gologin-btn">
                   Log in
                </Link>
             </p>
          </div>
+         <AlertModal
+            show={alertModalShow}
+            handleClose={closeAlertModal}
+            text={!modalText ? <Spinner className="spiner--handle" animation="border" variant="primary" /> : modalText}
+         />
       </div>
    );
 }

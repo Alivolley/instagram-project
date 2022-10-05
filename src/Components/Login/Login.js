@@ -7,9 +7,54 @@ export default function Login() {
    const [emailValue, setEmailValue] = useState("");
    const [passwordValue, setPasswordValue] = useState("");
    const [showPass, setShowPass] = useState(false);
+   const [notValidEmail, setNotValidEmail] = useState(false);
+   const [passwordValueCheck, setPasswordValueCheck] = useState(false);
 
    const changevisibilty = () => {
       setShowPass((prev) => !prev);
+   };
+
+   const checkForm = (e) => {
+      e.preventDefault();
+      let pattern = /^[a-z0-9]+@[a-z]{5,6}\.[a-z]{2,3}$/g;
+      let validateEmail = pattern.test(emailValue);
+      !validateEmail ? setNotValidEmail(true) : setNotValidEmail(false);
+      !passwordValue ? setPasswordValueCheck(true) : setPasswordValueCheck(false);
+
+      if (validateEmail && passwordValue) {
+         // setModalText(<Loading change={true} />);
+         // setShowModal(true);
+         let usernameInfo = { email: emailValue, password: passwordValue };
+         fetch("https://javadinstagram.pythonanywhere.com/login/", {
+            headers: {
+               "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(usernameInfo),
+         })
+            .then((res) => {
+               // if (res.status === 200) {
+               console.log(res);
+               return res.json();
+               // } else {
+               //    setModalText("!!! Password or Email is wrong .");
+               // }
+            })
+            .then((data) => {
+               // Cookies.set("refresh", data.refresh, { expires: 1 });
+               // Cookies.set("access", data.access, { expires: 1 });
+               // setModalText("You logged in successfully :)");
+
+               // setTimeout(() => {
+               //    navigation("/dashboard");
+               // }, 1500);
+               console.log(data);
+            })
+            .catch((err) => {
+               console.log(err);
+               // setModalText("!!! Password or Email is wrong .")
+            });
+      }
    };
 
    return (
@@ -23,9 +68,9 @@ export default function Login() {
                   fillRule="evenodd"
                ></path>
             </svg>
-            <form className="login-form">
+            <form className="login-form" onSubmit={checkForm}>
                <input type="text" className="login-form__email" placeholder="Email" value={emailValue.toLowerCase()} onChange={(e) => setEmailValue(e.target.value)} />
-               <p className="login-form__email-validation">Insert a valid email</p>
+               <p className="login-form__email-validation">{notValidEmail && "Insert a valid email"}</p>
 
                <input
                   type={`${showPass ? "text" : "password"}`}
@@ -35,7 +80,7 @@ export default function Login() {
                   onChange={(e) => setPasswordValue(e.target.value)}
                />
                <p className="login-form__password-validation">
-                  Password must be 8 character{" "}
+                  {passwordValueCheck && "Password required"}
                   {showPass ? (
                      <AiOutlineEye className="login-password-visiblity" onClick={changevisibilty} />
                   ) : (
@@ -47,7 +92,7 @@ export default function Login() {
             </form>
             <p className="login-form__goSignUp">
                Don't have an account?{" "}
-               <Link to="/" className="login-form__goSignUp-btn">
+               <Link to="/signup" className="login-form__goSignUp-btn">
                   Sign up
                </Link>
             </p>
