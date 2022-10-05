@@ -14,6 +14,47 @@ export default function SignUp() {
       setShowPass((prev) => !prev);
    };
 
+   const checkForm = (e) => {
+      e.preventDefault();
+      let pattern = /[a-z0-9]+@[a-z]{5,6}\.[a-z]{2,3}/g;
+      let validateEmail = pattern.test(emailValue);
+      //   !validateEmail ? setNotValidEmail(true) : setNotValidEmail(false);
+      //   passwordValue !== confirmValue ? setNotValidPass(true) : setNotValidPass(false);
+      //   if (validateEmail && passwordValue && confirmValue && passwordValue === confirmValue && usernameValue) {
+      //  setModalText(<Loading change={true} />);
+      //  setShowModal(true);
+      let usernameInfo = { username: usernameValue, email: emailValue, password: passwordValue, password2: passwordValue };
+      fetch("https://djangorest.pythonanywhere.com/accounts/register/", {
+         headers: {
+            "Content-Type": "application/json",
+         },
+         method: "POST",
+         body: JSON.stringify(usernameInfo),
+      })
+         .then((res) => {
+            console.log(res);
+            //    if (res.statusText === "Created") {
+            //       setModalText("You regitered successfully :) . Now you must login");
+            //       setTimeout(() => {
+            //          navigation("/login");
+            //       }, 2000);
+            //    } else if (res.statusText === "Conflict") {
+            //       setModalText("!!! A user exist with this information");
+            //    } else {
+            //       setModalText("!!! error occurred");
+            //    }
+         })
+         .catch((err) => {
+            console.log(err);
+            //    if (err.statusText === "Conflict") {
+            //       setModalText("!!! A user exist with this information");
+            //    } else {
+            //       setModalText("!!! error occurred");
+            //    }
+         });
+      //   }
+   };
+
    return (
       <div className="container signUp-wrapper">
          <div className="signUp">
@@ -26,7 +67,7 @@ export default function SignUp() {
                ></path>
             </svg>
             <h2 className="signUp-title">Sign up to see photos and videos from your friends.</h2>
-            <form className="signUp-form">
+            <form className="signUp-form" onSubmit={checkForm}>
                <input type="text" className="signUp-form__email" placeholder="Email" value={emailValue.toLowerCase()} onChange={(e) => setEmailValue(e.target.value)} />
                <p className="signUp-form__email-validation">Insert a valid email</p>
                <input

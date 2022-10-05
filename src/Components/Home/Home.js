@@ -12,7 +12,7 @@ export default function Home() {
    return (
       <div className="container">
          <div className="row">
-            <div className="col-12 col-lg-7">
+            <div className="col-12 col-xxl-7 home-left-side">
                <div className="home-stories">
                   <Swiper slidesPerView={6} slidesPerGroup={4} spaceBetween={20} navigation={true} modules={[Navigation]} className="mySwiper">
                      <SwiperSlide>
@@ -130,7 +130,7 @@ export default function Home() {
                   <HomePostCard />
                </div>
             </div>
-            <div className="col-12 col-lg-5 home-right-side">
+            <div className="col-12 col-xxl-5 home-right-side">
                <div className="home-right-side__header">
                   <h2 className="home-right-side__title">Suggestions For You</h2>
                   <Link to="/" className="home-right-side__seeAll">
