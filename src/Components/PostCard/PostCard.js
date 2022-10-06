@@ -3,18 +3,18 @@ import "./PostCard.css";
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 
-export default function PostCard(props) {
+export default function PostCard({ picture, likes, comments }) {
    return (
       <div className="postcard">
-         <img className="postcard-img" src={props.picture} alt="" />
+         <img className="postcard-img" src={picture} alt="" />
          <div className="postcard-img-cover">
             <p className="postcard-likes">
                <AiFillHeart className="postcard-icon" />
-               117
+               {likes}
             </p>
             <p className="postcard-comment">
                <FaComment className="postcard-icon" />
-               63
+               {comments}
             </p>
          </div>
       </div>

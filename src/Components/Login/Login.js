@@ -40,7 +40,6 @@ export default function Login() {
          })
             .then((res) => {
                if (res.status === 200) {
-                  console.log(res);
                   return res.json();
                } else {
                   setModalText("!!! Password or Email is wrong .");
@@ -54,12 +53,8 @@ export default function Login() {
                setTimeout(() => {
                   navigation("/");
                }, 1500);
-               console.log(data);
             })
-            .catch((err) => {
-               console.log(err);
-               setModalText("!!! Password or Email is wrong .");
-            });
+            .catch((err) => setModalText("!!! Password or Email is wrong ."));
       }
    };
 

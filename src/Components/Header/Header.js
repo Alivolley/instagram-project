@@ -1,10 +1,28 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 import "./Header.css";
 
 export default function Header() {
    const [collapseShow, setCollapseShow] = useState(false);
    const [lastActiveShow, setLastActiveShow] = useState(false);
+   const [profileData, setProfileData] = useState();
+
+   let headerImg = profileData ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.png";
+   let location = useLocation();
+
+   useEffect(() => {
+      fetch(`https://javadinstagram.pythonanywhere.com/profile/`, {
+         headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${Cookies.get("access")}`,
+         },
+         method: "GET",
+      })
+         .then((res) => res.status === 200 && res.json())
+         .then((data) => setProfileData(data))
+         .catch((err) => console.log(err));
+   }, []);
 
    const toggleMenu = () => {
       setLastActiveShow(false);
@@ -15,6 +33,11 @@ export default function Header() {
       setCollapseShow(false);
       setLastActiveShow((prev) => !prev);
    };
+
+   useEffect(() => {
+      setCollapseShow(false);
+      setLastActiveShow(false);
+   }, [location.pathname]);
 
    window.addEventListener("click", (e) => {
       if (
@@ -158,7 +181,8 @@ export default function Header() {
                </svg>
             </div>
 
-            <img src="/pics/profile-photo.jpg" alt="" className="header-right-menu__picture" onClick={toggleMenu} />
+            <img src={headerImg} alt="" className="header-right-menu__picture" onClick={toggleMenu} />
+
             <ul className={`${collapseShow ? "header-collapse__menu header-collapse__menu--show" : "header-collapse__menu"}`}>
                <Link to="/profile/posts" className="header-collapse__item">
                   <svg aria-label="Profile" className="_ab6-" color="#262626" fill="#262626" height="16" role="img" viewBox="0 0 24 24" width="16">
@@ -188,7 +212,7 @@ export default function Header() {
                   </svg>
                   Saved
                </Link>
-               <li className="header-collapse__item">
+               <Link to="/settings" className="header-collapse__item">
                   <svg aria-label="Settings" className="_ab6-" color="#262626" fill="#262626" height="16" role="img" viewBox="0 0 24 24" width="16">
                      <circle cx="12" cy="12" fill="none" r="8.635" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></circle>
                      <path
@@ -200,7 +224,7 @@ export default function Header() {
                      ></path>
                   </svg>
                   Settings
-               </li>
+               </Link>
                <li className="header-collapse__line"></li>
                <li className="header-collapse__item">Log Out</li>
             </ul>

@@ -77,6 +77,7 @@
 .profile-user__name {
    display: block;
    font-weight: 600;
+   margin-bottom: 1rem;
 }
 
 .profile-user__bio {

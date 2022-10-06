@@ -1,0 +1,119 @@
+.setting,
+.changePass {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-left: auto;
+   margin-right: auto;
+   border: 0.1rem solid #dbdbdb;
+   margin-top: 3rem !important;
+}
+
+.setting-header {
+   display: flex;
+   align-items: center;
+   gap: 3rem;
+   margin: 3rem 0;
+}
+
+.setting-header__img {
+   width: 5rem;
+   height: 5rem;
+   border-radius: 50%;
+}
+
+.setting-header__details {
+}
+
+.setting-header__username {
+   margin: 0;
+}
+
+.setting-header__changePic {
+   cursor: pointer;
+   font-weight: 600;
+   color: #0095f7;
+}
+
+.setting-profile__form,
+.changePass__form {
+   display: flex;
+   flex-direction: column;
+   gap: 3rem;
+   padding: 1.5rem;
+}
+
+.setting-input__wrapper,
+.changePass-input__wrapper {
+   display: flex;
+}
+
+.label-input__old,
+.label-input__new,
+.label-input__confirm,
+.label-input__name,
+.label-input__username,
+.label-input__bio,
+.label-input__email,
+.label-input__phone,
+.label-input__gender {
+   margin-left: auto;
+   margin-right: 3rem;
+   font-weight: 600;
+}
+
+.changePass-old,
+.changePass-new,
+.changePass-confirm,
+.setting-name,
+.setting-username,
+.setting-bio,
+.setting-email,
+.setting-phone,
+.setting-gender {
+   width: 21rem;
+   border: 0.1rem solid #dbdbdb;
+   border-radius: 0.3rem;
+   height: 3.2rem;
+   padding: 1rem 1rem;
+}
+
+.setting-bio {
+   height: auto;
+}
+
+.setting-gender {
+   padding: 0 1rem;
+}
+
+.setting-profile__submit,
+.changePass__submit {
+   width: 10rem;
+   margin-left: auto;
+   margin-top: 3rem;
+   border: none;
+   background-color: #0095f7;
+   color: white;
+   font-weight: 600;
+   padding: 0.6rem 1rem;
+   font-size: 1.4rem;
+   border-radius: 0.3rem;
+   margin-bottom: 3rem;
+}
+
+.changePass-title {
+   margin: 5rem 0;
+   font-size: 3rem;
+}
+
+.changePass__submit {
+   width: 15rem;
+   margin-top: 0;
+}
+
+.changePass-visiblity {
+   font-size: 1.8rem;
+   color: black;
+   cursor: pointer;
+   margin-left: auto;
+}
