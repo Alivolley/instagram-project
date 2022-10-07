@@ -81,11 +81,11 @@ export default function Settings() {
          body: JSON.stringify(usernameInfo),
       })
          .then((res) => {
-            if (res.status === 200) {
+            if (res.status === 201) {
                setModalText("You're changes applied successfully");
-               setTimeout(() => {
-                  navigation("/profile/posts");
-               }, 2000);
+               //    setTimeout(() => {
+               //       navigation("/profile/posts");
+               //    }, 2000);
             }
          })
          .catch((err) => {
