@@ -124,3 +124,11 @@
    cursor: pointer;
    margin-left: auto;
 }
+
+.changePass-notmatch {
+   margin: 0;
+   margin-left: auto;
+   height: 2rem;
+   color: #ff3041;
+   font-size: 1.4rem;
+}

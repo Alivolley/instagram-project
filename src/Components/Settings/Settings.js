@@ -8,7 +8,6 @@ import AlertModal from "../AlertModal/AlertModal";
 
 export default function Settings() {
    const [profileData, setProfileData] = useState();
-   const [conectFaild, setConectFaild] = useState(false);
    const [nameValue, setNameValue] = useState("");
    const [usernameValue, setUsernameValue] = useState("");
    const [bioValue, setBioValue] = useState("");
@@ -22,6 +21,7 @@ export default function Settings() {
    const [alertModalShow, setAlertModalShow] = useState(false);
    const [modalText, setModalText] = useState();
    const [modalImgShow, setModalImgShow] = useState(false);
+   const [NotMatchPass, setnotMatchPass] = useState(false);
 
    let navigation = useNavigate();
 
@@ -44,7 +44,7 @@ export default function Settings() {
                setGenderValue(data.gender);
                setProfileData(data);
             })
-            .catch((err) => setConectFaild(true));
+            .catch((err) => console.log(err));
       } else {
          navigation("/login");
       }
@@ -66,7 +66,7 @@ export default function Settings() {
          name: nameValue,
          open_suggestions: true,
          phone_number: phoneValue,
-         profile_photo: profileData.profile_photo,
+         // profile_photo: profileData.profile_photo,
          username: usernameValue,
          website: "",
       };
@@ -78,12 +78,16 @@ export default function Settings() {
             "Content-Type": "application/json",
             authorization: `Bearer ${Cookies.get("access")}`,
          },
-         method: "POST",
+         method: "PUT",
          body: JSON.stringify(changedInfo),
       })
          .then((res) => {
-            if (res.status === 201) {
+            console.log(res);
+            if (res.status === 200) {
                setModalText("You're changes applied successfully");
+               setTimeout(() => {
+                  navigation(0);
+               }, 500);
             }
          })
          .catch((err) => {
@@ -94,7 +98,9 @@ export default function Settings() {
    const checkFormPassword = (e) => {
       e.preventDefault();
 
-      if ((oldPass, newPass, confirmPass)) {
+      newPass !== confirmPass ? setnotMatchPass(true) : setnotMatchPass(false);
+
+      if (oldPass && newPass && confirmPass && !NotMatchPass) {
          let changedPassInfo = {
             old_password: oldPass,
             password1: newPass,
@@ -114,7 +120,6 @@ export default function Settings() {
             body: JSON.stringify(changedPassInfo),
          })
             .then((res) => {
-               console.log(res);
                if (res.status === 200) {
                   setModalText("You're changes applied successfully");
                } else {
@@ -272,6 +277,7 @@ export default function Settings() {
                         ) : (
                            <AiOutlineEyeInvisible className="changePass-visiblity" onClick={changevisibilty} />
                         )}
+                        <p className="changePass-notmatch">{NotMatchPass ? "Passwords are not matched" : ""}</p>
 
                         <input type="submit" className="changePass__submit" value="Change password" />
                      </form>
