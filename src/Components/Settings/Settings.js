@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { Spinner } from "react-bootstrap";
 import "./Settings.css";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import AlertModal from "../AlertModal/AlertModal";
 
 export default function Settings() {
    const [profileData, setProfileData] = useState();
@@ -18,12 +19,14 @@ export default function Settings() {
    const [newPass, setNewPass] = useState("");
    const [confirmPass, setConfirmPass] = useState("");
    const [showPass, setShowPass] = useState(false);
+   const [alertModalShow, setAlertModalShow] = useState(false);
+   const [modalText, setModalText] = useState();
 
    let navigation = useNavigate();
 
    useEffect(() => {
       if (Cookies.get("access")) {
-         fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/`, {
+         fetch(`https://javadinstagram.pythonanywhere.com/accounts/information/`, {
             headers: {
                "Content-Type": "application/json",
                authorization: `Bearer ${Cookies.get("access")}`,
@@ -31,7 +34,15 @@ export default function Settings() {
             method: "GET",
          })
             .then((res) => res.status === 200 && res.json())
-            .then((data) => setProfileData(data))
+            .then((data) => {
+               setNameValue(data.name);
+               setUsernameValue(data.username);
+               setBioValue(data.bio);
+               setEmailValue(data.email);
+               setPhoneValue(data.phone_number);
+               setGenderValue(data.gender);
+               setProfileData(data);
+            })
             .catch((err) => setConectFaild(true));
       } else {
          navigation("/login");
@@ -42,7 +53,86 @@ export default function Settings() {
       setShowPass((prev) => !prev);
    };
 
-   console.log(profileData);
+   const checkForm = (e) => {
+      e.preventDefault();
+
+      setAlertModalShow(true);
+
+      let usernameInfo = {
+         bio: bioValue,
+         email: emailValue,
+         gender: genderValue,
+         name: nameValue,
+         open_suggestions: true,
+         phone_number: phoneValue,
+         profile_photo: profileData.profile_photo,
+         username: usernameValue,
+         website: "",
+      };
+
+      console.log(JSON.stringify(usernameInfo));
+
+      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/`, {
+         headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${Cookies.get("access")}`,
+         },
+         method: "POST",
+         body: JSON.stringify(usernameInfo),
+      })
+         .then((res) => {
+            if (res.status === 200) {
+               setModalText("You're changes applied successfully");
+               setTimeout(() => {
+                  navigation("/profile/posts");
+               }, 2000);
+            }
+         })
+         .catch((err) => {
+            setModalText("!!! Failed ...");
+         });
+   };
+
+   const checkFormPassword = (e) => {
+      e.preventDefault();
+
+      setAlertModalShow(true);
+
+      let usernameInfo = {
+         oldpassword: oldPass,
+         newpassword: newPass,
+         confirmPass: confirmPass,
+      };
+
+      console.log(JSON.stringify(usernameInfo));
+
+      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/`, {
+         headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${Cookies.get("access")}`,
+         },
+         method: "POST",
+         body: JSON.stringify(usernameInfo),
+      })
+         .then((res) => {
+            if (res.status === 200) {
+               setModalText("You're changes applied successfully");
+               setTimeout(() => {
+                  navigation("/profile/posts");
+               }, 2000);
+            }
+         })
+         .catch((err) => {
+            setModalText("!!! Failed ...");
+         });
+   };
+
+   const closeAlertModal = () => {
+      setAlertModalShow(false);
+      setModalText("");
+   };
+
+   //    console.log(profileData);
 
    return (
       <div className="container">
@@ -58,7 +148,7 @@ export default function Settings() {
                         </div>
                      </div>
 
-                     <form className="setting-profile__form">
+                     <form className="setting-profile__form" onSubmit={checkForm}>
                         <div className="setting-input__wrapper">
                            <label htmlFor="setting-name" className="label-input__name">
                               Name
@@ -77,6 +167,11 @@ export default function Settings() {
                               value={usernameValue}
                               onChange={(e) => setUsernameValue(e.target.value)}
                            />
+                        </div>
+
+                        <div className="setting-input__wrapper">
+                           <label className="label-input__website">Website</label>
+                           <input type="text" className="setting-website" disabled placeholder="Only available on app" />
                         </div>
 
                         <div className="setting-input__wrapper">
@@ -109,7 +204,7 @@ export default function Settings() {
                               <option value="male">Male</option>
                               <option value="female">Female</option>
                               <option value="custom">Custom</option>
-                              <option value="prefer not to say">Prefer not to say</option>
+                              <option value="none">Prefer not to say</option>
                            </select>
                         </div>
                         <input type="submit" className="setting-profile__submit" value="Submit" />
@@ -120,7 +215,7 @@ export default function Settings() {
                <div className="row">
                   <div className="col-12 col-lg-9 col-xxl-7 changePass">
                      <h2 className="changePass-title">Change you're password</h2>
-                     <form className="changePass__form">
+                     <form className="changePass__form" onSubmit={checkFormPassword}>
                         <div className="changePass-input__wrapper">
                            <label htmlFor="changePass-old" className="label-input__old">
                               Old password
@@ -176,6 +271,11 @@ export default function Settings() {
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />
          )}
+         <AlertModal
+            show={alertModalShow}
+            handleClose={closeAlertModal}
+            text={!modalText ? <Spinner className="spiner--handle" animation="border" variant="primary" /> : modalText}
+         />
       </div>
    );
 }
