@@ -161,6 +161,17 @@
    font-weight: 700;
    cursor: pointer;
    color: #0095f6;
+   position: relative;
+}
+
+.img-modal__upload-photo--input {
+   cursor: pointer;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   opacity: 0;
 }
 
 .img-modal__remove-photo {

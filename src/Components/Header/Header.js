@@ -8,7 +8,6 @@ export default function Header() {
    const [lastActiveShow, setLastActiveShow] = useState(false);
    const [profileData, setProfileData] = useState();
 
-   let headerImg = profileData ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.png";
    let location = useLocation();
 
    useEffect(() => {
@@ -181,7 +180,14 @@ export default function Header() {
                </svg>
             </div>
 
-            <img src={headerImg} alt="" className="header-right-menu__picture" onClick={toggleMenu} />
+            {profileData && (
+               <img
+                  src={profileData.profile.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "pics/no-bg.png"}
+                  alt=""
+                  className="header-right-menu__picture"
+                  onClick={toggleMenu}
+               />
+            )}
 
             <ul className={`${collapseShow ? "header-collapse__menu header-collapse__menu--show" : "header-collapse__menu"}`}>
                <Link to="/profile/posts" className="header-collapse__item">

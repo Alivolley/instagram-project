@@ -3,11 +3,13 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./Profile.css";
 import { Spinner } from "react-bootstrap";
+import AlertModal from "../AlertModal/AlertModal";
 
 export default function Profile() {
    const [modalImgShow, setModalImgShow] = useState(false);
    const [profileData, setProfileData] = useState();
-   const [conectFaild, setConectFaild] = useState(false);
+   const [alertModalShow, setAlertModalShow] = useState(false);
+   const [modalText, setModalText] = useState();
 
    let navigation = useNavigate();
 
@@ -22,11 +24,39 @@ export default function Profile() {
          })
             .then((res) => res.status === 200 && res.json())
             .then((data) => setProfileData(data))
-            .catch((err) => setConectFaild(true));
+            .catch((err) => console.log(err));
       } else {
          navigation("/login");
       }
    }, []);
+
+   const uploadeProfileImg = (e) => {
+      let photo = e.target.files[0];
+      let formData = new FormData();
+      formData.append("photo", photo);
+
+      setAlertModalShow(true);
+
+      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/profile-photo/`, {
+         headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${Cookies.get("access")}`,
+         },
+         method: "POST",
+         body: formData,
+      })
+         .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+               setModalText("You're changes applied successfully");
+            } else {
+               setModalText("!!! Failed ...");
+            }
+         })
+         .catch((err) => {
+            setModalText("!!! Failed ...");
+         });
+   };
 
    const toggleMenu = () => {
       setModalImgShow((prev) => !prev);
@@ -35,6 +65,13 @@ export default function Profile() {
    const closeChangeProfileModal = (e) => {
       e.target.className === "profile-img-modal-wrapper profile-img-modal-wrapper--show" && setModalImgShow(false);
    };
+
+   const closeAlertModal = () => {
+      setAlertModalShow(false);
+      setModalText("");
+   };
+
+   console.log(profileData && profileData.profile.bio);
 
    return (
       <>
@@ -169,7 +206,9 @@ export default function Profile() {
                   <div className="profile-img-modal">
                      <h2 className="img-modal__title">Change Profile Photo</h2>
                      <hr className="img-modal__line" />
-                     <p className="img-modal__upload-photo">Upload Photo</p>
+                     <p className="img-modal__upload-photo">
+                        Upload Photo <input type="file" className="img-modal__upload-photo--input" onChange={uploadeProfileImg} />
+                     </p>
                      <hr className="img-modal__line" />
                      <p className="img-modal__remove-photo">Remove Current Photo</p>
                      <hr className="img-modal__line" />
@@ -182,6 +221,11 @@ export default function Profile() {
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />
          )}
+         <AlertModal
+            show={alertModalShow}
+            handleClose={closeAlertModal}
+            text={!modalText ? <Spinner className="spiner--handle" animation="border" variant="primary" /> : modalText}
+         />
       </>
    );
 }

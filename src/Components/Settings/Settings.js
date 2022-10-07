@@ -85,9 +85,7 @@ export default function Settings() {
             console.log(res);
             if (res.status === 200) {
                setModalText("You're changes applied successfully");
-               setTimeout(() => {
-                  navigation(0);
-               }, 500);
+               navigation(0);
             }
          })
          .catch((err) => {
@@ -132,6 +130,35 @@ export default function Settings() {
       }
    };
 
+   const uploadeProfileImg = (e) => {
+      let photo = e.target.files[0];
+      let formData = new FormData();
+      formData.append("photo", photo);
+      // console.log(formData);
+
+      setAlertModalShow(true);
+
+      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/profile-photo/`, {
+         headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${Cookies.get("access")}`,
+         },
+         method: "PUT",
+         body: formData,
+      })
+         .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+               setModalText("You're changes applied successfully");
+            } else {
+               setModalText("!!! Failed ...");
+            }
+         })
+         .catch((err) => {
+            setModalText("!!! Failed ...");
+         });
+   };
+
    const closeAlertModal = () => {
       setAlertModalShow(false);
       setModalText("");
@@ -145,7 +172,7 @@ export default function Settings() {
       setModalImgShow((prev) => !prev);
    };
 
-   //    console.log(profileData);
+   // console.log(profileData);
 
    return (
       <div className="container">
@@ -154,7 +181,11 @@ export default function Settings() {
                <div className="row">
                   <div className="col-12 col-lg-9 col-xxl-7 setting">
                      <div className="setting-header">
-                        <img src={`https://javadinstagram.pythonanywhere.com${profileData.profile_photo}`} alt="" className="setting-header__img" />
+                        <img
+                           src={profileData.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile_photo}` : "pics/no-bg.png"}
+                           alt=""
+                           className="setting-header__img"
+                        />
                         <div className="setting-header__details">
                            <p className="setting-header__username">{profileData.name}</p>
                            <p className="setting-header__changePic" onClick={toggleMenu}>
@@ -207,7 +238,14 @@ export default function Settings() {
                            <label htmlFor="setting-phone" className="label-input__phone">
                               Phone number
                            </label>
-                           <input type="text" className="setting-phone" id="setting-phone" value={phoneValue} onChange={(e) => setPhoneValue(e.target.value)} />
+                           <input
+                              type="text"
+                              className="setting-phone"
+                              id="setting-phone"
+                              value={phoneValue}
+                              onChange={(e) => setPhoneValue(e.target.value)}
+                              maxLength={11}
+                           />
                         </div>
 
                         <div className="setting-input__wrapper">
@@ -290,7 +328,10 @@ export default function Settings() {
                   <div className="profile-img-modal">
                      <h2 className="img-modal__title">Change Profile Photo</h2>
                      <hr className="img-modal__line" />
-                     <p className="img-modal__upload-photo">Upload Photo</p>
+
+                     <p className="img-modal__upload-photo">
+                        Upload Photo <input type="file" className="img-modal__upload-photo--input" onChange={uploadeProfileImg} />
+                     </p>
                      <hr className="img-modal__line" />
                      <p className="img-modal__remove-photo">Remove Current Photo</p>
                      <hr className="img-modal__line" />
