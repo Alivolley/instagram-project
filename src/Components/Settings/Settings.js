@@ -21,6 +21,7 @@ export default function Settings() {
    const [showPass, setShowPass] = useState(false);
    const [alertModalShow, setAlertModalShow] = useState(false);
    const [modalText, setModalText] = useState();
+   const [modalImgShow, setModalImgShow] = useState(false);
 
    let navigation = useNavigate();
 
@@ -58,7 +59,7 @@ export default function Settings() {
 
       setAlertModalShow(true);
 
-      let usernameInfo = {
+      let changedInfo = {
          bio: bioValue,
          email: emailValue,
          gender: genderValue,
@@ -70,7 +71,7 @@ export default function Settings() {
          website: "",
       };
 
-      console.log(JSON.stringify(usernameInfo));
+      console.log(JSON.stringify(changedInfo));
 
       fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/`, {
          headers: {
@@ -78,14 +79,11 @@ export default function Settings() {
             authorization: `Bearer ${Cookies.get("access")}`,
          },
          method: "POST",
-         body: JSON.stringify(usernameInfo),
+         body: JSON.stringify(changedInfo),
       })
          .then((res) => {
             if (res.status === 201) {
                setModalText("You're changes applied successfully");
-               //    setTimeout(() => {
-               //       navigation("/profile/posts");
-               //    }, 2000);
             }
          })
          .catch((err) => {
@@ -96,40 +94,50 @@ export default function Settings() {
    const checkFormPassword = (e) => {
       e.preventDefault();
 
-      setAlertModalShow(true);
+      if ((oldPass, newPass, confirmPass)) {
+         let changedPassInfo = {
+            old_password: oldPass,
+            password1: newPass,
+            password2: confirmPass,
+         };
 
-      let usernameInfo = {
-         oldpassword: oldPass,
-         newpassword: newPass,
-         confirmPass: confirmPass,
-      };
+         console.log(JSON.stringify(changedPassInfo));
 
-      console.log(JSON.stringify(usernameInfo));
+         setAlertModalShow(true);
 
-      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/`, {
-         headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${Cookies.get("access")}`,
-         },
-         method: "POST",
-         body: JSON.stringify(usernameInfo),
-      })
-         .then((res) => {
-            if (res.status === 200) {
-               setModalText("You're changes applied successfully");
-               setTimeout(() => {
-                  navigation("/profile/posts");
-               }, 2000);
-            }
+         fetch(`https://javadinstagram.pythonanywhere.com/accounts/password/change/`, {
+            headers: {
+               "Content-Type": "application/json",
+               authorization: `Bearer ${Cookies.get("access")}`,
+            },
+            method: "POST",
+            body: JSON.stringify(changedPassInfo),
          })
-         .catch((err) => {
-            setModalText("!!! Failed ...");
-         });
+            .then((res) => {
+               console.log(res);
+               if (res.status === 200) {
+                  setModalText("You're changes applied successfully");
+               } else {
+                  setModalText("!!! Failed ...");
+               }
+            })
+            .catch((err) => {
+               setModalText("!!! Failed ...");
+            });
+      }
    };
 
    const closeAlertModal = () => {
       setAlertModalShow(false);
       setModalText("");
+   };
+
+   const closeChangeProfileModal = (e) => {
+      e.target.className === "profile-img-modal-wrapper profile-img-modal-wrapper--show" && setModalImgShow(false);
+   };
+
+   const toggleMenu = () => {
+      setModalImgShow((prev) => !prev);
    };
 
    //    console.log(profileData);
@@ -144,7 +152,9 @@ export default function Settings() {
                         <img src={`https://javadinstagram.pythonanywhere.com${profileData.profile_photo}`} alt="" className="setting-header__img" />
                         <div className="setting-header__details">
                            <p className="setting-header__username">{profileData.name}</p>
-                           <p className="setting-header__changePic">Change profile photo</p>
+                           <p className="setting-header__changePic" onClick={toggleMenu}>
+                              Change profile photo
+                           </p>
                         </div>
                      </div>
 
@@ -265,6 +275,22 @@ export default function Settings() {
 
                         <input type="submit" className="changePass__submit" value="Change password" />
                      </form>
+                  </div>
+               </div>
+               <div
+                  className={`${modalImgShow ? "profile-img-modal-wrapper profile-img-modal-wrapper--show" : "profile-img-modal-wrapper"}`}
+                  onClick={closeChangeProfileModal}
+               >
+                  <div className="profile-img-modal">
+                     <h2 className="img-modal__title">Change Profile Photo</h2>
+                     <hr className="img-modal__line" />
+                     <p className="img-modal__upload-photo">Upload Photo</p>
+                     <hr className="img-modal__line" />
+                     <p className="img-modal__remove-photo">Remove Current Photo</p>
+                     <hr className="img-modal__line" />
+                     <p className="img-modal__cancel" onClick={toggleMenu}>
+                        Cancel
+                     </p>
                   </div>
                </div>
             </>
