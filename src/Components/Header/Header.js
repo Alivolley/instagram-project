@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./Header.css";
+import axiosInstance from "../../Utils/axios";
 
 export default function Header() {
    const [collapseShow, setCollapseShow] = useState(false);
@@ -11,17 +12,30 @@ export default function Header() {
    let location = useLocation();
 
    useEffect(() => {
-      fetch(`https://javadinstagram.pythonanywhere.com/profile/`, {
-         headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${Cookies.get("access")}`,
-         },
-         method: "GET",
-      })
-         .then((res) => res.status === 200 && res.json())
-         .then((data) => setProfileData(data))
+      axiosInstance
+         .get("/profile/", {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            setProfileData(res.data);
+         })
          .catch((err) => console.log(err));
    }, []);
+
+   useEffect(() => {
+      axiosInstance
+         .get("/profile/", {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            setProfileData(res.data);
+         })
+         .catch((err) => console.log(err));
+   }, [location.pathname === "/"]);
 
    const toggleMenu = () => {
       setLastActiveShow(false);
@@ -180,14 +194,14 @@ export default function Header() {
                </svg>
             </div>
 
-            {profileData && (
-               <img
-                  src={profileData.profile.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "pics/no-bg.png"}
-                  alt=""
-                  className="header-right-menu__picture"
-                  onClick={toggleMenu}
-               />
-            )}
+            <img
+               src={
+                  profileData && profileData.profile.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.jpg"
+               }
+               alt=""
+               className="header-right-menu__picture"
+               onClick={toggleMenu}
+            />
 
             <ul className={`${collapseShow ? "header-collapse__menu header-collapse__menu--show" : "header-collapse__menu"}`}>
                <Link to="/profile/posts" className="header-collapse__item">

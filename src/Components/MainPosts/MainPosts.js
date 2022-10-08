@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import PostCard from "../PostCard/PostCard";
 import Cookies from "js-cookie";
 import "./MainPosts.css";
+import axiosInstance from "../../Utils/axios";
 
 export default function MainPosts() {
    const [profileData, setProfileData] = useState();
 
    useEffect(() => {
-      fetch(`https://javadinstagram.pythonanywhere.com/profile/`, {
-         headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${Cookies.get("access")}`,
-         },
-         method: "GET",
-      })
-         .then((res) => res.status === 200 && res.json())
-         .then((data) => setProfileData(data))
+      axiosInstance
+         .get("/profile/", {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            setProfileData(res.data);
+         })
          .catch((err) => console.log(err));
    }, []);
 

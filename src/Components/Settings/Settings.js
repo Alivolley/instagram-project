@@ -5,6 +5,7 @@ import { Spinner } from "react-bootstrap";
 import "./Settings.css";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AlertModal from "../AlertModal/AlertModal";
+import axiosInstance from "../../Utils/axios";
 
 export default function Settings() {
    const [profileData, setProfileData] = useState();
@@ -26,28 +27,22 @@ export default function Settings() {
    let navigation = useNavigate();
 
    useEffect(() => {
-      if (Cookies.get("access")) {
-         fetch(`https://javadinstagram.pythonanywhere.com/accounts/information/`, {
+      axiosInstance
+         .get("accounts/edit/", {
             headers: {
-               "Content-Type": "application/json",
-               authorization: `Bearer ${Cookies.get("access")}`,
+               Authorization: `Bearer ${Cookies.get("access")}`,
             },
-            method: "GET",
          })
-            .then((res) => res.status === 200 && res.json())
-            .then((data) => {
-               setNameValue(data.name);
-               setUsernameValue(data.username);
-               setBioValue(data.bio);
-               setEmailValue(data.email);
-               setPhoneValue(data.phone_number);
-               setGenderValue(data.gender);
-               setProfileData(data);
-            })
-            .catch((err) => console.log(err));
-      } else {
-         navigation("/login");
-      }
+         .then((res) => {
+            setNameValue(res.data.name);
+            setUsernameValue(res.data.username);
+            setBioValue(res.data.bio);
+            setEmailValue(res.data.email);
+            setPhoneValue(res.data.phone_number);
+            setGenderValue(res.data.gender);
+            setProfileData(res.data);
+         })
+         .catch((err) => console.log(err));
    }, []);
 
    const changevisibilty = () => {
@@ -71,18 +66,13 @@ export default function Settings() {
          website: "",
       };
 
-      console.log(JSON.stringify(changedInfo));
-
-      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/`, {
-         headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${Cookies.get("access")}`,
-         },
-         method: "PUT",
-         body: JSON.stringify(changedInfo),
-      })
+      axiosInstance
+         .put("accounts/edit/", JSON.stringify(changedInfo), {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
          .then((res) => {
-            console.log(res);
             if (res.status === 200) {
                setModalText("You're changes applied successfully");
                navigation(0);
@@ -104,8 +94,6 @@ export default function Settings() {
             password1: newPass,
             password2: confirmPass,
          };
-
-         console.log(JSON.stringify(changedPassInfo));
 
          setAlertModalShow(true);
 
@@ -133,23 +121,24 @@ export default function Settings() {
    const uploadeProfileImg = (e) => {
       let photo = e.target.files[0];
       let formData = new FormData();
-      formData.append("photo", photo);
+      formData.append("file", photo);
       // console.log(formData);
+      // console.log(e.target.files[0]);
 
       setAlertModalShow(true);
 
-      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/profile-photo/`, {
-         headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${Cookies.get("access")}`,
-         },
-         method: "PUT",
-         body: formData,
-      })
+      axiosInstance
+         .put("accounts/edit/", formData, {
+            headers: {
+               "Content-Type": "multipart/form-data",
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
          .then((res) => {
             console.log(res);
             if (res.status === 200) {
                setModalText("You're changes applied successfully");
+               // navigation(0);
             } else {
                setModalText("!!! Failed ...");
             }
@@ -157,6 +146,25 @@ export default function Settings() {
          .catch((err) => {
             setModalText("!!! Failed ...");
          });
+
+      // fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/profile-photo/`, {
+      //    headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       authorization: `Bearer ${Cookies.get("access")}`,
+      //    },
+      //    method: "PUT",
+      //    body: formData,
+      // })
+      //    .then((res) => {
+      //       if (res.status === 200) {
+      //          setModalText("You're changes applied successfully");
+      //       } else {
+      //          setModalText("!!! Failed ...");
+      //       }
+      //    })
+      //    .catch((err) => {
+      //       setModalText("!!! Failed ...");
+      //    });
    };
 
    const closeAlertModal = () => {
@@ -182,7 +190,7 @@ export default function Settings() {
                   <div className="col-12 col-lg-9 col-xxl-7 setting">
                      <div className="setting-header">
                         <img
-                           src={profileData.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile_photo}` : "pics/no-bg.png"}
+                           src={profileData.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile_photo}` : "pics/no-bg.jpg"}
                            alt=""
                            className="setting-header__img"
                         />
@@ -330,7 +338,7 @@ export default function Settings() {
                      <hr className="img-modal__line" />
 
                      <p className="img-modal__upload-photo">
-                        Upload Photo <input type="file" className="img-modal__upload-photo--input" onChange={uploadeProfileImg} />
+                        Upload Photo <input type="file" name="file" className="img-modal__upload-photo--input" onChange={uploadeProfileImg} />
                      </p>
                      <hr className="img-modal__line" />
                      <p className="img-modal__remove-photo">Remove Current Photo</p>

@@ -8,38 +8,48 @@ import Home from "./Components/Home/Home";
 import SignUp from "./Components/SignUp/SignUp";
 import Login from "./Components/Login/Login";
 import Settings from "./Components/Settings/Settings";
+import PrivateRoute from "./Components/PrivateRoute";
 
 export let Routes = [
-   { path: "/", element: <Home /> },
-   { path: "/explore", element: <Explore /> },
-   { path: "/signup", element: <SignUp /> },
    { path: "/login", element: <Login /> },
-   { path: "/settings", element: <Settings /> },
+   { path: "/signup", element: <SignUp /> },
+
    {
-      path: "/profile/*",
-      element: <Profile />,
+      path: "/*",
+      element: <PrivateRoute />,
       children: [
+         { path: "", element: <Home /> },
+         { path: "explore", element: <Explore /> },
+         { path: "settings", element: <Settings /> },
+
          {
-            path: "posts",
-            element: <MainPosts />,
+            path: "profile/*",
+            element: <Profile />,
+            children: [
+               {
+                  path: "posts",
+                  element: <MainPosts />,
+               },
+               {
+                  path: "saved",
+                  element: <SavedPosts />,
+               },
+            ],
          },
+
          {
-            path: "saved",
-            element: <SavedPosts />,
-         },
-      ],
-   },
-   {
-      path: "/direct/*",
-      element: <Direct />,
-      children: [
-         {
-            path: "inbox",
-            element: <DirectEmptySide />,
-         },
-         {
-            path: ":id",
-            element: <p>choosen</p>,
+            path: "direct/*",
+            element: <Direct />,
+            children: [
+               {
+                  path: "inbox",
+                  element: <DirectEmptySide />,
+               },
+               {
+                  path: ":id",
+                  element: <p>choosen</p>,
+               },
+            ],
          },
       ],
    },

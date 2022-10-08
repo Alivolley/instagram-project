@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./Profile.css";
 import { Spinner } from "react-bootstrap";
 import AlertModal from "../AlertModal/AlertModal";
+import axiosInstance from "../../Utils/axios";
 
 export default function Profile() {
    const [modalImgShow, setModalImgShow] = useState(false);
@@ -11,23 +12,17 @@ export default function Profile() {
    const [alertModalShow, setAlertModalShow] = useState(false);
    const [modalText, setModalText] = useState();
 
-   let navigation = useNavigate();
-
    useEffect(() => {
-      if (Cookies.get("access")) {
-         fetch(`https://javadinstagram.pythonanywhere.com/profile/`, {
+      axiosInstance
+         .get("/profile/", {
             headers: {
-               "Content-Type": "application/json",
-               authorization: `Bearer ${Cookies.get("access")}`,
+               Authorization: `Bearer ${Cookies.get("access")}`,
             },
-            method: "GET",
          })
-            .then((res) => res.status === 200 && res.json())
-            .then((data) => setProfileData(data))
-            .catch((err) => console.log(err));
-      } else {
-         navigation("/login");
-      }
+         .then((res) => {
+            setProfileData(res.data);
+         })
+         .catch((err) => console.log(err));
    }, []);
 
    const uploadeProfileImg = (e) => {
@@ -46,7 +41,6 @@ export default function Profile() {
          body: formData,
       })
          .then((res) => {
-            console.log(res);
             if (res.status === 200) {
                setModalText("You're changes applied successfully");
             } else {
@@ -71,14 +65,19 @@ export default function Profile() {
       setModalText("");
    };
 
-   console.log(profileData && profileData.profile.bio);
+   // console.log(profileData && profileData.profile.bio);
 
    return (
       <>
          {profileData ? (
             <>
                <div className="profile-info">
-                  <img className="profile-img" src={`https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}`} alt="" onClick={toggleMenu} />
+                  <img
+                     className="profile-img"
+                     src={profileData.profile.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.jpg"}
+                     alt=""
+                     onClick={toggleMenu}
+                  />
                   <div className="row profile-account__details ">
                      <div className="col-12 profile-account__header ">
                         <p className="profile-account__name ">{profileData.profile.name}</p>
@@ -121,9 +120,9 @@ export default function Profile() {
 
                      <div className="col-12 profile-user__details ">
                         <span className="profile-user__name">{profileData.profile.username.toUpperCase()}</span>
-                        <span className="profile-user__bio">Web developer</span>
-                        <span className="profile-user__bio">Volleyball player</span>
-                        <span className="profile-user__bio">Man on a mission</span>
+                        <span className="profile-user__bio">{profileData.profile.bio}</span>
+                        {/* <span className="profile-user__bio">Volleyball player</span> */}
+                        {/* <span className="profile-user__bio">Man on a mission</span> */}
                      </div>
                   </div>
                </div>

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AlertModal from "../AlertModal/AlertModal";
 import Cookies from "js-cookie";
 import "./Login.css";
+import axiosInstance from "../../Utils/axios";
 
 export default function Login() {
    const [emailValue, setEmailValue] = useState("");
@@ -31,28 +32,18 @@ export default function Login() {
       if (validateEmail && passwordValue) {
          setAlertModalShow(true);
          let usernameInfo = { email: emailValue, password: passwordValue };
-         fetch("https://javadinstagram.pythonanywhere.com/login/", {
-            headers: {
-               "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify(usernameInfo),
-         })
+
+         axiosInstance
+            .post("/login/", JSON.stringify(usernameInfo))
             .then((res) => {
                if (res.status === 200) {
-                  return res.json();
+                  Cookies.set("refresh", res.data.refresh, { expires: 1 });
+                  Cookies.set("access", res.data.access, { expires: 1 });
+                  setModalText("You logged in successfully :)");
+                  navigation("/");
                } else {
                   setModalText("!!! Password or Email is wrong .");
                }
-            })
-            .then((data) => {
-               Cookies.set("refresh", data.refresh, { expires: 1 });
-               Cookies.set("access", data.access, { expires: 1 });
-               setModalText("You logged in successfully :)");
-
-               setTimeout(() => {
-                  navigation("/");
-               }, 1500);
             })
             .catch((err) => setModalText("!!! Password or Email is wrong ."));
       }

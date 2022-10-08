@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import "./SignUp.css";
 import AlertModal from "../AlertModal/AlertModal";
+import axiosInstance from "../../Utils/axios";
 
 export default function SignUp() {
    const [usernameValue, setUsernameValue] = useState("");
@@ -39,16 +40,11 @@ export default function SignUp() {
       !validatePhone ? setPhoneNumberValueCheck(true) : setPhoneNumberValueCheck(false);
       passwordValue !== confirmValue ? setNotValidPass(true) : setNotValidPass(false);
       if (validateEmail && validatePhone && passwordValue && confirmValue && passwordValue === confirmValue && usernameValue) {
-         //  setModalText(<Loading change={true} />);
          setAlertModalShow(true);
          let usernameInfo = { username: usernameValue, email: emailValue, password: passwordValue, password2: passwordValue, phone_number: phoneNumber };
-         fetch("https://javadinstagram.pythonanywhere.com/register/", {
-            headers: {
-               "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify(usernameInfo),
-         })
+
+         axiosInstance
+            .post("/register/", JSON.stringify(usernameInfo))
             .then((res) => {
                console.log(res);
                if (res.statusText === "Created") {
@@ -63,7 +59,6 @@ export default function SignUp() {
                }
             })
             .catch((err) => {
-               console.log(err);
                if (err.statusText === "Conflict") {
                   setModalText("!!! A user exist with this information");
                } else {
