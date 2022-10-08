@@ -20,14 +20,19 @@ export default function SavedPosts() {
          .catch((err) => console.log(err));
    }, []);
 
-   // console.log(profileData);
+   console.log(profileData);
 
    return (
       <>
          {profileData &&
             profileData.saved.map((save) => (
                <div className=" col-4 " key={save.id}>
-                  <PostCard picture={`https://javadinstagram.pythonanywhere.com${save.files[0].page}`} comments={save.comments_count} likes={save.likes_count} />
+                  <PostCard
+                     picture={`https://javadinstagram.pythonanywhere.com${save.files[0].page}`}
+                     comments={save.comments_count}
+                     likes={save.likes_count}
+                     type={save.files[0].extension}
+                  />
                </div>
             ))}
       </>

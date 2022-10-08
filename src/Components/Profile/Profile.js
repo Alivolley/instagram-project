@@ -70,7 +70,7 @@ export default function Profile() {
    return (
       <>
          {profileData ? (
-            <>
+            <div className="container">
                <div className="profile-info">
                   <img
                      className="profile-img"
@@ -216,7 +216,7 @@ export default function Profile() {
                      </p>
                   </div>
                </div>
-            </>
+            </div>
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />
          )}
