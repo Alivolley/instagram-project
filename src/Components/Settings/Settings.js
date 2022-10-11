@@ -97,17 +97,16 @@ export default function Settings() {
 
          setAlertModalShow(true);
 
-         fetch(`https://javadinstagram.pythonanywhere.com/accounts/password/change/`, {
-            headers: {
-               "Content-Type": "application/json",
-               authorization: `Bearer ${Cookies.get("access")}`,
-            },
-            method: "POST",
-            body: JSON.stringify(changedPassInfo),
-         })
+         axiosInstance
+            .post("accounts/password/change/", JSON.stringify(changedPassInfo), {
+               headers: {
+                  Authorization: `Bearer ${Cookies.get("access")}`,
+               },
+            })
             .then((res) => {
                if (res.status === 200) {
                   setModalText("You're changes applied successfully");
+                  navigation(0);
                } else {
                   setModalText("!!! Failed ...");
                }
@@ -121,24 +120,21 @@ export default function Settings() {
    const uploadeProfileImg = (e) => {
       let photo = e.target.files[0];
       let formData = new FormData();
-      formData.append("file", photo);
-      // console.log(formData);
-      // console.log(e.target.files[0]);
+      formData.append("profile_photo", photo);
 
       setAlertModalShow(true);
 
       axiosInstance
-         .put("accounts/edit/", formData, {
+         .put(`accounts/edit-profile-photo/`, formData, {
             headers: {
                "Content-Type": "multipart/form-data",
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
          .then((res) => {
-            console.log(res);
             if (res.status === 200) {
                setModalText("You're changes applied successfully");
-               // navigation(0);
+               navigation(0);
             } else {
                setModalText("!!! Failed ...");
             }
@@ -146,25 +142,28 @@ export default function Settings() {
          .catch((err) => {
             setModalText("!!! Failed ...");
          });
+   };
 
-      // fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/profile-photo/`, {
-      //    headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       authorization: `Bearer ${Cookies.get("access")}`,
-      //    },
-      //    method: "PUT",
-      //    body: formData,
-      // })
-      //    .then((res) => {
-      //       if (res.status === 200) {
-      //          setModalText("You're changes applied successfully");
-      //       } else {
-      //          setModalText("!!! Failed ...");
-      //       }
-      //    })
-      //    .catch((err) => {
-      //       setModalText("!!! Failed ...");
-      //    });
+   const deleteProfileImg = () => {
+      setAlertModalShow(true);
+
+      axiosInstance
+         .delete(`accounts/edit-profile-photo/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            if (res.status === 200) {
+               setModalText("You're changes applied successfully");
+               navigation(0);
+            } else {
+               setModalText("!!! Failed ...");
+            }
+         })
+         .catch((err) => {
+            setModalText("!!! Failed ...");
+         });
    };
 
    const closeAlertModal = () => {
@@ -341,7 +340,9 @@ export default function Settings() {
                         Upload Photo <input type="file" name="file" className="img-modal__upload-photo--input" onChange={uploadeProfileImg} />
                      </p>
                      <hr className="img-modal__line" />
-                     <p className="img-modal__remove-photo">Remove Current Photo</p>
+                     <p className="img-modal__remove-photo" onClick={deleteProfileImg}>
+                        Remove Current Photo
+                     </p>
                      <hr className="img-modal__line" />
                      <p className="img-modal__cancel" onClick={toggleMenu}>
                         Cancel

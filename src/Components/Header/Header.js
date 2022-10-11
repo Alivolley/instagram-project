@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./Header.css";
 import axiosInstance from "../../Utils/axios";
@@ -10,10 +10,11 @@ export default function Header() {
    const [profileData, setProfileData] = useState();
 
    let location = useLocation();
+   let navigation = useNavigate();
 
    useEffect(() => {
       axiosInstance
-         .get("/profile/", {
+         .get("accounts/edit/", {
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -52,6 +53,11 @@ export default function Header() {
       setLastActiveShow(false);
    }, [location.pathname]);
 
+   const logOut = () => {
+      Cookies.remove("access");
+      navigation(0);
+   };
+
    window.addEventListener("click", (e) => {
       if (
          e.target.id !== "header-svg" &&
@@ -72,6 +78,8 @@ export default function Header() {
          setLastActiveShow(false);
       }
    });
+
+   // console.log(profileData);
 
    return (
       <header className="header container">
@@ -195,9 +203,7 @@ export default function Header() {
             </div>
 
             <img
-               src={
-                  profileData && profileData.profile.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.jpg"
-               }
+               src={profileData && profileData.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile_photo}` : "/pics/no-bg.jpg"}
                alt=""
                className="header-right-menu__picture"
                onClick={toggleMenu}
@@ -246,7 +252,9 @@ export default function Header() {
                   Settings
                </Link>
                <li className="header-collapse__line"></li>
-               <li className="header-collapse__item">Log Out</li>
+               <li className="header-collapse__item" onClick={logOut}>
+                  Log Out
+               </li>
             </ul>
 
             <ul className={`${lastActiveShow ? "header-lastActivity header-lastActivity--show" : "header-lastActivity"}`}>

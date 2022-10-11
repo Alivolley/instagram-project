@@ -8,10 +8,6 @@ const axiosInstance = axios.create({
    },
 });
 
-// axios.defaults.headers.post["Content-Type"] = "application/json";
-
-// axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${Cookies.get("access")}`;
-
 // axiosInstance.interceptors.response.use(
 //    (response) => response,
 //    (error) => Promise.reject((error.response && error.response.data) || "Something went wrong")

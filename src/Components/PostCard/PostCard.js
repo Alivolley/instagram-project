@@ -6,7 +6,7 @@ import { FaComment } from "react-icons/fa";
 export default function PostCard({ picture, likes, comments, type }) {
    return (
       <div className="postcard">
-         {type === "image" ? <img className="postcard-img" src={picture} alt="" /> : <video src={picture} className="postcard-video"></video>}
+         {type === "image" ? <img className="postcard-img" src={picture} alt="" /> : <video src={picture} className="postcard-img"></video>}
          <div className="postcard-img-cover">
             <p className="postcard-likes">
                <AiFillHeart className="postcard-icon" />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./Profile.css";
 import { Spinner } from "react-bootstrap";
@@ -11,6 +11,8 @@ export default function Profile() {
    const [profileData, setProfileData] = useState();
    const [alertModalShow, setAlertModalShow] = useState(false);
    const [modalText, setModalText] = useState();
+
+   let navigation = useNavigate();
 
    useEffect(() => {
       axiosInstance
@@ -28,21 +30,43 @@ export default function Profile() {
    const uploadeProfileImg = (e) => {
       let photo = e.target.files[0];
       let formData = new FormData();
-      formData.append("photo", photo);
+      formData.append("profile_photo", photo);
 
       setAlertModalShow(true);
 
-      fetch(`https://javadinstagram.pythonanywhere.com/accounts/edit/profile-photo/`, {
-         headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${Cookies.get("access")}`,
-         },
-         method: "POST",
-         body: formData,
-      })
+      axiosInstance
+         .put(`accounts/edit-profile-photo/`, formData, {
+            headers: {
+               "Content-Type": "multipart/form-data",
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
          .then((res) => {
             if (res.status === 200) {
                setModalText("You're changes applied successfully");
+               navigation(0);
+            } else {
+               setModalText("!!! Failed ...");
+            }
+         })
+         .catch((err) => {
+            setModalText("!!! Failed ...");
+         });
+   };
+
+   const deleteProfileImg = () => {
+      setAlertModalShow(true);
+
+      axiosInstance
+         .delete(`accounts/edit-profile-photo/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            if (res.status === 200) {
+               setModalText("You're changes applied successfully");
+               navigation(0);
             } else {
                setModalText("!!! Failed ...");
             }
@@ -209,7 +233,9 @@ export default function Profile() {
                         Upload Photo <input type="file" className="img-modal__upload-photo--input" onChange={uploadeProfileImg} />
                      </p>
                      <hr className="img-modal__line" />
-                     <p className="img-modal__remove-photo">Remove Current Photo</p>
+                     <p className="img-modal__remove-photo" onClick={deleteProfileImg}>
+                        Remove Current Photo
+                     </p>
                      <hr className="img-modal__line" />
                      <p className="img-modal__cancel" onClick={toggleMenu}>
                         Cancel
