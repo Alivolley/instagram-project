@@ -61,6 +61,10 @@
    .App {
       padding: 0 31.5rem !important;
    }
+
+   .chosenPost-right-side {
+      height: auto;
+   }
 }
 
 /* xxl */

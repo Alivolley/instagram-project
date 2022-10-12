@@ -1,7 +1,6 @@
 import React from "react";
 import "./AlertModal.css";
 import Modal from "react-bootstrap/Modal";
-import { Button } from "bootstrap";
 
 export default function AlertModal({ show, handleClose, text }) {
    return (

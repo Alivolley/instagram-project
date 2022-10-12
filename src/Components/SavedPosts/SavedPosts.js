@@ -3,9 +3,21 @@ import PostCard from "../PostCard/PostCard";
 import Cookies from "js-cookie";
 import "./SavedPosts.css";
 import axiosInstance from "../../Utils/axios";
+import ChosenPost from "../ChosenPost/ChosenPost";
 
 export default function SavedPosts() {
    const [profileData, setProfileData] = useState();
+   const [showChosenPost, setShowChosenPost] = useState(false);
+   const [ChosenPostId, setChosenPostId] = useState();
+
+   const openPost = (id) => {
+      setShowChosenPost(true);
+      setChosenPostId(id);
+   };
+
+   const closePost = () => {
+      setShowChosenPost(false);
+   };
 
    useEffect(() => {
       axiosInstance
@@ -20,13 +32,13 @@ export default function SavedPosts() {
          .catch((err) => console.log(err));
    }, []);
 
-   console.log(profileData);
+   // console.log(profileData);
 
    return (
       <>
          {profileData &&
             profileData.saved.map((save) => (
-               <div className=" col-4 " key={save.id}>
+               <div className=" col-4 " key={save.id} onClick={() => openPost(save.id)}>
                   <PostCard
                      picture={`https://javadinstagram.pythonanywhere.com${save.files[0].page}`}
                      comments={save.comments_count}
@@ -35,6 +47,7 @@ export default function SavedPosts() {
                   />
                </div>
             ))}
+         {showChosenPost && <ChosenPost show={true} handleClose={closePost} id={ChosenPostId} />}
       </>
    );
 }

@@ -1,0 +1,233 @@
+.modal-backdrop.show {
+   opacity: 0.8 !important;
+}
+
+.chosenPost-close {
+   position: absolute;
+   top: 0;
+   right: -10rem;
+   z-index: 10;
+   cursor: pointer;
+}
+
+.chosenPost-row {
+}
+
+.chosenPost-left-side {
+   height: 100%;
+   margin-top: auto !important;
+   margin-bottom: auto !important;
+}
+
+.chosenPost-img-slide {
+   width: 100%;
+}
+
+.chosenPost-video-slide {
+   width: 100%;
+   height: 100vh;
+}
+
+.chosenPost-volume {
+   position: absolute;
+   bottom: 3rem;
+   right: 5rem;
+   font-size: 2.2rem;
+   cursor: pointer;
+   color: gray;
+}
+
+.chosenPost-video__cover {
+   position: absolute;
+   background-color: rgba(0, 0, 0, 0.3);
+   top: 0;
+   right: 0;
+   left: 0;
+   bottom: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.chosenPost-video__cover--btn {
+   font-size: 13rem;
+   color: rgba(255, 255, 255, 0.8);
+}
+
+.chosenPost-right-side {
+   height: 50rem;
+   padding: 0 1.5rem !important;
+}
+
+.chosenPost-wrapper {
+   position: relative;
+   height: 100%;
+}
+
+.chosenPost-header {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 5rem;
+   display: flex;
+   align-items: center;
+   background-color: white;
+   border-bottom: 0.1rem solid #c8c9ca;
+}
+
+.chosenPost-header__img {
+   width: 3.6rem;
+   height: 3.6rem;
+   border-radius: 50%;
+   margin-right: 1.7rem;
+}
+
+.chosenPost-header__name {
+   text-decoration: none;
+   color: black;
+   font-weight: 600;
+}
+
+.chosenPost-header__name:hover {
+   color: black;
+}
+
+.chosenPost-header__follow-btn {
+   text-decoration: none;
+   color: #5295f6;
+   font-weight: 600;
+   margin-left: auto;
+   margin-right: 3rem;
+}
+
+.chosenPost-header__follow-btn:hover {
+   color: #5295f6;
+}
+
+.chosenPost-comments {
+   position: absolute;
+   top: 7rem;
+   bottom: 15rem;
+   left: 0;
+   right: 0;
+   overflow: auto;
+}
+
+.chosenPost-caption {
+   margin-bottom: 3.5rem;
+}
+
+.chosenPost-caption__wrapper {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+}
+
+.chosenPost-caption__img {
+   width: 4rem;
+   height: 4rem;
+   border-radius: 50%;
+}
+
+.chosenPost-caption__username {
+   text-decoration: none;
+   color: black;
+   font-weight: 600;
+   font-size: 1.5rem;
+}
+
+.chosenPost-caption__username:hover {
+   color: black;
+}
+
+.chosenPost-comment {
+   margin-top: 1.5rem;
+}
+
+.chosenPost-comment__wrapper {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+}
+
+.chosenPost-comment__img {
+   width: 4rem;
+   height: 4rem;
+   border-radius: 50%;
+}
+
+.chosenPost-comment__username {
+   text-decoration: none;
+   color: black;
+   font-weight: 600;
+   font-size: 1.5rem;
+}
+
+.chosenPost-comment__username:hover {
+   color: black;
+}
+
+.chosenPost-comment__text {
+   font-size: 1.4rem;
+}
+
+.chosenPost-footer {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   height: 14.5rem;
+   background-color: white;
+   border-top: 0.1rem solid #c8c9ca;
+   padding-top: 2rem;
+}
+
+.chosenPost-footer__options {
+   padding: 0 1rem;
+   display: flex;
+}
+
+.chosenPost-footer__like {
+}
+
+.chosenPost-footer__comment {
+   margin-left: 1.5rem;
+}
+
+.chosenPost-footer__share {
+   margin-left: 1.5rem;
+}
+
+.chosenPost-footer__save {
+   margin-left: auto;
+}
+
+.chosenPost-footer__likes-count {
+   padding: 1rem;
+   font-size: 1.4rem;
+   font-weight: 600;
+}
+
+.chosenPost-footer__form {
+   display: flex;
+}
+
+.chosenPost-footer__input {
+   width: 100%;
+   border: none;
+   outline: none;
+}
+
+.chosenPost-footer__input::placeholder {
+   font-size: 1.4rem;
+}
+
+.chosenPost-footer__btn {
+   border: none;
+   outline: none;
+   background-color: transparent;
+   color: #5295f6;
+   font-weight: 600;
+   font-size: 1.5rem;
+}
