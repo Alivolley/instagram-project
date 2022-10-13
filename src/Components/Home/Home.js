@@ -14,7 +14,26 @@ export default function Home() {
          <div className="row">
             <div className="col-12 col-xxl-7 home-left-side">
                <div className="home-stories">
-                  <Swiper slidesPerView={6} slidesPerGroup={4} spaceBetween={20} navigation={true} modules={[Navigation]} className="mySwiper">
+                  <Swiper
+                     breakpoints={{
+                        250: {
+                           slidesPerView: 2,
+                           slidesPerGroup: 1,
+                        },
+                        400: {
+                           slidesPerView: 4,
+                           slidesPerGroup: 2,
+                        },
+                        500: {
+                           slidesPerView: 6,
+                           slidesPerGroup: 4,
+                        },
+                     }}
+                     spaceBetween={20}
+                     navigation={true}
+                     modules={[Navigation]}
+                     className="mySwiper"
+                  >
                      <SwiperSlide>
                         <Link to="/" className="contact-story">
                            <div className="contact-story__img-wrapper">
