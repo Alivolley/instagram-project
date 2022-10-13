@@ -51,6 +51,18 @@ export default function ChosenPost({ show, handleClose, id }) {
          setVolume(true);
       }
    };
+
+   window.addEventListener("keyup", (e) => {
+      if (e.code === "Space") {
+         if (!playPause) {
+            videoRef.current.play();
+            setPlayPause(true);
+         } else {
+            videoRef.current.pause();
+            setPlayPause(false);
+         }
+      }
+   });
    // console.log(chosenPostData);
 
    return (
