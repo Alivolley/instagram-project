@@ -1,12 +1,11 @@
 import React from "react";
 import "./HomePostCard.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Lazy } from "swiper";
+import { Navigation, Pagination } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/lazy";
 
 export default function HomePostCard() {
    return (
@@ -31,43 +30,17 @@ export default function HomePostCard() {
          </div>
 
          <div className="homePostCard-images">
-            <Swiper lazy={true} navigation={true} modules={[Navigation, Pagination, Lazy]} className="mySwiper" pagination={true}>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/post-1.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/post-2.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/post-3.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/post-4.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/post-5.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/saved-1.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/saved-2.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/saved-3.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
-               <SwiperSlide>
-                  <img className="homePostCard-img-slide swiper-lazy" src="/pics/saved-4.jpg" alt="" />
-                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-               </SwiperSlide>
+            <Swiper navigation={true} modules={[Navigation, Pagination]} className="mySwiper" pagination={true}>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/post-1.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/post-2.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/post-3.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/post-4.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/post-5.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/saved-1.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/saved-2.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/saved-3.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/saved-4.jpg" alt="" />}</SwiperSlide>
+               <SwiperSlide>{({ isActive }) => isActive && <img className="homePostCard-img-slide" src="/pics/saved-5.jpg" alt="" />}</SwiperSlide>
             </Swiper>
          </div>
 

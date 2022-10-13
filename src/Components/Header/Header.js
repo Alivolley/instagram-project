@@ -27,7 +27,7 @@ export default function Header() {
 
    useEffect(() => {
       axiosInstance
-         .get("/profile/", {
+         .get("accounts/edit/", {
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
