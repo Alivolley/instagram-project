@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ChosenPost.css";
 import Modal from "react-bootstrap/Modal";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../Utils/axios";
 import Cookies from "js-cookie";
 import { Spinner } from "react-bootstrap";
@@ -12,11 +13,10 @@ import { FaPlay } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Link } from "react-router-dom";
 
 export default function ChosenPost({ show, handleClose, id }) {
    const [chosenPostData, setChosenPostData] = useState();
-   const [playPause, setPlayPause] = useState(false);
+   const [playPause, setPlayPause] = useState(true);
    const [volume, setVolume] = useState(true);
 
    let videoRef = useRef();
@@ -75,29 +75,33 @@ export default function ChosenPost({ show, handleClose, id }) {
                   <Swiper navigation={true} modules={[Navigation, Pagination]} className="mySwiper" pagination={true}>
                      {chosenPostData.files.map((file) => (
                         <SwiperSlide>
-                           {file.extension === "image" ? (
-                              <img className="chosenPost-img-slide" src={`https://javadinstagram.pythonanywhere.com${file.page}`} alt="" />
-                           ) : (
-                              <>
-                                 {!playPause && (
-                                    <div className="chosenPost-video__cover">
-                                       <FaPlay className="chosenPost-video__cover--btn" />
-                                    </div>
-                                 )}
-                                 <video
-                                    loop
-                                    ref={videoRef}
-                                    onClick={playPauseHandler}
-                                    className="chosenPost-video-slide"
-                                    src={`https://javadinstagram.pythonanywhere.com${file.page}`}
-                                 ></video>
-                                 {volume ? (
-                                    <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />
-                                 ) : (
-                                    <BiVolumeMute className="chosenPost-volume" onClick={changeVolume} />
-                                 )}
-                              </>
-                           )}
+                           {({ isActive }) =>
+                              isActive &&
+                              (file.extension === "image" ? (
+                                 <img className="chosenPost-img-slide" src={`https://javadinstagram.pythonanywhere.com${file.page}`} alt="" />
+                              ) : (
+                                 <>
+                                    {!playPause && (
+                                       <div className="chosenPost-video__cover">
+                                          <FaPlay className="chosenPost-video__cover--btn" />
+                                       </div>
+                                    )}
+                                    <video
+                                       loop
+                                       autoPlay
+                                       ref={videoRef}
+                                       onClick={playPauseHandler}
+                                       className="chosenPost-video-slide"
+                                       src={`https://javadinstagram.pythonanywhere.com${file.page}`}
+                                    ></video>
+                                    {volume ? (
+                                       <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />
+                                    ) : (
+                                       <BiVolumeMute className="chosenPost-volume" onClick={changeVolume} />
+                                    )}
+                                 </>
+                              ))
+                           }
                         </SwiperSlide>
                      ))}
                   </Swiper>

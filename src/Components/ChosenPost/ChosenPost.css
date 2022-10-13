@@ -14,9 +14,6 @@
 }
 
 .chosenPost-left-side {
-   height: 100%;
-   margin-top: auto !important;
-   margin-bottom: auto !important;
 }
 
 .chosenPost-img-slide {
@@ -32,9 +29,12 @@
    position: absolute;
    bottom: 3rem;
    right: 5rem;
-   font-size: 2.2rem;
+   font-size: 2.6rem;
    cursor: pointer;
-   color: gray;
+   color: white;
+   background-color: black;
+   padding: 0.4rem;
+   border-radius: 50%;
 }
 
 .chosenPost-video__cover {
@@ -95,14 +95,14 @@
 
 .chosenPost-header__follow-btn {
    text-decoration: none;
-   color: #5295f6;
+   color: #0095f7;
    font-weight: 600;
    margin-left: auto;
    margin-right: 3rem;
 }
 
 .chosenPost-header__follow-btn:hover {
-   color: #5295f6;
+   color: #0095f7;
 }
 
 .chosenPost-comments {
@@ -227,7 +227,7 @@
    border: none;
    outline: none;
    background-color: transparent;
-   color: #5295f6;
+   color: #0095f7;
    font-weight: 600;
    font-size: 1.5rem;
 }
