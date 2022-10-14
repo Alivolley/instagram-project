@@ -106,7 +106,7 @@ export default function Profile() {
                      <div className="col-12 profile-account__header ">
                         <p className="profile-account__name ">{profileData.profile.name}</p>
                         <button className="profile-edit__btn ">Edit profile</button>
-                        <svg
+                        {/* <svg
                            aria-label="Options"
                            className="profile-setting__btn _ab6-"
                            color="#262626"
@@ -124,7 +124,7 @@ export default function Profile() {
                               strokeLinejoin="round"
                               strokeWidth="2"
                            ></path>
-                        </svg>
+                        </svg> */}
                      </div>
 
                      <div className="col-12 profile-account__status">
@@ -145,8 +145,6 @@ export default function Profile() {
                      <div className="col-12 profile-user__details ">
                         <span className="profile-user__name">{profileData.profile.username.toUpperCase()}</span>
                         <span className="profile-user__bio">{profileData.profile.bio}</span>
-                        {/* <span className="profile-user__bio">Volleyball player</span> */}
-                        {/* <span className="profile-user__bio">Man on a mission</span> */}
                      </div>
                   </div>
                </div>
