@@ -18,6 +18,8 @@ export default function ChosenPost({ show, handleClose, id }) {
    const [chosenPostData, setChosenPostData] = useState();
    const [playPause, setPlayPause] = useState(true);
    const [volume, setVolume] = useState(true);
+   const [isLiked, setIsLiked] = useState();
+   const [isSaved, setIsSaved] = useState();
 
    let videoRef = useRef();
 
@@ -28,7 +30,13 @@ export default function ChosenPost({ show, handleClose, id }) {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => res.status === 200 && setChosenPostData(res.data))
+         .then((res) => {
+            if (res.status === 200) {
+               setIsLiked(res.data.has_like);
+               setIsSaved(res.data.has_save);
+               setChosenPostData(res.data);
+            }
+         })
          .catch((err) => console.log(err));
    }, []);
 
@@ -71,7 +79,7 @@ export default function ChosenPost({ show, handleClose, id }) {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => console.log(res))
+         .then((res) => res.status === 200 && console.log("object"))
          .catch((err) => console.log(err));
    };
 
@@ -163,7 +171,7 @@ export default function ChosenPost({ show, handleClose, id }) {
                      </div>
                      <div className="chosenPost-footer">
                         <div className="chosenPost-footer__options">
-                           {chosenPostData.has_like ? (
+                           {isLiked ? (
                               <svg
                                  onClick={changeLikeStatus}
                                  aria-label="Unlike"
@@ -223,7 +231,8 @@ export default function ChosenPost({ show, handleClose, id }) {
                                  strokeWidth="2"
                               ></polygon>
                            </svg>
-                           {chosenPostData.has_save ? (
+
+                           {isSaved ? (
                               <svg
                                  aria-label="Remove"
                                  className="chosenPost-footer__save _ab6-"

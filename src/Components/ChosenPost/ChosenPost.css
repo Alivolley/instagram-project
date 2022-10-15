@@ -189,18 +189,22 @@
 }
 
 .chosenPost-footer__like {
+   cursor: pointer;
 }
 
 .chosenPost-footer__comment {
    margin-left: 1.5rem;
+   cursor: pointer;
 }
 
 .chosenPost-footer__share {
    margin-left: 1.5rem;
+   cursor: pointer;
 }
 
 .chosenPost-footer__save {
    margin-left: auto;
+   cursor: pointer;
 }
 
 .chosenPost-footer__likes-count {
