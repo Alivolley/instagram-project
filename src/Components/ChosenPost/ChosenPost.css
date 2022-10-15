@@ -22,7 +22,7 @@
 
 .chosenPost-video-slide {
    width: 100%;
-   height: 100vh;
+   max-height: 100vh;
 }
 
 .chosenPost-volume {
