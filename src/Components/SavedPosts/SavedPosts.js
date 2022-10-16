@@ -10,15 +10,6 @@ export default function SavedPosts() {
    const [showChosenPost, setShowChosenPost] = useState(false);
    const [ChosenPostId, setChosenPostId] = useState();
 
-   const openPost = (id) => {
-      setShowChosenPost(true);
-      setChosenPostId(id);
-   };
-
-   const closePost = () => {
-      setShowChosenPost(false);
-   };
-
    useEffect(() => {
       axiosInstance
          .get("/saved/", {
@@ -31,6 +22,26 @@ export default function SavedPosts() {
          })
          .catch((err) => console.log(err));
    }, []);
+
+   const openPost = (id) => {
+      setShowChosenPost(true);
+      setChosenPostId(id);
+   };
+
+   const closePost = () => {
+      setShowChosenPost(false);
+
+      axiosInstance
+         .get("/saved/", {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            setProfileData(res.data);
+         })
+         .catch((err) => console.log(err));
+   };
 
    // console.log(profileData);
 

@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ChosenPost.css";
 import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom";
 import axiosInstance from "../../Utils/axios";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
+import SharePost from "../SharePost/SharePost";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -18,10 +19,12 @@ export default function ChosenPost({ show, handleClose, id }) {
    const [chosenPostData, setChosenPostData] = useState();
    const [playPause, setPlayPause] = useState(true);
    const [volume, setVolume] = useState(true);
+   const [showShare, setShowShare] = useState(false);
    const [isLiked, setIsLiked] = useState();
    const [isSaved, setIsSaved] = useState();
 
    let videoRef = useRef();
+   let commentInputRef = useRef();
 
    useEffect(() => {
       axiosInstance
@@ -73,14 +76,50 @@ export default function ChosenPost({ show, handleClose, id }) {
    });
 
    const changeLikeStatus = () => {
+      setIsLiked((prev) => !prev);
+
       axiosInstance
-         .post(`post/like-post/${id}/`, {
+         .get(`post/like-post/${id}/`, {
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => res.status === 200 && console.log("object"))
+         .then((res) => res.status !== 200 && setIsLiked(false))
+         .catch((err) => setIsLiked(false));
+
+      axiosInstance
+         .get(`post/detail-and-comments/${id}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            if (res.status === 200) {
+               setChosenPostData(res.data);
+            }
+         })
          .catch((err) => console.log(err));
+   };
+
+   const changeSaveStatus = () => {
+      setIsSaved((prev) => !prev);
+
+      axiosInstance
+         .get(`post/save-post/${id}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => res.status !== 200 && setIsSaved(false))
+         .catch((err) => setIsLiked(false));
+   };
+
+   const focusOnInput = () => {
+      commentInputRef.current.focus();
+   };
+
+   const hideShareBox = () => {
+      setShowShare(false);
    };
 
    // console.log(chosenPostData);
@@ -159,15 +198,21 @@ export default function ChosenPost({ show, handleClose, id }) {
                            </div>
                            <p className="chosenPost-comment__text">{chosenPostData.caption}</p>
                         </div>
-                        <div className="chosenPost-comment">
-                           <div className="chosenPost-comment__wrapper">
-                              <img src="/pics/post-2.jpg" alt="" className="chosenPost-comment__img" />
-                              <Link to="/" className="chosenPost-comment__username">
-                                 somebody
-                              </Link>
+                        {chosenPostData.comments.map((item) => (
+                           <div key={item.id} className="chosenPost-comment">
+                              <div className="chosenPost-comment__wrapper">
+                                 <img
+                                    src={item.user.profile_photo ? `https://javadinstagram.pythonanywhere.com${item.user.profile_photo}` : "/pics/no-bg.jpg"}
+                                    alt=""
+                                    className="chosenPost-comment__img"
+                                 />
+                                 <Link to="/" className="chosenPost-comment__username">
+                                    {item.user.name}
+                                 </Link>
+                              </div>
+                              <p className="chosenPost-comment__text">{item.body}</p>
                            </div>
-                           <p className="chosenPost-comment__text">این یک کامنت تستی است و برای تست کردن قالب استفاده شده است.</p>
-                        </div>
+                        ))}
                      </div>
                      <div className="chosenPost-footer">
                         <div className="chosenPost-footer__options">
@@ -209,6 +254,7 @@ export default function ChosenPost({ show, handleClose, id }) {
                               role="img"
                               viewBox="0 0 24 24"
                               width="24"
+                              onClick={focusOnInput}
                            >
                               <path d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></path>
                            </svg>
@@ -221,6 +267,7 @@ export default function ChosenPost({ show, handleClose, id }) {
                               role="img"
                               viewBox="0 0 24 24"
                               width="24"
+                              onClick={() => setShowShare(true)}
                            >
                               <line fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" x1="22" x2="9.218" y1="3" y2="10.083"></line>
                               <polygon
@@ -242,6 +289,7 @@ export default function ChosenPost({ show, handleClose, id }) {
                                  role="img"
                                  viewBox="0 0 24 24"
                                  width="24"
+                                 onClick={changeSaveStatus}
                               >
                                  <path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path>
                               </svg>
@@ -255,6 +303,7 @@ export default function ChosenPost({ show, handleClose, id }) {
                                  role="img"
                                  viewBox="0 0 24 24"
                                  width="24"
+                                 onClick={changeSaveStatus}
                               >
                                  <polygon
                                     fill="none"
@@ -267,15 +316,16 @@ export default function ChosenPost({ show, handleClose, id }) {
                               </svg>
                            )}
                         </div>
-                        <p className="chosenPost-footer__likes-count">112 likes</p>
+                        <p className="chosenPost-footer__likes-count">{chosenPostData.likes_count} likes</p>
                         <hr />
                         <form className="chosenPost-footer__form">
-                           <input type="text" className="chosenPost-footer__input" placeholder="Add a comment ..." />
+                           <input ref={commentInputRef} type="text" className="chosenPost-footer__input" placeholder="Add a comment ..." />
                            <input type="submit" className="chosenPost-footer__btn" value="Post" />
                         </form>
                      </div>
                   </div>
                </div>
+               <SharePost show={showShare} onHide={hideShareBox} id={chosenPostData.id} />
             </div>
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />
