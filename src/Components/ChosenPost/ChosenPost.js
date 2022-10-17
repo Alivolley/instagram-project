@@ -8,18 +8,22 @@ import { Spinner } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { RiDeleteBack2Line } from "react-icons/ri";
 import { FaPlay } from "react-icons/fa";
 import SharePost from "../SharePost/SharePost";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
-export default function ChosenPost({ show, handleClose, id }) {
+export default function ChosenPost({ show, handleClose, id, ownPost }) {
    const [chosenPostData, setChosenPostData] = useState();
    const [playPause, setPlayPause] = useState(true);
    const [volume, setVolume] = useState(true);
    const [showShare, setShowShare] = useState(false);
+   const [showDeleteModal, setShowDeleteModal] = useState(false);
    const [isLiked, setIsLiked] = useState();
    const [isSaved, setIsSaved] = useState();
    const [commentInput, setCommentInput] = useState("");
@@ -165,7 +169,20 @@ export default function ChosenPost({ show, handleClose, id }) {
       setShowShare(false);
    };
 
-   // console.log(chosenPostData);
+   const hideDeleteModal = () => {
+      setShowDeleteModal(false);
+   };
+
+   const deleteComment = (commentId) => {
+      axiosInstance
+         .delete(`post/remove-comment/${commentId}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => console.log(res))
+         .catch((err) => console.log(err));
+   };
 
    return (
       <Modal show={show} onHide={handleClose} centered size="xl">
@@ -232,9 +249,12 @@ export default function ChosenPost({ show, handleClose, id }) {
                         <Link to="/" className="chosenPost-header__name">
                            {chosenPostData.user.name}
                         </Link>
-                        <Link to="/" className="chosenPost-header__follow-btn">
-                           Follow
-                        </Link>
+                        {!ownPost && (
+                           <Link to="/" className="chosenPost-header__follow-btn">
+                              Follow
+                           </Link>
+                        )}
+                        {ownPost && <MdOutlineDeleteForever className="chosenPost-header__delete" onClick={() => setShowDeleteModal(true)} />}
                      </div>
                      <div className="chosenPost-comments">
                         <div className="chosenPost-caption">
@@ -257,6 +277,7 @@ export default function ChosenPost({ show, handleClose, id }) {
                                  <Link to="/" className="chosenPost-comment__username">
                                     {item.user.name}
                                  </Link>
+                                 {ownPost && <RiDeleteBack2Line className="chosenPost-header__delete-comment" onClick={() => deleteComment(item.id)} />}
                               </div>
                               <p className="chosenPost-comment__text">{item.body}</p>
                            </div>
@@ -380,7 +401,8 @@ export default function ChosenPost({ show, handleClose, id }) {
                      </div>
                   </div>
                </div>
-               <SharePost show={showShare} onHide={hideShareBox} id={chosenPostData.id} />
+               <SharePost show={showShare} onHide={hideShareBox} id={id} />
+               <DeleteModal show={showDeleteModal} onHide={hideDeleteModal} id={id} />
             </div>
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />
