@@ -30,6 +30,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
 
    let videoRef = useRef();
    let commentInputRef = useRef();
+   let winHeight = window.innerHeight - 50;
 
    useEffect(() => {
       axiosInstance
@@ -227,6 +228,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                               isActive &&
                               (file.extension === "image" ? (
                                  <img
+                                    style={{ maxHeight: winHeight }}
                                     className="chosenPost-img-slide"
                                     src={`https://javadinstagram.pythonanywhere.com${file.page}`}
                                     alt=""
@@ -240,6 +242,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                                        </div>
                                     )}
                                     <video
+                                       style={{ maxHeight: winHeight }}
                                        loop
                                        autoPlay
                                        ref={videoRef}
