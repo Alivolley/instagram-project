@@ -180,9 +180,26 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => console.log(res))
+         .then(
+            (res) =>
+               res.status === 200 &&
+               axiosInstance
+                  .get(`post/detail-and-comments/${id}/`, {
+                     headers: {
+                        Authorization: `Bearer ${Cookies.get("access")}`,
+                     },
+                  })
+                  .then((res) => {
+                     if (res.status === 200) {
+                        setChosenPostData(res.data);
+                     }
+                  })
+                  .catch((err) => console.log(err))
+         )
          .catch((err) => console.log(err));
    };
+
+   // console.log(chosenPostData);
 
    return (
       <Modal show={show} onHide={handleClose} centered size="xl">
@@ -277,9 +294,13 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                                  <Link to="/" className="chosenPost-comment__username">
                                     {item.user.name}
                                  </Link>
-                                 {ownPost && <RiDeleteBack2Line className="chosenPost-header__delete-comment" onClick={() => deleteComment(item.id)} />}
                               </div>
                               <p className="chosenPost-comment__text">{item.body}</p>
+                              {item.can_delete && (
+                                 <p className="chosenPost-comment__delete" onClick={() => deleteComment(item.id)}>
+                                    DELETE
+                                 </p>
+                              )}
                            </div>
                         ))}
                      </div>

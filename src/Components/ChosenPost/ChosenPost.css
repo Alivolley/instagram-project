@@ -112,13 +112,6 @@
    margin-left: auto;
 }
 
-.chosenPost-header__delete-comment {
-   cursor: pointer;
-   font-size: 1.4rem;
-   margin-left: auto;
-   margin-right: 1.5rem;
-}
-
 .chosenPost-comments {
    position: absolute;
    top: 7rem;
@@ -184,6 +177,13 @@
 
 .chosenPost-comment__text {
    font-size: 1.4rem;
+}
+
+.chosenPost-comment__delete {
+   cursor: pointer;
+   font-size: 1rem;
+   color: #a5a7aa;
+   margin-top: -0.5rem;
 }
 
 .chosenPost-footer {
