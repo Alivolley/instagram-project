@@ -222,6 +222,7 @@
    width: 100%;
    border: none;
    outline: none;
+   font-size: 1.4rem;
 }
 
 .chosenPost-footer__input::placeholder {

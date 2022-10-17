@@ -32,6 +32,12 @@
    width: 20rem;
    height: 3rem;
    margin-right: 2rem;
+   text-decoration: none;
+   color: black;
+}
+
+.profile-edit__btn:hover {
+   color: black;
 }
 
 .profile-setting__btn {

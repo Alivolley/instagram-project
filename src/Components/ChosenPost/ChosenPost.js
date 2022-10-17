@@ -22,6 +22,7 @@ export default function ChosenPost({ show, handleClose, id }) {
    const [showShare, setShowShare] = useState(false);
    const [isLiked, setIsLiked] = useState();
    const [isSaved, setIsSaved] = useState();
+   const [commentInput, setCommentInput] = useState("");
 
    let videoRef = useRef();
    let commentInputRef = useRef();
@@ -76,42 +77,84 @@ export default function ChosenPost({ show, handleClose, id }) {
    });
 
    const changeLikeStatus = () => {
-      setIsLiked((prev) => !prev);
-
       axiosInstance
          .get(`post/like-post/${id}/`, {
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => res.status !== 200 && setIsLiked(false))
-         .catch((err) => setIsLiked(false));
-
-      axiosInstance
-         .get(`post/detail-and-comments/${id}/`, {
-            headers: {
-               Authorization: `Bearer ${Cookies.get("access")}`,
-            },
-         })
          .then((res) => {
             if (res.status === 200) {
-               setChosenPostData(res.data);
+               setIsLiked((prev) => !prev);
+               axiosInstance
+                  .get(`post/detail-and-comments/${id}/`, {
+                     headers: {
+                        Authorization: `Bearer ${Cookies.get("access")}`,
+                     },
+                  })
+                  .then((res) => {
+                     if (res.status === 200) {
+                        setChosenPostData(res.data);
+                     }
+                  })
+                  .catch((err) => console.log(err));
+            } else {
+               setIsLiked(false);
             }
          })
-         .catch((err) => console.log(err));
+         .catch((err) => setIsLiked(false));
    };
 
    const changeSaveStatus = () => {
-      setIsSaved((prev) => !prev);
-
       axiosInstance
          .get(`post/save-post/${id}/`, {
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => res.status !== 200 && setIsSaved(false))
+         .then((res) => res.status === 200 && setIsSaved((prev) => !prev))
+         .catch((err) => setIsSaved(false));
+   };
+
+   const likeWithClick = () => {
+      setIsLiked(true);
+
+      axiosInstance
+         .get(`post/like-post-double-click/${id}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => res.status !== 200 && setIsLiked(false))
          .catch((err) => setIsLiked(false));
+   };
+
+   const createComment = (e) => {
+      e.preventDefault();
+      axiosInstance
+         .post(`post/create-comment/${id}/`, JSON.stringify({ body: commentInput }), {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            if (res.status === 201) {
+               setCommentInput("");
+               axiosInstance
+                  .get(`post/detail-and-comments/${id}/`, {
+                     headers: {
+                        Authorization: `Bearer ${Cookies.get("access")}`,
+                     },
+                  })
+                  .then((res) => {
+                     if (res.status === 200) {
+                        setChosenPostData(res.data);
+                     }
+                  })
+                  .catch((err) => console.log(err));
+            }
+         })
+         .catch((err) => console.log(err));
    };
 
    const focusOnInput = () => {
@@ -149,7 +192,12 @@ export default function ChosenPost({ show, handleClose, id }) {
                            {({ isActive }) =>
                               isActive &&
                               (file.extension === "image" ? (
-                                 <img className="chosenPost-img-slide" src={`https://javadinstagram.pythonanywhere.com${file.page}`} alt="" />
+                                 <img
+                                    className="chosenPost-img-slide"
+                                    src={`https://javadinstagram.pythonanywhere.com${file.page}`}
+                                    alt=""
+                                    onDoubleClick={likeWithClick}
+                                 />
                               ) : (
                                  <>
                                     {!playPause && (
@@ -318,8 +366,15 @@ export default function ChosenPost({ show, handleClose, id }) {
                         </div>
                         <p className="chosenPost-footer__likes-count">{chosenPostData.likes_count} likes</p>
                         <hr />
-                        <form className="chosenPost-footer__form">
-                           <input ref={commentInputRef} type="text" className="chosenPost-footer__input" placeholder="Add a comment ..." />
+                        <form className="chosenPost-footer__form" onSubmit={createComment}>
+                           <input
+                              ref={commentInputRef}
+                              type="text"
+                              className="chosenPost-footer__input"
+                              placeholder="Add a comment ..."
+                              value={commentInput}
+                              onChange={(e) => setCommentInput(e.target.value)}
+                           />
                            <input type="submit" className="chosenPost-footer__btn" value="Post" />
                         </form>
                      </div>
