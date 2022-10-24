@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { MdOutlineDeleteForever } from "react-icons/md";
-import { RiDeleteBack2Line } from "react-icons/ri";
 import { FaPlay } from "react-icons/fa";
 import SharePost from "../SharePost/SharePost";
 
@@ -297,13 +296,13 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                                  <Link to="/" className="chosenPost-comment__username">
                                     {item.user.name}
                                  </Link>
+                                 {item.can_delete && (
+                                    <p className="chosenPost-comment__delete" onClick={() => deleteComment(item.id)}>
+                                       Delete
+                                    </p>
+                                 )}
                               </div>
                               <p className="chosenPost-comment__text">{item.body}</p>
-                              {item.can_delete && (
-                                 <p className="chosenPost-comment__delete" onClick={() => deleteComment(item.id)}>
-                                    DELETE
-                                 </p>
-                              )}
                            </div>
                         ))}
                      </div>

@@ -43,18 +43,22 @@
 }
 
 .homePostCard-like {
+   cursor: pointer;
 }
 
 .homePostCard-comment {
    margin-left: 1.5rem;
+   cursor: pointer;
 }
 
 .homePostCard-share {
    margin-left: 1.5rem;
+   cursor: pointer;
 }
 
 .homePostCard-save {
    margin-left: auto;
+   cursor: pointer;
 }
 
 .homePostCard-likes-count {
@@ -72,6 +76,11 @@
    padding: 1rem;
    font-size: 1.4rem;
    color: #8e8e8e;
+   cursor: pointer;
+}
+
+.homePostCard-view-comments:hover {
+   color: black;
 }
 
 .homePostCard-posted-at {

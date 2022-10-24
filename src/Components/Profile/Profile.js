@@ -5,11 +5,15 @@ import "./Profile.css";
 import { Spinner } from "react-bootstrap";
 import AlertModal from "../AlertModal/AlertModal";
 import axiosInstance from "../../Utils/axios";
+import Followers from "../Followers/Followers";
+import Followings from "../Followings/Followings";
 
 export default function Profile() {
    const [modalImgShow, setModalImgShow] = useState(false);
    const [profileData, setProfileData] = useState();
    const [alertModalShow, setAlertModalShow] = useState(false);
+   const [showFollowers, setShowFollowers] = useState(false);
+   const [showFollowing, setShowFollowing] = useState(false);
    const [modalText, setModalText] = useState();
 
    let navigation = useNavigate();
@@ -89,6 +93,14 @@ export default function Profile() {
       setModalText("");
    };
 
+   const hideFollowers = () => {
+      setShowFollowers(false);
+   };
+
+   const hideFollowings = () => {
+      setShowFollowing(false);
+   };
+
    // console.log(profileData && profileData.profile.bio);
 
    return (
@@ -115,19 +127,19 @@ export default function Profile() {
                            <span className="profile-account__posts-count">{profileData.posts.length}</span>
                            Posts
                         </div>
-                        <Link to="/" className="profile-account__followers">
+                        <p className="profile-account__followers" onClick={() => setShowFollowers(true)}>
                            <span className="profile-account__followers-count">{profileData.profile.followers_count}</span>
                            Followers
-                        </Link>
-                        <Link to="/" className="profile-account__following">
+                        </p>
+                        <p className="profile-account__following" onClick={() => setShowFollowing(true)}>
                            <span className="profile-account__following-count">{profileData.profile.following_count}</span>
                            Following
-                        </Link>
+                        </p>
                      </div>
 
                      <div className="col-12 profile-user__details ">
                         <span className="profile-user__name">{profileData.profile.username.toUpperCase()}</span>
-                        <span className="profile-user__bio">{profileData.profile.bio}</span>
+                        <pre className="profile-user__bio">{profileData.profile.bio}</pre>
                      </div>
                   </div>
                </div>
@@ -223,6 +235,8 @@ export default function Profile() {
                      </p>
                   </div>
                </div>
+               <Followers show={showFollowers} onHide={hideFollowers} username={profileData.profile.username} />
+               <Followings show={showFollowing} onHide={hideFollowings} username={profileData.profile.username} />
             </div>
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />

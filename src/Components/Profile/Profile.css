@@ -53,13 +53,11 @@
 }
 
 .profile-account__followers {
-   text-decoration: none;
-   color: black;
+   cursor: pointer;
 }
 
 .profile-account__following {
-   text-decoration: none;
-   color: black;
+   cursor: pointer;
 }
 
 .profile-account__followers:hover,
