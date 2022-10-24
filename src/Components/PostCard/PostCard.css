@@ -10,6 +10,16 @@
    height: 100%;
 }
 
+.postcard-multiply {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   background-color: white;
+   border-radius: 7px;
+   font-size: 18px;
+   padding: 2px;
+}
+
 .postcard-img-cover {
    background-color: rgba(0, 0, 0, 0.432);
    width: 100%;

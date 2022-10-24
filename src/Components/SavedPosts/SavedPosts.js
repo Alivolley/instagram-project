@@ -43,7 +43,7 @@ export default function SavedPosts() {
          .catch((err) => console.log(err));
    };
 
-   // console.log(profileData);
+   console.log(profileData);
 
    return (
       <>
@@ -55,6 +55,7 @@ export default function SavedPosts() {
                      comments={save.comments_count}
                      likes={save.likes_count}
                      type={save.files[0].extension}
+                     multiply={save.multi_files}
                   />
                </div>
             ))}

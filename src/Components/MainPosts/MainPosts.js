@@ -55,6 +55,7 @@ export default function MainPosts() {
                      comments={post.comments_count}
                      likes={post.likes_count}
                      type={post.files[0].extension}
+                     multiply={post.multi_files}
                   />
                </div>
             ))}
