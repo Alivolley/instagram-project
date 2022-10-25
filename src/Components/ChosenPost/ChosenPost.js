@@ -199,7 +199,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
          .catch((err) => console.log(err));
    };
 
-   // console.log(chosenPostData);
+   console.log(chosenPostData);
 
    return (
       <Modal show={show} onHide={handleClose} centered size="xl">
@@ -265,21 +265,17 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                   <div className="chosenPost-wrapper">
                      <div className="chosenPost-header">
                         <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-header__img" />
-                        <Link to="/" className="chosenPost-header__name">
+                        <Link to={`/${chosenPostData.user.name}`} className="chosenPost-header__name">
                            {chosenPostData.user.name}
                         </Link>
-                        {!ownPost && (
-                           <Link to="/" className="chosenPost-header__follow-btn">
-                              Follow
-                           </Link>
-                        )}
+                        {!ownPost && <p className="chosenPost-header__follow-btn">Follow</p>}
                         {ownPost && <MdOutlineDeleteForever className="chosenPost-header__delete" onClick={() => setShowDeleteModal(true)} />}
                      </div>
                      <div className="chosenPost-comments">
                         <div className="chosenPost-caption">
                            <div className="chosenPost-caption__wrapper">
                               <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-caption__img" />
-                              <Link to="/" className="chosenPost-caption__username">
+                              <Link to={`/${chosenPostData.user.name}`} className="chosenPost-caption__username">
                                  {chosenPostData.user.name}
                               </Link>
                            </div>

@@ -9,6 +9,7 @@ import SignUp from "./Components/SignUp/SignUp";
 import Login from "./Components/Login/Login";
 import Settings from "./Components/Settings/Settings";
 import PrivateRoute from "./Components/PrivateRoute";
+import OthersProfile from "./Components/OthersProfile/OthersProfile";
 
 export let Routes = [
    { path: "/login", element: <Login /> },
@@ -21,6 +22,7 @@ export let Routes = [
          { path: "", element: <Home /> },
          { path: "explore", element: <Explore /> },
          { path: "settings", element: <Settings /> },
+         { path: ":username", element: <OthersProfile /> },
 
          {
             path: "profile/*",

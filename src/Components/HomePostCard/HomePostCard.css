@@ -18,7 +18,13 @@
 
 .homePostCard-header__name {
    margin-left: 1rem;
-   font-size: 1.4rem;
+   font-size: 1.7rem;
+   color: black;
+   text-decoration: none;
+}
+
+.homePostCard-header__name:hover {
+   color: black;
 }
 
 .homePostCard-header__more {

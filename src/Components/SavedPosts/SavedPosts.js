@@ -43,7 +43,7 @@ export default function SavedPosts() {
          .catch((err) => console.log(err));
    };
 
-   console.log(profileData);
+   // console.log(profileData);
 
    return (
       <>

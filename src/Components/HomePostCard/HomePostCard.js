@@ -12,6 +12,7 @@ import axiosInstance from "../../Utils/axios";
 import Cookies from "js-cookie";
 import ChosenPost from "../ChosenPost/ChosenPost";
 import SharePost from "../SharePost/SharePost";
+import { Link } from "react-router-dom";
 
 export default function HomePostCard({ caption, commentNum, files, saved, liked, likesNum, postId, profile, username, create, reget }) {
    const [playPause, setPlayPause] = useState(false);
@@ -100,7 +101,9 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
       <div className="homePostCard">
          <div className="homePostCard-header">
             <img className="homePostCard-header__img" src={profile ? `https://javadinstagram.pythonanywhere.com${profile}` : "/pics/no-bg.jpg"} alt="" />
-            <h2 className="homePostCard-header__name">{username}</h2>
+            <Link to={`/${username}`} className="homePostCard-header__name">
+               {username}
+            </Link>
          </div>
 
          <div className="homePostCard-images">
