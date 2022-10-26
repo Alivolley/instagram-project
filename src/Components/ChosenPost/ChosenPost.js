@@ -199,7 +199,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
          .catch((err) => console.log(err));
    };
 
-   console.log(chosenPostData);
+   // console.log(chosenPostData);
 
    return (
       <Modal show={show} onHide={handleClose} centered size="xl">
@@ -264,34 +264,49 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                <div className="col-12 col-lg-4 chosenPost-right-side">
                   <div className="chosenPost-wrapper">
                      <div className="chosenPost-header">
-                        <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-header__img" />
-                        <Link to={`/${chosenPostData.user.name}`} className="chosenPost-header__name">
+                        <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`}>
+                           <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-header__img" />
+                        </a>
+                        <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`} className="chosenPost-header__name">
                            {chosenPostData.user.name}
-                        </Link>
-                        {!ownPost && <p className="chosenPost-header__follow-btn">Follow</p>}
-                        {ownPost && <MdOutlineDeleteForever className="chosenPost-header__delete" onClick={() => setShowDeleteModal(true)} />}
+                        </a>
+                        {ownPost ? (
+                           <MdOutlineDeleteForever className="chosenPost-header__delete" onClick={() => setShowDeleteModal(true)} />
+                        ) : chosenPostData.is_following ? (
+                           <p className="chosenPost-header__followed-btn">Followed</p>
+                        ) : (
+                           <p className="chosenPost-header__follow-btn">Follow</p>
+                        )}
                      </div>
+
                      <div className="chosenPost-comments">
                         <div className="chosenPost-caption">
                            <div className="chosenPost-caption__wrapper">
-                              <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-caption__img" />
-                              <Link to={`/${chosenPostData.user.name}`} className="chosenPost-caption__username">
+                              <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`}>
+                                 <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-caption__img" />
+                              </a>
+                              <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`} className="chosenPost-caption__username">
                                  {chosenPostData.user.name}
-                              </Link>
+                              </a>
                            </div>
                            <p className="chosenPost-comment__text">{chosenPostData.caption}</p>
                         </div>
                         {chosenPostData.comments.map((item) => (
                            <div key={item.id} className="chosenPost-comment">
                               <div className="chosenPost-comment__wrapper">
-                                 <img
-                                    src={item.user.profile_photo ? `https://javadinstagram.pythonanywhere.com${item.user.profile_photo}` : "/pics/no-bg.jpg"}
-                                    alt=""
-                                    className="chosenPost-comment__img"
-                                 />
-                                 <Link to="/" className="chosenPost-comment__username">
+                                 <a href={`/${chosenPostData.auth_username === item.user.username ? "profile/posts" : item.user.username}`}>
+                                    <img
+                                       src={item.user.profile_photo ? `https://javadinstagram.pythonanywhere.com${item.user.profile_photo}` : "/pics/no-bg.jpg"}
+                                       alt=""
+                                       className="chosenPost-comment__img"
+                                    />
+                                 </a>
+                                 <a
+                                    href={`/${chosenPostData.auth_username === item.user.username ? "profile/posts" : item.user.username}`}
+                                    className="chosenPost-comment__username"
+                                 >
                                     {item.user.name}
-                                 </Link>
+                                 </a>
                                  {item.can_delete && (
                                     <p className="chosenPost-comment__delete" onClick={() => deleteComment(item.id)}>
                                        Delete

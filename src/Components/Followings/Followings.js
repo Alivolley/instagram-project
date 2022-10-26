@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axiosInstance from "../../Utils/axios";
 import "./Followings.css";
 
-export default function Followings({ show, onHide, username }) {
+export default function Followings({ show, onHide, username, myPro }) {
    const [followingsData, setFollowingsData] = useState();
 
    useEffect(() => {
@@ -23,27 +23,24 @@ export default function Followings({ show, onHide, username }) {
       e.target.className === "followings--show followings" && onHide();
    });
 
-   //    follow/<int:user_id>/
-   // unfollow/<int:user_id>/
-
    const UnFollowUser = (id) => {
       axiosInstance
-         .delete(`unfollow/${id}/`, {
+         .get(`unfollow/${id}/`, {
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
          .then(
-            (res) => console.log(res)
-            // res.status === 200 &&
-            // axiosInstance
-            //    .get(`${username}/following/`, {
-            //       headers: {
-            //          Authorization: `Bearer ${Cookies.get("access")}`,
-            //       },
-            //    })
-            //    .then((res) => res.status === 200 && setFollowingsData(res.data))
-            //    .catch((err) => console.log(err))
+            (res) =>
+               res.status === 200 &&
+               axiosInstance
+                  .get(`${username}/following/`, {
+                     headers: {
+                        Authorization: `Bearer ${Cookies.get("access")}`,
+                     },
+                  })
+                  .then((res) => res.status === 200 && setFollowingsData(res.data))
+                  .catch((err) => console.log(err))
          )
          .catch((err) => console.log(err));
    };
@@ -63,15 +60,18 @@ export default function Followings({ show, onHide, username }) {
                   <div className="followings-body">
                      {followingsData.map((followings) => (
                         <div key={followings.id} className="followings-contact">
-                           <img
-                              className="followings-contact__img"
-                              src={followings.profile_photo ? `https://javadinstagram.pythonanywhere.com${followings.profile_photo}` : "/pics/no-bg.jpg"}
-                              alt=""
-                           />
-                           <Link to="/" className="followings-contact__username">
+                           <a href={`/${followings.username}`} className="followings-contact__username">
+                              <img
+                                 className="followings-contact__img"
+                                 src={followings.profile_photo ? `https://javadinstagram.pythonanywhere.com${followings.profile_photo}` : "/pics/no-bg.jpg"}
+                                 alt=""
+                              />
+                           </a>
+
+                           <a href={`/${followings.username}`} className="followings-contact__username">
                               {followings.username}
-                           </Link>
-                           {followings.is_following && (
+                           </a>
+                           {followings.is_following && myPro && (
                               <button
                                  className="followings-contact__btn-following"
                                  onClick={() => {

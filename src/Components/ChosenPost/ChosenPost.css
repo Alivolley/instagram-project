@@ -93,12 +93,19 @@
    color: black;
 }
 
-.chosenPost-header__follow-btn {
+.chosenPost-header__follow-btn,
+.chosenPost-header__followed-btn {
    text-decoration: none;
    color: #0095f7;
    font-weight: 600;
    margin-left: auto;
    margin-right: 3rem;
+   margin-top: auto;
+}
+
+.chosenPost-header__followed-btn {
+   color: #a5a7aa;
+   font-size: 1.4rem;
 }
 
 .chosenPost-header__follow-btn:hover {

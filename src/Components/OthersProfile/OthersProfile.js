@@ -5,7 +5,7 @@ import { Spinner } from "react-bootstrap";
 import axiosInstance from "../../Utils/axios";
 import Followers from "../Followers/Followers";
 import Followings from "../Followings/Followings";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import PostCard from "../PostCard/PostCard";
 import ChosenPost from "../ChosenPost/ChosenPost";
 
@@ -17,6 +17,7 @@ export default function OthersProfile() {
    const [ChosenPostId, setChosenPostId] = useState();
 
    let params = useParams();
+   let location = useLocation();
 
    useEffect(() => {
       axiosInstance
@@ -30,6 +31,23 @@ export default function OthersProfile() {
          })
          .catch((err) => console.log(err));
    }, []);
+
+   useEffect(() => {
+      setShowFollowers(false);
+      setShowFollowing(false);
+      setShowChosenPost(false);
+
+      axiosInstance
+         .get(`profile/${params.username}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            setProfileData(res.data);
+         })
+         .catch((err) => console.log(err));
+   }, [location.pathname]);
 
    const closePost = () => {
       setShowChosenPost(false);
@@ -59,8 +77,34 @@ export default function OthersProfile() {
       setShowFollowing(false);
    };
 
+   const followUser = () => {
+      axiosInstance
+         .get(`follow/${profileData.profile.id}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            closePost();
+         })
+         .catch((err) => console.log(err));
+   };
+
+   const unFollowUser = () => {
+      axiosInstance
+         .get(`unfollow/${profileData.profile.id}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            closePost();
+         })
+         .catch((err) => console.log(err));
+   };
+
    //    console.log(params.username);
-   console.log(profileData);
+   // console.log(profileData);
 
    return (
       <>
@@ -75,9 +119,15 @@ export default function OthersProfile() {
                   <div className="row profile-account__details ">
                      <div className="col-12 profile-account__header ">
                         <p className="profile-account__name ">{profileData.profile.name}</p>
-                        <button to="/settings" className="profile-edit__btn profile-edit__btn--new ">
-                           Follow
-                        </button>
+                        {profileData.profile.is_following ? (
+                           <button to="/settings" className="profile-edit__btn " onClick={unFollowUser}>
+                              Unfollow
+                           </button>
+                        ) : (
+                           <button to="/settings" className="profile-edit__btn profile-edit__btn--follow " onClick={followUser}>
+                              Follow
+                           </button>
+                        )}
                      </div>
 
                      <div className="col-12 profile-account__status">

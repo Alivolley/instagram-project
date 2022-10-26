@@ -100,10 +100,12 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
    return (
       <div className="homePostCard">
          <div className="homePostCard-header">
-            <img className="homePostCard-header__img" src={profile ? `https://javadinstagram.pythonanywhere.com${profile}` : "/pics/no-bg.jpg"} alt="" />
-            <Link to={`/${username}`} className="homePostCard-header__name">
+            <a href={`/${username}`} className="homePostCard-header__name">
+               <img className="homePostCard-header__img" src={profile ? `https://javadinstagram.pythonanywhere.com${profile}` : "/pics/no-bg.jpg"} alt="" />
+            </a>
+            <a href={`/${username}`} className="homePostCard-header__name">
                {username}
-            </Link>
+            </a>
          </div>
 
          <div className="homePostCard-images">

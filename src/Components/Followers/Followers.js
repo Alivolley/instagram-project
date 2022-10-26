@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axiosInstance from "../../Utils/axios";
 import "./Followers.css";
 
-export default function Followers({ show, onHide, username }) {
+export default function Followers({ show, onHide, username, myPro }) {
    const [followerData, setFollowerData] = useState();
 
    useEffect(() => {
@@ -60,22 +60,26 @@ export default function Followers({ show, onHide, username }) {
                   <div className="followers-body">
                      {followerData.map((follower) => (
                         <div key={follower.id} className="followers-contact">
-                           <img
-                              className="followers-contact__img"
-                              src={follower.profile_photo ? `https://javadinstagram.pythonanywhere.com${follower.profile_photo}` : "/pics/no-bg.jpg"}
-                              alt=""
-                           />
-                           <Link to="/" className="followers-contact__username">
+                           <a href={`/${follower.username}`} className="followers-contact__username">
+                              <img
+                                 className="followers-contact__img"
+                                 src={follower.profile_photo ? `https://javadinstagram.pythonanywhere.com${follower.profile_photo}` : "/pics/no-bg.jpg"}
+                                 alt=""
+                              />
+                           </a>
+                           <a href={`/${follower.username}`} className="followers-contact__username">
                               {follower.username}
-                           </Link>
-                           <button
-                              className="followers-contact__btn"
-                              onClick={() => {
-                                 removeFromFollowers(follower.user_id);
-                              }}
-                           >
-                              Remove
-                           </button>
+                           </a>
+                           {myPro && (
+                              <button
+                                 className="followers-contact__btn"
+                                 onClick={() => {
+                                    removeFromFollowers(follower.user_id);
+                                 }}
+                              >
+                                 Remove
+                              </button>
+                           )}
                         </div>
                      ))}
                   </div>

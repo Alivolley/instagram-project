@@ -60,6 +60,10 @@
    color: black;
 }
 
+.followings-contact__username:hover {
+   color: black;
+}
+
 .followings-contact__btn-follow {
    margin-left: auto;
    background-color: #0095f7;

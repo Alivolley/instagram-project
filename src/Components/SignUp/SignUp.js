@@ -46,7 +46,7 @@ export default function SignUp() {
          axiosInstance
             .post("/register/", JSON.stringify(usernameInfo))
             .then((res) => {
-               console.log(res);
+               // console.log(res);
                if (res.statusText === "Created") {
                   setModalText("You regitered successfully :) . Now you must login");
                   setTimeout(() => {

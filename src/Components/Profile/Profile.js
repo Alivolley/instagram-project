@@ -235,8 +235,8 @@ export default function Profile() {
                      </p>
                   </div>
                </div>
-               <Followers show={showFollowers} onHide={hideFollowers} username={profileData.profile.username} />
-               <Followings show={showFollowing} onHide={hideFollowings} username={profileData.profile.username} />
+               <Followers show={showFollowers} onHide={hideFollowers} username={profileData.profile.username} myPro={true} />
+               <Followings show={showFollowing} onHide={hideFollowings} username={profileData.profile.username} myPro={true} />
             </div>
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />
