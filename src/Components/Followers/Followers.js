@@ -60,14 +60,14 @@ export default function Followers({ show, onHide, username, myPro }) {
                   <div className="followers-body">
                      {followerData.map((follower) => (
                         <div key={follower.id} className="followers-contact">
-                           <a href={`/${follower.username}`} className="followers-contact__username">
+                           <a href={`/${follower.username === follower.auth_username ? "profile/posts/" : follower.username}`} className="followers-contact__username">
                               <img
                                  className="followers-contact__img"
                                  src={follower.profile_photo ? `https://javadinstagram.pythonanywhere.com${follower.profile_photo}` : "/pics/no-bg.jpg"}
                                  alt=""
                               />
                            </a>
-                           <a href={`/${follower.username}`} className="followers-contact__username">
+                           <a href={`/${follower.username === follower.auth_username ? "profile/posts/" : follower.username}`} className="followers-contact__username">
                               {follower.username}
                            </a>
                            {myPro && (

@@ -60,7 +60,10 @@ export default function Followings({ show, onHide, username, myPro }) {
                   <div className="followings-body">
                      {followingsData.map((followings) => (
                         <div key={followings.id} className="followings-contact">
-                           <a href={`/${followings.username}`} className="followings-contact__username">
+                           <a
+                              href={`/${followings.username === followings.auth_username ? "profile/posts/" : followings.username}`}
+                              className="followings-contact__username"
+                           >
                               <img
                                  className="followings-contact__img"
                                  src={followings.profile_photo ? `https://javadinstagram.pythonanywhere.com${followings.profile_photo}` : "/pics/no-bg.jpg"}
@@ -68,7 +71,10 @@ export default function Followings({ show, onHide, username, myPro }) {
                               />
                            </a>
 
-                           <a href={`/${followings.username}`} className="followings-contact__username">
+                           <a
+                              href={`/${followings.username === followings.auth_username ? "profile/posts/" : followings.username}`}
+                              className="followings-contact__username"
+                           >
                               {followings.username}
                            </a>
                            {followings.is_following && myPro && (

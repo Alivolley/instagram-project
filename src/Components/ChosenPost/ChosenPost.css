@@ -109,6 +109,7 @@
 }
 
 .chosenPost-header__follow-btn:hover {
+   cursor: pointer;
    color: #0095f7;
 }
 
