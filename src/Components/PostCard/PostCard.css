@@ -3,6 +3,7 @@
    margin-top: 3rem;
    cursor: pointer;
    position: relative;
+   background-color: black;
 }
 
 .postcard-img {
