@@ -31,28 +31,34 @@ export default function CreatePosts() {
    };
 
    const sendPost = () => {
-      if (newPostsFile.length > 0 && captionValue) {
-         fileRef.current.classList.remove("not-filed");
-         captionRef.current.classList.remove("not-filed");
+      // if (newPostsFile.length > 0 && captionValue) {
+      fileRef.current.classList.remove("not-filed");
+      captionRef.current.classList.remove("not-filed");
 
-         setAlertModalShow(true);
+      setAlertModalShow(true);
 
-         let formData = new FormData();
-         formData.append("files", newPostsFile);
-         formData.append("caption", captionValue);
-         axiosInstance
-            .post(`post/create-post/`, formData, {
-               headers: {
-                  "Content-Type": "multipart/form-data",
-                  Authorization: `Bearer ${Cookies.get("access")}`,
-               },
-            })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
-      } else {
-         fileRef.current.classList.add("not-filed");
-         captionRef.current.classList.add("not-filed");
-      }
+      let formData = new FormData();
+      formData.append("files", newPostsFile);
+      formData.append("caption", captionValue);
+      axiosInstance
+         .post(`post/create-post/`, formData, {
+            headers: {
+               "Content-Type": "multipart/form-data",
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            setModalText(res.message);
+            console.log(res);
+         })
+         .catch((err) => {
+            setModalText(err.message);
+            console.log(err);
+         });
+      // } else {
+      // fileRef.current.classList.add("not-filed");
+      // captionRef.current.classList.add("not-filed");
+      // }
    };
 
    const closeAlertModal = () => {
@@ -61,7 +67,7 @@ export default function CreatePosts() {
    };
 
    // console.log(newPostsUrl);
-   console.log(newPostsFile);
+   // console.log(newPostsFile);
 
    return (
       <div className="container add">
