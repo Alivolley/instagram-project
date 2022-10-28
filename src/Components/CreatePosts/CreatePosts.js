@@ -17,9 +17,9 @@ export default function CreatePosts() {
    let fileRef = useRef();
 
    const saveNewPostsUrl = (e) => {
-      let posts = e.target.files[0];
-      setNewPostsFile((prev) => [...prev, posts]);
-
+      // let posts = e.target.files[0];
+      // setNewPostsFile((prev) => [...prev, posts]);
+      setNewPostsFile(e.target.files[0]);
       let file = e.target.files[0];
       const objectUrl = URL.createObjectURL(file);
       newPostsUrl.length < 10 && setNewPostsUrl((prev) => [...prev, { source: objectUrl, name: e.target.files[0].name, extention: e.target.files[0].type }]);
