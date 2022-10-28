@@ -85,19 +85,17 @@
 }
 
 .add-caption {
-   display: flex;
-   align-items: center;
-   /* justify-content: center; */
-   gap: 1.5rem;
    margin-top: 7rem;
 }
 
 .add-caption__label {
+   margin-bottom: 1rem;
+   font-weight: 600;
 }
 
 .add-caption__input {
    width: 100%;
-   padding: 1.3rem 2rem;
+   padding: 1rem 2rem;
    border: 0.1rem solid rgb(173, 167, 167);
    border-radius: 0.8rem;
 }

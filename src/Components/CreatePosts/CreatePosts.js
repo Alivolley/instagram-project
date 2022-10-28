@@ -3,17 +3,21 @@ import React, { useRef, useState } from "react";
 import axiosInstance from "../../Utils/axios";
 import "./CreatePosts.css";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import AlertModal from "../AlertModal/AlertModal";
+import { Spinner } from "react-bootstrap";
 
 export default function CreatePosts() {
    const [newPostsUrl, setNewPostsUrl] = useState("");
    const [newPostsFile, setNewPostsFile] = useState("");
    const [captionValue, setCaptionValue] = useState("");
+   const [alertModalShow, setAlertModalShow] = useState(false);
+   const [modalText, setModalText] = useState();
 
    let captionRef = useRef();
    let fileRef = useRef();
 
    const saveNewPostsUrl = (e) => {
-      let posts = e.target.files;
+      let posts = e.target.files[0];
       setNewPostsFile((prev) => [...prev, posts]);
 
       let file = e.target.files[0];
@@ -30,6 +34,8 @@ export default function CreatePosts() {
       if (newPostsFile.length > 0 && captionValue) {
          fileRef.current.classList.remove("not-filed");
          captionRef.current.classList.remove("not-filed");
+
+         setAlertModalShow(true);
 
          let formData = new FormData();
          formData.append("files", newPostsFile);
@@ -49,8 +55,13 @@ export default function CreatePosts() {
       }
    };
 
+   const closeAlertModal = () => {
+      setAlertModalShow(false);
+      setModalText("");
+   };
+
    // console.log(newPostsUrl);
-   // console.log(newPostsFile);
+   console.log(newPostsFile);
 
    return (
       <div className="container add">
@@ -82,7 +93,7 @@ export default function CreatePosts() {
 
          <div className="add-caption">
             <label className="add-caption__label" htmlFor="add-caption__input">
-               Caption:
+               Caption :
             </label>
             <input
                ref={captionRef}
@@ -98,6 +109,12 @@ export default function CreatePosts() {
          <button className="add-btn" onClick={sendPost}>
             Post
          </button>
+
+         <AlertModal
+            show={alertModalShow}
+            handleClose={closeAlertModal}
+            text={!modalText ? <Spinner className="spiner--handle" animation="border" variant="primary" /> : modalText}
+         />
       </div>
    );
 }
