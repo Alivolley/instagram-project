@@ -1,50 +1,69 @@
 import Cookies from "js-cookie";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axiosInstance from "../../Utils/axios";
 import "./CreatePosts.css";
 import { RiDeleteBin2Line } from "react-icons/ri";
 
 export default function CreatePosts() {
-   const [newPosts, setNewPosts] = useState("");
+   const [newPostsUrl, setNewPostsUrl] = useState("");
+   const [newPostsFile, setNewPostsFile] = useState("");
+   const [captionValue, setCaptionValue] = useState("");
 
-   const uploadeProfileImg = (e) => {
-      let file = e.target.files;
+   let captionRef = useRef();
+   let fileRef = useRef();
 
-      setNewPosts((prev) => [...prev, file]);
-      //   let formData = new FormData();
-      //   formData.append("posts_file", file);
+   const saveNewPostsUrl = (e) => {
+      let posts = e.target.files;
+      setNewPostsFile((prev) => [...prev, posts]);
 
-      // setAlertModalShow(true);
-
-      //   axiosInstance
-      //      .put(`accounts/edit-profile-photo/`, formData, {
-      //         headers: {
-      //            "Content-Type": "multipart/form-data",
-      //            Authorization: `Bearer ${Cookies.get("access")}`,
-      //         },
-      //      })
-      //      .then((res) => {
-      //         if (res.status === 200) {
-      //            //  setModalText("You're changes applied successfully");
-      //            //  navigation(0);
-      //         } else {
-      //            //  setModalText("!!! Failed ...");
-      //         }
-      //      })
-      //      .catch((err) => {
-      //         //   setModalText("!!! Failed ...");
-      //      });
+      let file = e.target.files[0];
+      const objectUrl = URL.createObjectURL(file);
+      newPostsUrl.length < 10 && setNewPostsUrl((prev) => [...prev, { source: objectUrl, name: e.target.files[0].name, extention: e.target.files[0].type }]);
    };
-   console.log(newPosts);
+
+   const removePost = (url) => {
+      setNewPostsUrl((prev) => prev.filter((item) => item.source !== url.source));
+      setNewPostsFile((prev) => prev.filter((item) => item[0].name !== url.name));
+   };
+
+   const sendPost = () => {
+      if (newPostsFile.length > 0 && captionValue) {
+         fileRef.current.classList.remove("not-filed");
+         captionRef.current.classList.remove("not-filed");
+
+         let formData = new FormData();
+         formData.append("files", newPostsFile);
+         formData.append("caption", captionValue);
+         axiosInstance
+            .post(`post/create-post/`, formData, {
+               headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `Bearer ${Cookies.get("access")}`,
+               },
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+      } else {
+         fileRef.current.classList.add("not-filed");
+         captionRef.current.classList.add("not-filed");
+      }
+   };
+
+   // console.log(newPostsUrl);
+   // console.log(newPostsFile);
 
    return (
-      <div className="container">
+      <div className="container add">
          <div className="row">
-            {newPosts ? (
-               newPosts.map((post) => (
-                  <div className="col-md-2">
+            {newPostsUrl ? (
+               newPostsUrl.map((item) => (
+                  <div className="col-4 col-md-2" onClick={() => removePost(item)}>
                      <div className="newPost-card">
-                        <img className="newPost-card__img" src={post[0]} alt="" />
+                        {item.extention.includes("image") ? (
+                           <img className="newPost-card__img" src={item.source} alt="" />
+                        ) : (
+                           <video className="newPost-card__img" src={item.source}></video>
+                        )}
                         <div className="newPost-card__cover">
                            <RiDeleteBin2Line className="newPost-card__delete" />
                         </div>
@@ -55,11 +74,30 @@ export default function CreatePosts() {
                <p className="nofile">No file chosen</p>
             )}
          </div>
-         <div className="add-file">
+         <div className="add-file" ref={fileRef}>
             <p className="add-file__wrapper">
-               Upload file <input type="file" name="file" className="add-file__input" onChange={uploadeProfileImg} />
+               Upload file <input type="file" name="file" className="add-file__input" onChange={saveNewPostsUrl} />
             </p>
          </div>
+
+         <div className="add-caption">
+            <label className="add-caption__label" htmlFor="add-caption__input">
+               Caption:
+            </label>
+            <input
+               ref={captionRef}
+               id="add-caption__input"
+               type="text"
+               className="add-caption__input"
+               placeholder="type ..."
+               value={captionValue}
+               onChange={(e) => setCaptionValue(e.target.value)}
+            />
+         </div>
+
+         <button className="add-btn" onClick={sendPost}>
+            Post
+         </button>
       </div>
    );
 }

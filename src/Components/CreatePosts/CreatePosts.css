@@ -1,3 +1,9 @@
+.add {
+   border: 0.1rem solid #dbdbdb;
+   padding: 1.5rem 3rem !important;
+   margin-top: 3rem;
+}
+
 .add-file {
    border: 0.1rem solid #0095f6;
    width: 22rem;
@@ -48,6 +54,8 @@
 
 .newPost-card__img {
    width: 100%;
+   max-height: 14rem !important;
+   background-color: black;
 }
 
 .newPost-card__cover {
@@ -74,4 +82,44 @@
 .nofile {
    text-align: center;
    padding-top: 3rem;
+}
+
+.add-caption {
+   display: flex;
+   align-items: center;
+   /* justify-content: center; */
+   gap: 1.5rem;
+   margin-top: 7rem;
+}
+
+.add-caption__label {
+}
+
+.add-caption__input {
+   width: 100%;
+   padding: 1.3rem 2rem;
+   border: 0.1rem solid rgb(173, 167, 167);
+   border-radius: 0.8rem;
+}
+
+.add-btn {
+   display: block;
+   margin: 8rem auto;
+   border: 0.1rem solid #0095f6;
+   width: 14rem;
+   background-color: white;
+   border-radius: 1rem;
+   height: 3.5rem;
+   transition: all 0.2s;
+   color: #0095f6;
+   font-weight: 700;
+}
+
+.add-btn:hover {
+   background-color: #0095f6;
+   color: white;
+}
+
+.not-filed {
+   border: 0.1rem solid red;
 }
