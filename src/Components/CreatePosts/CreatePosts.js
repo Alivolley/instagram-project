@@ -39,15 +39,13 @@ export default function CreatePosts() {
          setAlertModalShow(true);
 
          let formData = new FormData();
-         let test = new FormData();
+
          newPostsFile.forEach((file) => {
             formData.append("files", file);
-            // debugger;
          });
 
          formData.append("caption", captionValue);
-         const allFile = formData.getAll("files");
-         // debugger;
+
          axiosInstance
             .post(`post/create-post/`, formData, {
                headers: {
