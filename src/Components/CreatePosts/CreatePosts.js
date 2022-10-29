@@ -5,6 +5,7 @@ import "./CreatePosts.css";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import AlertModal from "../AlertModal/AlertModal";
 import { Spinner } from "react-bootstrap";
+import { BiJoystickButton } from "react-icons/bi";
 
 export default function CreatePosts() {
    const [newPostsUrl, setNewPostsUrl] = useState("");
@@ -27,7 +28,7 @@ export default function CreatePosts() {
 
    const removePost = (url) => {
       setNewPostsUrl((prev) => prev.filter((item) => item.source !== url.source));
-      setNewPostsFile((prev) => prev.filter((item) => item[0].name !== url.name));
+      setNewPostsFile((prev) => prev.filter((item) => item.name !== url.name));
    };
 
    const sendPost = () => {
@@ -38,8 +39,15 @@ export default function CreatePosts() {
          setAlertModalShow(true);
 
          let formData = new FormData();
-         formData.append("files", newPostsFile);
+         let test = new FormData();
+         newPostsFile.forEach((file) => {
+            formData.append("files", file);
+            // debugger;
+         });
+
          formData.append("caption", captionValue);
+         const allFile = formData.getAll("files");
+         // debugger;
          axiosInstance
             .post(`post/create-post/`, formData, {
                headers: {

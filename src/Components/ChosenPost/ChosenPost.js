@@ -200,7 +200,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
    };
 
    // console.log(chosenPostData);
-
+   // debugger;
    return (
       <Modal show={show} onHide={handleClose} centered size="xl">
          <svg
@@ -221,44 +221,47 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
             <div className="row chosenPost-row">
                <div className="col-12 col-lg-8 chosenPost-left-side">
                   <Swiper navigation={true} modules={[Navigation, Pagination]} className="mySwiper" pagination={true}>
-                     {chosenPostData.files.map((file) => (
-                        <SwiperSlide key={file.id}>
-                           {({ isActive }) =>
-                              isActive &&
-                              (file.extension === "image" ? (
-                                 <img
-                                    style={{ maxHeight: winHeight }}
-                                    className="chosenPost-img-slide"
-                                    src={`https://javadinstagram.pythonanywhere.com${file.page}`}
-                                    alt=""
-                                    onDoubleClick={likeWithClick}
-                                 />
-                              ) : (
-                                 <>
-                                    {!playPause && (
-                                       <div className="chosenPost-video__cover">
-                                          <FaPlay className="chosenPost-video__cover--btn" />
-                                       </div>
-                                    )}
-                                    <video
+                     {chosenPostData.files.map((file) => {
+                        // debugger;
+                        return (
+                           <SwiperSlide key={file.id}>
+                              {({ isActive }) =>
+                                 isActive &&
+                                 (file.extension === "image" ? (
+                                    <img
                                        style={{ maxHeight: winHeight }}
-                                       loop
-                                       autoPlay
-                                       ref={videoRef}
-                                       onClick={playPauseHandler}
-                                       className="chosenPost-video-slide"
+                                       className="chosenPost-img-slide"
                                        src={`https://javadinstagram.pythonanywhere.com${file.page}`}
-                                    ></video>
-                                    {volume ? (
-                                       <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />
-                                    ) : (
-                                       <BiVolumeMute className="chosenPost-volume" onClick={changeVolume} />
-                                    )}
-                                 </>
-                              ))
-                           }
-                        </SwiperSlide>
-                     ))}
+                                       alt=""
+                                       onDoubleClick={likeWithClick}
+                                    />
+                                 ) : (
+                                    <>
+                                       {!playPause && (
+                                          <div className="chosenPost-video__cover">
+                                             <FaPlay className="chosenPost-video__cover--btn" />
+                                          </div>
+                                       )}
+                                       <video
+                                          style={{ maxHeight: winHeight }}
+                                          loop
+                                          autoPlay
+                                          ref={videoRef}
+                                          onClick={playPauseHandler}
+                                          className="chosenPost-video-slide"
+                                          src={`https://javadinstagram.pythonanywhere.com${file.page}`}
+                                       ></video>
+                                       {volume ? (
+                                          <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />
+                                       ) : (
+                                          <BiVolumeMute className="chosenPost-volume" onClick={changeVolume} />
+                                       )}
+                                    </>
+                                 ))
+                              }
+                           </SwiperSlide>
+                        );
+                     })}
                   </Swiper>
                </div>
                <div className="col-12 col-lg-4 chosenPost-right-side">
