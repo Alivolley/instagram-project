@@ -9,6 +9,7 @@ export default function Header() {
    const [lastActiveShow, setLastActiveShow] = useState(false);
    const [search, setSearch] = useState(false);
    const [profileData, setProfileData] = useState();
+   const [activitiData, setActivitiData] = useState();
    const [searchValue, setSearchValue] = useState("");
    const [searchResult, setSearchResult] = useState();
 
@@ -24,6 +25,17 @@ export default function Header() {
          })
          .then((res) => {
             setProfileData(res.data);
+         })
+         .catch((err) => console.log(err));
+
+      axiosInstance
+         .get("activities/", {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => {
+            setActivitiData(res.data);
          })
          .catch((err) => console.log(err));
    }, []);
@@ -109,7 +121,7 @@ export default function Header() {
       }
    });
 
-   // console.log(profileData);
+   // console.log(activitiData);
 
    return (
       <header className="header container">
@@ -311,48 +323,18 @@ export default function Header() {
             </ul>
 
             <ul className={`${lastActiveShow ? "header-lastActivity header-lastActivity--show" : "header-lastActivity"}`}>
-               <Link to="/" className="lastActivity-item">
-                  <img src="/pics/post-1.jpg" alt="" className="lastActivity-img" />
-                  <p className="lastActivity-username">javad2233 </p>
-                  <p className="lastActivity-describe">start following you</p>
-                  <button className="lastActivity-btn">follow</button>
-               </Link>
-               <Link to="/" className="lastActivity-item">
-                  <img src="/pics/post-2.jpg" alt="" className="lastActivity-img" />
-                  <p className="lastActivity-username">javad2233 </p>
-                  <p className="lastActivity-describe">start following you</p>
-                  <button className="lastActivity-btn">follow</button>
-               </Link>
-               <Link to="/" className="lastActivity-item">
-                  <img src="/pics/post-3.jpg" alt="" className="lastActivity-img" />
-                  <p className="lastActivity-username">javad2233 </p>
-                  <p className="lastActivity-describe">start following you</p>
-                  <button className="lastActivity-btn">follow</button>
-               </Link>
-               <Link to="/" className="lastActivity-item">
-                  <img src="/pics/post-4.jpg" alt="" className="lastActivity-img" />
-                  <p className="lastActivity-username">javad2233 </p>
-                  <p className="lastActivity-describe">start following you</p>
-                  <button className="lastActivity-btn">follow</button>
-               </Link>
-               <Link to="/" className="lastActivity-item">
-                  <img src="/pics/post-5.jpg" alt="" className="lastActivity-img" />
-                  <p className="lastActivity-username">javad2233 </p>
-                  <p className="lastActivity-describe">start following you</p>
-                  <button className="lastActivity-btn">follow</button>
-               </Link>
-               <Link to="/" className="lastActivity-item">
-                  <img src="/pics/post-1.jpg" alt="" className="lastActivity-img" />
-                  <p className="lastActivity-username">javad2233 </p>
-                  <p className="lastActivity-describe">start following you</p>
-                  <button className="lastActivity-btn">follow</button>
-               </Link>
-               <Link to="/" className="lastActivity-item">
-                  <img src="/pics/post-2.jpg" alt="" className="lastActivity-img" />
-                  <p className="lastActivity-username">javad2233 </p>
-                  <p className="lastActivity-describe">start following you</p>
-                  <button className="lastActivity-btn">follow</button>
-               </Link>
+               {activitiData && activitiData.length ? (
+                  activitiData.map((data) => (
+                     <Link to={`${data.username}/`} className="lastActivity-item">
+                        <img src="/pics/post-1.jpg" alt="" className="lastActivity-img" />
+                        <p className="lastActivity-username">{data.username}</p>
+                        <p className="lastActivity-describe">{data.message}</p>
+                        <button className="lastActivity-btn">Check</button>
+                     </Link>
+                  ))
+               ) : (
+                  <p className="lastActivity-norecent">No recnt activity.</p>
+               )}
             </ul>
          </div>
          <div className="header-line"></div>
