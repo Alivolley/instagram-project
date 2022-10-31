@@ -29,7 +29,7 @@ export default function SignUp() {
 
    const checkForm = (e) => {
       e.preventDefault();
-      let pattern = /^[a-z0-9]+@[a-z]{5,6}\.[a-z]{2,3}$/g;
+      let pattern = /^[a-z\.0-9]+@[a-z]{5,6}\.[a-z]{2,3}$/g;
       let patternPhone = /^[0-9]{11,11}$/g;
 
       let validateEmail = pattern.test(emailValue);

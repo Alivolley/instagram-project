@@ -1,6 +1,7 @@
 .direct {
    border: 0.1rem solid #dbdbdb;
    margin-top: 3rem;
+   position: relative;
 }
 
 .direct-left {
@@ -59,4 +60,25 @@
    color: #8e8e8e;
    font-size: 1.4rem;
    margin: 0;
+}
+
+.develope {
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   background-color: rgba(0, 0, 0, 0.9);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 10;
+}
+
+.develope-text {
+   color: black;
+   background-color: white;
+   padding: 8rem 1.5rem;
+   font-size: 2rem;
+   border-radius: 1rem;
 }

@@ -123,9 +123,21 @@
    font-weight: 600;
    color: #0f9bf6;
    cursor: pointer;
+   text-decoration: none;
+}
+
+.home-right-side__btn:hover {
+   color: #0f9bf6;
 }
 
 .home-right-side__seeAll:hover,
 .home-right-side__name:hover {
    color: black;
+}
+
+.home-noposts {
+   margin-top: 4rem;
+   text-align: center;
+   border: 0.1rem solid #dbdbdb;
+   padding: 7rem 0;
 }

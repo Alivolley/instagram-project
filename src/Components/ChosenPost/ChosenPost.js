@@ -175,7 +175,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
 
    const deleteComment = (commentId) => {
       axiosInstance
-         .delete(`post/remove-comment/${commentId}/`, {
+         .get(`post/remove-comment/${commentId}/`, {
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },

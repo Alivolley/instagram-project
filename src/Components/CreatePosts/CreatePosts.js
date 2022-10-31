@@ -5,7 +5,7 @@ import "./CreatePosts.css";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import AlertModal from "../AlertModal/AlertModal";
 import { Spinner } from "react-bootstrap";
-import { BiJoystickButton } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePosts() {
    const [newPostsUrl, setNewPostsUrl] = useState("");
@@ -16,6 +16,7 @@ export default function CreatePosts() {
 
    let captionRef = useRef();
    let fileRef = useRef();
+   let navigation = useNavigate();
 
    const saveNewPostsUrl = (e) => {
       let posts = e.target.files[0];
@@ -55,11 +56,11 @@ export default function CreatePosts() {
             })
             .then((res) => {
                setModalText(res.statusText);
-               console.log(res);
+               navigation(0);
             })
             .catch((err) => {
                console.log(err);
-               setModalText(err.message);
+               setModalText("Somthing went wrong. Try with vpn");
             });
       } else {
          fileRef.current.classList.add("not-filed");
@@ -73,7 +74,7 @@ export default function CreatePosts() {
    };
 
    // console.log(newPostsUrl);
-   console.log(newPostsFile);
+   // console.log(newPostsFile);
 
    return (
       <div className="container add">

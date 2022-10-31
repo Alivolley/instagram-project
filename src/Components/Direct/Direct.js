@@ -61,21 +61,21 @@ export default function Direct() {
                      <Link to="/direct/2" className="contact-card">
                         <img className="contact-card__img" src="/pics/post-2.jpg" alt="" />
                         <div className="contact-card__detail">
-                           <p className="contact-card__name">javad2233</p>
+                           <p className="contact-card__name">hosein</p>
                            <p className="contact-card__status">You sent a message</p>
                         </div>
                      </Link>
                      <Link to="/direct/2" className="contact-card">
                         <img className="contact-card__img" src="/pics/post-3.jpg" alt="" />
                         <div className="contact-card__detail">
-                           <p className="contact-card__name">javad2233</p>
+                           <p className="contact-card__name">ashkan45</p>
                            <p className="contact-card__status">You sent a message</p>
                         </div>
                      </Link>
                      <Link to="/direct/2" className="contact-card">
                         <img className="contact-card__img" src="/pics/post-4.jpg" alt="" />
                         <div className="contact-card__detail">
-                           <p className="contact-card__name">javad2233</p>
+                           <p className="contact-card__name">alicvolley</p>
                            <p className="contact-card__status">You sent a message</p>
                         </div>
                      </Link>
@@ -140,6 +140,9 @@ export default function Direct() {
                <div className="col-7">
                   <Outlet />
                </div>
+            </div>
+            <div className="develope">
+               <p className="develope-text">UNDER DEVELOPMENT</p>
             </div>
          </div>
       </div>

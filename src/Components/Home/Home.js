@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Navigation } from "swiper";
 import { Link } from "react-router-dom";
 import HomePostCard from "../HomePostCard/HomePostCard";
 
@@ -13,6 +13,7 @@ import { Spinner } from "react-bootstrap";
 
 export default function Home() {
    const [homePosts, setHomePosts] = useState();
+   const [suggestions, setSuggestions] = useState();
 
    useEffect(() => {
       axiosInstance
@@ -22,6 +23,15 @@ export default function Home() {
             },
          })
          .then((res) => setHomePosts(res.data))
+         .catch((err) => console.log(err));
+
+      axiosInstance
+         .get(`suggestion/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => setSuggestions(res.data))
          .catch((err) => console.log(err));
    }, []);
 
@@ -36,14 +46,14 @@ export default function Home() {
          .catch((err) => console.log(err));
    };
 
-   // console.log(homePosts && homePosts);
+   // console.log(suggestions);
 
    return (
       <div className="container">
          {homePosts ? (
             <div className="row">
                <div className="col-12 col-xxl-7 home-left-side">
-                  <div className="home-stories">
+                  {/* <div className="home-stories">
                      <Swiper
                         breakpoints={{
                            250: {
@@ -169,83 +179,60 @@ export default function Home() {
                            </Link>
                         </SwiperSlide>
                      </Swiper>
-                  </div>
+                  </div> */}
                   <div className="home-posts">
-                     {homePosts.map((post) => (
-                        <HomePostCard
-                           key={post.id}
-                           caption={post.caption}
-                           commentNum={post.comments_count}
-                           files={post.files}
-                           liked={post.has_like}
-                           saved={post.has_save}
-                           postId={post.id}
-                           likesNum={post.likes_count}
-                           username={post.user.name}
-                           profile={post.user.profile_photo}
-                           create={post.created}
-                           reget={reload}
-                        />
-                     ))}
+                     {homePosts.length ? (
+                        homePosts.map((post) => (
+                           <HomePostCard
+                              key={post.id}
+                              caption={post.caption}
+                              commentNum={post.comments_count}
+                              files={post.files}
+                              liked={post.has_like}
+                              saved={post.has_save}
+                              postId={post.id}
+                              likesNum={post.likes_count}
+                              username={post.user.name}
+                              profile={post.user.profile_photo}
+                              create={post.created}
+                              reget={reload}
+                           />
+                        ))
+                     ) : (
+                        <p className="home-noposts">No post yet. You must follow some pepole to see their posts</p>
+                     )}
                   </div>
                </div>
                <div className="col-12 col-xxl-5 home-right-side">
                   <div className="home-right-side__header">
                      <h2 className="home-right-side__title">Suggestions For You</h2>
-                     <Link to="/" className="home-right-side__seeAll">
-                        See All
-                     </Link>
+                     <p className="home-right-side__seeAll">See All</p>
                   </div>
-                  <div className="home-right-side__suggestion">
-                     <img src="/pics/post-1.jpg" alt="" className="home-right-side__img" />
-                     <div className="home-right-side__details">
-                        <Link to="/" className="home-right-side__name">
-                           alivolley88
-                        </Link>
-                        <p className="home-right-side__status">Followed by alii_rizvandi + 9 more</p>
-                     </div>
-                     <p className="home-right-side__btn">Follow</p>
-                  </div>
-                  <div className="home-right-side__suggestion">
-                     <img src="/pics/post-2.jpg" alt="" className="home-right-side__img" />
-                     <div className="home-right-side__details">
-                        <Link to="/" className="home-right-side__name">
-                           alivolley88
-                        </Link>
-                        <p className="home-right-side__status">Follows you</p>
-                     </div>
-                     <p className="home-right-side__btn">Follow</p>
-                  </div>
-                  <div className="home-right-side__suggestion">
-                     <img src="/pics/post-3.jpg" alt="" className="home-right-side__img" />
-                     <div className="home-right-side__details">
-                        <Link to="/" className="home-right-side__name">
-                           alivolley88
-                        </Link>
-                        <p className="home-right-side__status">Followed by dkht_albana6 + 17 more</p>
-                     </div>
-                     <p className="home-right-side__btn">Follow</p>
-                  </div>
-                  <div className="home-right-side__suggestion">
-                     <img src="/pics/post-4.jpg" alt="" className="home-right-side__img" />
-                     <div className="home-right-side__details">
-                        <Link to="/" className="home-right-side__name">
-                           alivolley88
-                        </Link>
-                        <p className="home-right-side__status">New to Instagram</p>
-                     </div>
-                     <p className="home-right-side__btn">Follow</p>
-                  </div>
-                  <div className="home-right-side__suggestion">
-                     <img src="/pics/post-5.jpg" alt="" className="home-right-side__img" />
-                     <div className="home-right-side__details">
-                        <Link to="/" className="home-right-side__name">
-                           alivolley88
-                        </Link>
-                        <p className="home-right-side__status">Follows you</p>
-                     </div>
-                     <p className="home-right-side__btn">Follow</p>
-                  </div>
+
+                  {suggestions ? (
+                     suggestions.map((suggest) => (
+                        <div className="home-right-side__suggestion">
+                           <img
+                              src={suggest.profile_photo ? `https://javadinstagram.pythonanywhere.com${suggest.profile_photo}` : "/pics/no-bg.jpg"}
+                              alt=""
+                              className="home-right-side__img"
+                           />
+                           <div className="home-right-side__details">
+                              <Link to={`/${suggest.username}/`} className="home-right-side__name">
+                                 {suggest.username}
+                              </Link>
+                              <p className="home-right-side__status">
+                                 Followed by {suggest.followed_by[0].username} {suggest.followed_by.length > 1 ? `and ${suggest.followed_by.length - 1} + more` : null}
+                              </p>
+                           </div>
+                           <Link to={`/${suggest.username}/`} className="home-right-side__btn">
+                              Check
+                           </Link>
+                        </div>
+                     ))
+                  ) : (
+                     <Spinner className="spiner--handle" animation="border" variant="primary" />
+                  )}
                </div>
             </div>
          ) : (
