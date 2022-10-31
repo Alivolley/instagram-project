@@ -7,7 +7,10 @@ import axiosInstance from "../../Utils/axios";
 export default function Header() {
    const [collapseShow, setCollapseShow] = useState(false);
    const [lastActiveShow, setLastActiveShow] = useState(false);
+   const [search, setSearch] = useState(false);
    const [profileData, setProfileData] = useState();
+   const [searchValue, setSearchValue] = useState("");
+   const [searchResult, setSearchResult] = useState();
 
    let location = useLocation();
    let navigation = useNavigate();
@@ -40,17 +43,20 @@ export default function Header() {
 
    const toggleMenu = () => {
       setLastActiveShow(false);
+      setSearch(false);
       setCollapseShow((prev) => !prev);
    };
 
    const showLastActivity = () => {
       setCollapseShow(false);
+      setSearch(false);
       setLastActiveShow((prev) => !prev);
    };
 
    useEffect(() => {
       setCollapseShow(false);
       setLastActiveShow(false);
+      setSearch(false);
    }, [location.pathname]);
 
    const logOut = () => {
@@ -58,9 +64,32 @@ export default function Header() {
       navigation(0);
    };
 
+   const showSearch = () => {
+      setLastActiveShow(false);
+      setCollapseShow(false);
+      setSearch(true);
+   };
+
+   const searchInData = (e) => {
+      setSearchValue(e.target.value);
+
+      axiosInstance
+         .get(`post/search/${e.target.value}/`, {
+            headers: {
+               Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+         })
+         .then((res) => setSearchResult(res.data))
+         .catch((err) => console.log(err));
+   };
+
    window.addEventListener("click", (e) => {
       if (
          e.target.id !== "header-svg" &&
+         e.target.className !== "header-search-input" &&
+         e.target.className !== "header-search" &&
+         e.target.className !== "header-search-icon" &&
+         e.target.className !== "search-result" &&
          e.target.className !== "header-collapse__item" &&
          e.target.className !== "header-collapse__line" &&
          e.target.className !== "header-collapse__menu" &&
@@ -76,6 +105,7 @@ export default function Header() {
       ) {
          setCollapseShow(false);
          setLastActiveShow(false);
+         setSearch(false);
       }
    });
 
@@ -109,7 +139,30 @@ export default function Header() {
                   <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="16.511" x2="22" y1="16.511" y2="22"></line>
                </svg>
             </span>
-            <input type="text" className="header-search-input" placeholder="Search" />
+            <input type="text" className="header-search-input" placeholder="Search" onFocus={showSearch} value={searchValue} onChange={searchInData} />
+
+            {search && (
+               <div className="search-result">
+                  {searchResult && searchResult.length ? (
+                     searchResult.map((result) => (
+                        <Link to={`/${result.username}`} className="search-item">
+                           <img
+                              src={result.profile_photo ? `https://javadinstagram.pythonanywhere.com${result.profile_photo}` : "/pics/no-bg.jpg"}
+                              alt=""
+                              className="search-item__img"
+                           />
+                           <div className="search-item__details">
+                              <p className="search-item__username">{result.username}</p>
+                              <p className="search-item__name">{result.name}</p>
+                           </div>
+                           <p className="search-item__btn">Check</p>
+                        </Link>
+                     ))
+                  ) : (
+                     <p className="search-notfound">No such user found.</p>
+                  )}
+               </div>
+            )}
          </div>
          <div className="header-right-menu">
             <Link to="/">

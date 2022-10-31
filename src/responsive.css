@@ -106,6 +106,12 @@
    }
 }
 
+@media (min-width: 1650px) {
+   .postcard-img {
+      max-height: 35rem;
+   }
+}
+
 @media (max-width: 768px) {
    .chosenPost-close {
       right: 1rem;

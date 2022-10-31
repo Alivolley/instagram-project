@@ -192,7 +192,7 @@ export default function Home() {
                               saved={post.has_save}
                               postId={post.id}
                               likesNum={post.likes_count}
-                              username={post.user.name}
+                              username={post.user.username}
                               profile={post.user.profile_photo}
                               create={post.created}
                               reget={reload}
