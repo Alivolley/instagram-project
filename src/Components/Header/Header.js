@@ -325,15 +325,15 @@ export default function Header() {
             <ul className={`${lastActiveShow ? "header-lastActivity header-lastActivity--show" : "header-lastActivity"}`}>
                {activitiData && activitiData.length ? (
                   activitiData.map((data) => (
-                     <Link to={`${data.username}/`} className="lastActivity-item">
+                     <Link to={`${data.username}/`} className="lastActivity-item" key={data.id}>
                         <img src="/pics/post-1.jpg" alt="" className="lastActivity-img" />
                         <p className="lastActivity-username">{data.username}</p>
-                        <p className="lastActivity-describe">{data.message}</p>
+                        <p className="lastActivity-describe">{data.follow ? "starts following you" : "has liked you're post"}</p>
                         <button className="lastActivity-btn">Check</button>
                      </Link>
                   ))
                ) : (
-                  <p className="lastActivity-norecent">No recnt activity.</p>
+                  <p className="lastActivity-norecent">No recent activity.</p>
                )}
             </ul>
          </div>
