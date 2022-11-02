@@ -326,7 +326,11 @@ export default function Header() {
                {activitiData && activitiData.length ? (
                   activitiData.map((data) => (
                      <Link to={`${data.username}/`} className="lastActivity-item" key={data.id}>
-                        <img src="/pics/post-1.jpg" alt="" className="lastActivity-img" />
+                        <img
+                           src={data.profile_photo ? `https://javadinstagram.pythonanywhere.com${data.profile_photo}` : "/pics/no-bg.jpg"}
+                           alt=""
+                           className="lastActivity-img"
+                        />
                         <p className="lastActivity-username">{data.username}</p>
                         <p className="lastActivity-describe">{data.follow ? "starts following you" : "has liked you're post"}</p>
                         <button className="lastActivity-btn">Check</button>
