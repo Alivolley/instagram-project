@@ -327,7 +327,7 @@ export default function Header() {
                   activitiData.map((data) => (
                      <Link to={`${data.username}/`} className="lastActivity-item" key={data.id}>
                         <img
-                           src={data.profile_photo ? `https://javadinstagram.pythonanywhere.com${data.profile_photo}` : "/pics/no-bg.jpg"}
+                           src={data.user_photo ? `https://javadinstagram.pythonanywhere.com${data.user_photo}` : "/pics/no-bg.jpg"}
                            alt=""
                            className="lastActivity-img"
                         />
