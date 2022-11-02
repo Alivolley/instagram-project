@@ -68,17 +68,17 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
       }
    };
 
-   window.addEventListener("keyup", (e) => {
-      if (e.code === "Space") {
-         if (!playPause) {
-            videoRef.current.play();
-            setPlayPause(true);
-         } else {
-            videoRef.current.pause();
-            setPlayPause(false);
-         }
-      }
-   });
+   // window.addEventListener("keyup", (e) => {
+   //    if (e.code === "Space") {
+   //       if (!playPause) {
+   //          videoRef.current.play();
+   //          setPlayPause(true);
+   //       } else {
+   //          videoRef.current.pause();
+   //          setPlayPause(false);
+   //       }
+   //    }
+   // });
 
    const changeLikeStatus = () => {
       axiosInstance
