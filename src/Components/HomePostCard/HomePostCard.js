@@ -116,7 +116,7 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
                         isActive &&
                         (file.extension === "image" ? (
                            <img
-                              loading="lazy"
+                              // loading="lazy"
                               style={{ maxHeight: winHeight }}
                               className="chosenPost-img-slide"
                               src={`https://javadinstagram.pythonanywhere.com${file.page}`}
@@ -131,7 +131,7 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
                                  </div>
                               )}
                               <video
-                                 loading="lazy"
+                                 // loading="lazy"
                                  style={{ maxHeight: winHeight }}
                                  loop
                                  ref={videoRef}

@@ -40,10 +40,8 @@
    }
 
    .profile-edit__btn {
-      width: auto;
-      height: auto;
       margin-right: 0;
-      padding: 0.3rem 1.5rem;
+      width: 20rem;
    }
 
    .profile-account__status {
