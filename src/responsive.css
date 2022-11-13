@@ -10,6 +10,14 @@
       padding: 12rem 8rem;
       font-size: 2.5rem;
    }
+
+   .contact-modal {
+      font-size: 1.4rem;
+   }
+
+   .contact-modal__item--email {
+      font-size: 1.4rem;
+   }
 }
 
 /* md */
@@ -57,6 +65,11 @@
 
    .postcard-img {
       max-height: 22.5rem;
+   }
+
+   .contact-modal__front,
+   .contact-modal__back {
+      align-items: center;
    }
 }
 
