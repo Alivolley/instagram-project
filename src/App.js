@@ -45,14 +45,14 @@ function App() {
 
             <div className="contact-modal__back">
                <p className="contact-modal__title">Backend Developer</p>
-               <p className="contact-modal__item">Javad Najari</p>
+               <p className="contact-modal__item">Javad Najjari</p>
                <p className="contact-modal__item">
                   <SiTelegram className="contact-modal__icon" />
                   @J_N_1998
                </p>
                <p className="contact-modal__item">
                   <FcPhoneAndroid className="contact-modal__icon" />
-                  09928721882
+                  0990 822 7202
                </p>
                <p className="contact-modal__item contact-modal__item--email">
                   <CgMail className="contact-modal__icon" />
