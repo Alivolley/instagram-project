@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./Header.css";
 import axiosInstance from "../../Utils/axios";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Header() {
    const [collapseShow, setCollapseShow] = useState(false);
@@ -157,7 +158,7 @@ export default function Header() {
                <div className="search-result">
                   {searchResult && searchResult.length ? (
                      searchResult.map((result) => (
-                        <Link to={`/${result.username}`} className="search-item">
+                        <Link to={`/${result.username}`} className="search-item" key={uuidv4()}>
                            <img
                               src={result.profile_photo ? `https://javadinstagram.pythonanywhere.com${result.profile_photo}` : "/pics/no-bg.jpg"}
                               alt=""

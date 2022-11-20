@@ -94,8 +94,13 @@
 
 .header-right-menu {
    display: flex;
-   gap: 2.2rem;
+   gap: 1.3rem;
    position: relative;
+}
+
+.header-right-menu svg {
+   width: 2rem;
+   height: 2rem;
 }
 
 .header-right-menu__picture {

@@ -4,6 +4,7 @@ import "./Home.css";
 // import { Navigation } from "swiper";
 import { Link } from "react-router-dom";
 import HomePostCard from "../HomePostCard/HomePostCard";
+import { v4 as uuidv4 } from "uuid";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -211,7 +212,7 @@ export default function Home() {
 
                   {suggestions ? (
                      suggestions.map((suggest) => (
-                        <div className="home-right-side__suggestion">
+                        <div className="home-right-side__suggestion" key={uuidv4()}>
                            <img
                               src={suggest.profile_photo ? `https://javadinstagram.pythonanywhere.com${suggest.profile_photo}` : "/pics/no-bg.jpg"}
                               alt=""

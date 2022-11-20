@@ -1,4 +1,12 @@
-@media (min-width: 350px) {
+@media (min-width: 385px) {
+   .header-right-menu {
+      gap: 2.2rem;
+   }
+
+   .header-right-menu svg {
+      width: 2.4rem;
+      height: 2.4rem;
+   }
 }
 
 @media (min-width: 576px) {
