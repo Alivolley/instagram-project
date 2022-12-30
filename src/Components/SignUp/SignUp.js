@@ -86,17 +86,11 @@ export default function SignUp() {
             </svg>
             <h2 className="signUp-title">Sign up to see photos and videos from your friends.</h2>
             <form className="signUp-form" onSubmit={checkForm}>
-               <input type="text" className="signUp-form__email" placeholder="Email" value={emailValue.toLowerCase()} onChange={(e) => setEmailValue(e.target.value)} />
+               <input type="text" className="signUp-form__email" placeholder="Email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
 
                <p className="signUp-form__email-validation">{notValidEmail && "Insert a valid email"}</p>
 
-               <input
-                  type="text"
-                  className="signUp-form__username"
-                  placeholder="Username"
-                  value={usernameValue.toLowerCase()}
-                  onChange={(e) => setUsernameValue(e.target.value)}
-               />
+               <input type="text" className="signUp-form__username" placeholder="Username" value={usernameValue} onChange={(e) => setUsernameValue(e.target.value)} />
                <p className="signUp-form__username-validation">{notValueUsername && "Username can't be empty"}</p>
 
                <input
@@ -114,7 +108,7 @@ export default function SignUp() {
                   className="signUp-form__password"
                   maxLength={8}
                   placeholder="Password"
-                  value={passwordValue.toLowerCase()}
+                  value={passwordValue}
                   onChange={(e) => setPasswordValue(e.target.value)}
                />
                <p className="signUp-form__password-validation">
@@ -130,7 +124,7 @@ export default function SignUp() {
                   className="signUp-form__confirm"
                   maxLength={8}
                   placeholder="Confirm password"
-                  value={confirmValue.toLowerCase()}
+                  value={confirmValue}
                   onChange={(e) => setConfirmValue(e.target.value)}
                />
                <p className="signUp-form__confirm-validation">

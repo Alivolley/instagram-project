@@ -66,14 +66,14 @@ export default function Login() {
                ></path>
             </svg>
             <form className="login-form" onSubmit={checkForm}>
-               <input type="text" className="login-form__email" placeholder="Email" value={emailValue.toLowerCase()} onChange={(e) => setEmailValue(e.target.value)} />
+               <input type="text" className="login-form__email" placeholder="Email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
                <p className="login-form__email-validation">{notValidEmail && "Insert a valid email"}</p>
 
                <input
                   type={`${showPass ? "text" : "password"}`}
                   className="login-form__password"
                   placeholder="Password"
-                  value={passwordValue.toLowerCase()}
+                  value={passwordValue}
                   onChange={(e) => setPasswordValue(e.target.value)}
                />
                <p className="login-form__password-validation">
