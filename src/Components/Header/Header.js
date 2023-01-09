@@ -160,7 +160,7 @@ export default function Header() {
                      searchResult.map((result) => (
                         <Link to={`/${result.username}`} className="search-item" key={uuidv4()}>
                            <img
-                              src={result.profile_photo ? `https://instagramdjango.pythonanywhere.com${result.profile_photo}` : "/pics/no-bg.jpg"}
+                              src={result.profile_photo ? `https://javadinstagram.pythonanywhere.com${result.profile_photo}` : "/pics/no-bg.jpg"}
                               alt=""
                               className="search-item__img"
                            />
@@ -269,7 +269,7 @@ export default function Header() {
             </div>
 
             <img
-               src={profileData && profileData.profile_photo ? `https://instagramdjango.pythonanywhere.com${profileData.profile_photo}` : "/pics/no-bg.jpg"}
+               src={profileData && profileData.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile_photo}` : "/pics/no-bg.jpg"}
                alt=""
                className="header-right-menu__picture"
                onClick={toggleMenu}
@@ -328,7 +328,7 @@ export default function Header() {
                   activitiData.map((data) => (
                      <Link to={`${data.username}/`} className="lastActivity-item" key={data.id}>
                         <img
-                           src={data.user_photo ? `https://instagramdjango.pythonanywhere.com${data.user_photo}` : "/pics/no-bg.jpg"}
+                           src={data.user_photo ? `https://javadinstagram.pythonanywhere.com${data.user_photo}` : "/pics/no-bg.jpg"}
                            alt=""
                            className="lastActivity-img"
                         />

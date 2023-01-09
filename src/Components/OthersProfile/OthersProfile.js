@@ -113,7 +113,7 @@ export default function OthersProfile() {
                <div className="profile-info">
                   <img
                      className="profile-img profile-img--new"
-                     src={profileData.profile.profile_photo ? `https://instagramdjango.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.jpg"}
+                     src={profileData.profile.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.jpg"}
                      alt=""
                   />
                   <div className="row profile-account__details ">
@@ -209,7 +209,7 @@ export default function OthersProfile() {
                      {profileData.posts.map((post) => (
                         <div className=" col-4 " key={post.id} onClick={() => openPost(post.id)}>
                            <PostCard
-                              picture={`https://instagramdjango.pythonanywhere.com${post.files[0].page}`}
+                              picture={`https://javadinstagram.pythonanywhere.com${post.files[0].page}`}
                               comments={post.comments_count}
                               likes={post.likes_count}
                               type={post.files[0].extension}

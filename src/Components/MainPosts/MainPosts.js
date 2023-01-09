@@ -51,7 +51,7 @@ export default function MainPosts() {
             profileData.posts.map((post) => (
                <div className=" col-4 " key={post.id} onClick={() => openPost(post.id)}>
                   <PostCard
-                     picture={`https://instagramdjango.pythonanywhere.com${post.files[0].page}`}
+                     picture={`https://javadinstagram.pythonanywhere.com${post.files[0].page}`}
                      comments={post.comments_count}
                      likes={post.likes_count}
                      type={post.files[0].extension}
