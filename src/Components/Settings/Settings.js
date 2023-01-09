@@ -189,7 +189,7 @@ export default function Settings() {
                   <div className="col-12 col-lg-9 col-xxl-7 setting">
                      <div className="setting-header">
                         <img
-                           src={profileData.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile_photo}` : "pics/no-bg.jpg"}
+                           src={profileData.profile_photo ? `https://djangoinsta.pythonanywhere.com${profileData.profile_photo}` : "pics/no-bg.jpg"}
                            alt=""
                            className="setting-header__img"
                         />

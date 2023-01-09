@@ -51,7 +51,7 @@ export default function SavedPosts() {
             profileData.saved.map((save) => (
                <div className=" col-4 " key={save.id} onClick={() => openPost(save.id)}>
                   <PostCard
-                     picture={`https://javadinstagram.pythonanywhere.com${save.files[0].page}`}
+                     picture={`https://djangoinsta.pythonanywhere.com${save.files[0].page}`}
                      comments={save.comments_count}
                      likes={save.likes_count}
                      type={save.files[0].extension}

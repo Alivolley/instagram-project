@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-   baseURL: "https://javadinstagram.pythonanywhere.com",
+   baseURL: "https://djangoinsta.pythonanywhere.com",
    headers: {
       "Content-Type": "application/json",
    },
