@@ -101,7 +101,7 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
       <div className="homePostCard">
          <div className="homePostCard-header">
             <a href={`/${username}`} className="homePostCard-header__name">
-               <img className="homePostCard-header__img" src={profile ? `https://javadinstagram.pythonanywhere.com${profile}` : "/pics/no-bg.jpg"} alt="" />
+               <img className="homePostCard-header__img" src={profile ? `https://instagramdjango.pythonanywhere.com${profile}` : "/pics/no-bg.jpg"} alt="" />
             </a>
             <a href={`/${username}`} className="homePostCard-header__name">
                {username}
@@ -119,7 +119,7 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
                               // loading="lazy"
                               style={{ maxHeight: winHeight }}
                               className="chosenPost-img-slide"
-                              src={`https://javadinstagram.pythonanywhere.com${file.page}`}
+                              src={`https://instagramdjango.pythonanywhere.com${file.page}`}
                               alt=""
                               onDoubleClick={likeWithClick}
                            />
@@ -137,7 +137,7 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
                                  ref={videoRef}
                                  onClick={playPauseHandler}
                                  className="chosenPost-video-slide"
-                                 src={`https://javadinstagram.pythonanywhere.com${file.page}`}
+                                 src={`https://instagramdjango.pythonanywhere.com${file.page}`}
                               ></video>
                               {volume ? (
                                  <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />

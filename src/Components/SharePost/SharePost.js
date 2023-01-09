@@ -39,7 +39,7 @@ export default function SharePost({ show, onHide, id }) {
                      <div className="share-contact" key={item.user_id}>
                         <img
                            className="share-contact__img"
-                           src={item.profile_photo ? `https://javadinstagram.pythonanywhere.com${item.profile_photo}` : "/pics/no-bg.jpg"}
+                           src={item.profile_photo ? `https://instagramdjango.pythonanywhere.com${item.profile_photo}` : "/pics/no-bg.jpg"}
                            alt=""
                         />
                         <p to="/" className="share-contact__username">

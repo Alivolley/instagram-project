@@ -48,6 +48,7 @@ export default function Home() {
    };
 
    // console.log(suggestions);
+   // console.log(homePosts);
 
    return (
       <div className="container">
@@ -214,7 +215,7 @@ export default function Home() {
                      suggestions.map((suggest) => (
                         <div className="home-right-side__suggestion" key={uuidv4()}>
                            <img
-                              src={suggest.profile_photo ? `https://javadinstagram.pythonanywhere.com${suggest.profile_photo}` : "/pics/no-bg.jpg"}
+                              src={suggest.profile_photo ? `https://instagramdjango.pythonanywhere.com${suggest.profile_photo}` : "/pics/no-bg.jpg"}
                               alt=""
                               className="home-right-side__img"
                            />

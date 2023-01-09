@@ -63,7 +63,7 @@ export default function Followers({ show, onHide, username, myPro }) {
                            <a href={`/${follower.username === follower.auth_username ? "profile/posts/" : follower.username}`} className="followers-contact__username">
                               <img
                                  className="followers-contact__img"
-                                 src={follower.profile_photo ? `https://javadinstagram.pythonanywhere.com${follower.profile_photo}` : "/pics/no-bg.jpg"}
+                                 src={follower.profile_photo ? `https://instagramdjango.pythonanywhere.com${follower.profile_photo}` : "/pics/no-bg.jpg"}
                                  alt=""
                               />
                            </a>

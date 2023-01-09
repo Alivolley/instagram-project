@@ -110,7 +110,7 @@ export default function Profile() {
                <div className="profile-info">
                   <img
                      className="profile-img"
-                     src={profileData.profile.profile_photo ? `https://javadinstagram.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.jpg"}
+                     src={profileData.profile.profile_photo ? `https://instagramdjango.pythonanywhere.com${profileData.profile.profile_photo}` : "/pics/no-bg.jpg"}
                      alt=""
                      onClick={toggleMenu}
                   />

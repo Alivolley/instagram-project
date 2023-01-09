@@ -231,7 +231,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                                     <img
                                        style={{ maxHeight: winHeight }}
                                        className="chosenPost-img-slide"
-                                       src={`https://javadinstagram.pythonanywhere.com${file.page}`}
+                                       src={`https://instagramdjango.pythonanywhere.com${file.page}`}
                                        alt=""
                                        onDoubleClick={likeWithClick}
                                     />
@@ -249,7 +249,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                                           ref={videoRef}
                                           onClick={playPauseHandler}
                                           className="chosenPost-video-slide"
-                                          src={`https://javadinstagram.pythonanywhere.com${file.page}`}
+                                          src={`https://instagramdjango.pythonanywhere.com${file.page}`}
                                        ></video>
                                        {volume ? (
                                           <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />
@@ -268,7 +268,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                   <div className="chosenPost-wrapper">
                      <div className="chosenPost-header">
                         <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`}>
-                           <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-header__img" />
+                           <img src={`https://instagramdjango.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-header__img" />
                         </a>
                         <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`} className="chosenPost-header__name">
                            {chosenPostData.user.name}
@@ -286,7 +286,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                         <div className="chosenPost-caption">
                            <div className="chosenPost-caption__wrapper">
                               <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`}>
-                                 <img src={`https://javadinstagram.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-caption__img" />
+                                 <img src={`https://instagramdjango.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-caption__img" />
                               </a>
                               <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`} className="chosenPost-caption__username">
                                  {chosenPostData.user.name}
@@ -299,7 +299,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                               <div className="chosenPost-comment__wrapper">
                                  <a href={`/${chosenPostData.auth_username === item.user.username ? "profile/posts" : item.user.username}`}>
                                     <img
-                                       src={item.user.profile_photo ? `https://javadinstagram.pythonanywhere.com${item.user.profile_photo}` : "/pics/no-bg.jpg"}
+                                       src={item.user.profile_photo ? `https://instagramdjango.pythonanywhere.com${item.user.profile_photo}` : "/pics/no-bg.jpg"}
                                        alt=""
                                        className="chosenPost-comment__img"
                                     />

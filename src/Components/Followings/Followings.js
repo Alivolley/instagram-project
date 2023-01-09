@@ -66,7 +66,7 @@ export default function Followings({ show, onHide, username, myPro }) {
                            >
                               <img
                                  className="followings-contact__img"
-                                 src={followings.profile_photo ? `https://javadinstagram.pythonanywhere.com${followings.profile_photo}` : "/pics/no-bg.jpg"}
+                                 src={followings.profile_photo ? `https://instagramdjango.pythonanywhere.com${followings.profile_photo}` : "/pics/no-bg.jpg"}
                                  alt=""
                               />
                            </a>

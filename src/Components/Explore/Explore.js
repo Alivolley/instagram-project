@@ -47,7 +47,7 @@ export default function Explore() {
                {explorePosts.map((post) => (
                   <div className=" col-4 " key={post.id} onClick={() => openPost(post.id)}>
                      <PostCard
-                        picture={`https://javadinstagram.pythonanywhere.com${post.file.page}`}
+                        picture={`https://instagramdjango.pythonanywhere.com${post.file.page}`}
                         likes={post.likes_count}
                         comments={post.comments_count}
                         type={post.file.extension}
