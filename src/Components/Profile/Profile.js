@@ -7,6 +7,7 @@ import AlertModal from "../AlertModal/AlertModal";
 import axiosInstance from "../../Utils/axios";
 import Followers from "../Followers/Followers";
 import Followings from "../Followings/Followings";
+import axios from "axios";
 
 export default function Profile() {
    const [modalImgShow, setModalImgShow] = useState(false);
@@ -19,8 +20,10 @@ export default function Profile() {
    let navigation = useNavigate();
 
    useEffect(() => {
+      const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get("/profile/", {
+            cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -29,6 +32,10 @@ export default function Profile() {
             setProfileData(res.data);
          })
          .catch((err) => console.log(err));
+
+      return () => {
+         cancelToken.cancel();
+      };
    }, []);
 
    const uploadeProfileImg = (e) => {

@@ -1,3 +1,4 @@
+import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { GrClose } from "react-icons/gr";
@@ -9,14 +10,20 @@ export default function Followers({ show, onHide, username, myPro }) {
    const [followerData, setFollowerData] = useState();
 
    useEffect(() => {
+      const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`${username}/followers/`, {
+            cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
          .then((res) => res.status === 200 && setFollowerData(res.data))
          .catch((err) => console.log(err));
+
+      return () => {
+         cancelToken.cancel();
+      };
    }, []);
 
    window.addEventListener("click", (e) => {

@@ -16,6 +16,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import axios from "axios";
 
 export default function ChosenPost({ show, handleClose, id, ownPost }) {
    const [chosenPostData, setChosenPostData] = useState();
@@ -32,8 +33,10 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
    let winHeight = window.innerHeight - 50;
 
    useEffect(() => {
+      const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`post/detail-and-comments/${id}/`, {
+            cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -46,6 +49,10 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
             }
          })
          .catch((err) => console.log(err));
+
+      return () => {
+         cancelToken.cancel();
+      };
    }, []);
 
    const playPauseHandler = (e) => {

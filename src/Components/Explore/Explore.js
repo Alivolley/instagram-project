@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import axiosInstance from "../../Utils/axios";
 import { Spinner } from "react-bootstrap";
 import ChosenPost from "../ChosenPost/ChosenPost";
+import axios from "axios";
 
 export default function Explore() {
    const [explorePosts, setExplorePosts] = useState();
@@ -12,14 +13,20 @@ export default function Explore() {
    const [postId, setPostId] = useState(false);
 
    useEffect(() => {
+      const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`post/global/`, {
+            cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
          .then((res) => setExplorePosts(res.data))
          .catch((err) => console.log(err));
+
+      return () => {
+         cancelToken.cancel();
+      };
    }, []);
 
    const openPost = (id) => {

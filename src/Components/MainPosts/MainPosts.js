@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import "./MainPosts.css";
 import axiosInstance from "../../Utils/axios";
 import ChosenPost from "../ChosenPost/ChosenPost";
+import axios from "axios";
 
 export default function MainPosts() {
    const [profileData, setProfileData] = useState();
@@ -11,8 +12,10 @@ export default function MainPosts() {
    const [ChosenPostId, setChosenPostId] = useState();
 
    useEffect(() => {
+      const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get("/profile/", {
+            cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -21,6 +24,10 @@ export default function MainPosts() {
             setProfileData(res.data);
          })
          .catch((err) => console.log(err));
+
+      return () => {
+         cancelToken.cancel();
+      };
    }, []);
 
    const openPost = (id) => {

@@ -11,14 +11,17 @@ import "swiper/css/navigation";
 import axiosInstance from "../../Utils/axios";
 import Cookies from "js-cookie";
 import { Spinner } from "react-bootstrap";
+import axios from "axios";
 
 export default function Home() {
    const [homePosts, setHomePosts] = useState();
    const [suggestions, setSuggestions] = useState();
 
    useEffect(() => {
+      const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`post/post-of-followings/`, {
+            cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -28,12 +31,17 @@ export default function Home() {
 
       axiosInstance
          .get(`suggestion/`, {
+            cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
          .then((res) => setSuggestions(res.data))
          .catch((err) => console.log(err));
+
+      return () => {
+         cancelToken.cancel();
+      };
    }, []);
 
    const reload = () => {

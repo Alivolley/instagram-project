@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./HomePostCard.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import ChosenPost from "../ChosenPost/ChosenPost";
 import SharePost from "../SharePost/SharePost";
 import Loading from "../../Loading02.gif";
+import axios from "axios";
 
 export default function HomePostCard({ caption, commentNum, files, saved, liked, likesNum, postId, profile, username, create, reget }) {
    const [playPause, setPlayPause] = useState(false);
