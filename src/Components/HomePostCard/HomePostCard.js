@@ -12,7 +12,7 @@ import axiosInstance from "../../Utils/axios";
 import Cookies from "js-cookie";
 import ChosenPost from "../ChosenPost/ChosenPost";
 import SharePost from "../SharePost/SharePost";
-import backUp from "../../backUp.png";
+import Loading from "../../Loading02.gif";
 
 export default function HomePostCard({ caption, commentNum, files, saved, liked, likesNum, postId, profile, username, create, reget }) {
    const [playPause, setPlayPause] = useState(false);
@@ -145,7 +145,7 @@ export default function HomePostCard({ caption, commentNum, files, saved, liked,
                               </>
                            )
                         ) : (
-                           <img style={{ maxHeight: winHeight }} className="chosenPost-img-slide" src={backUp} alt="" />
+                           <img style={{ maxHeight: winHeight }} className="chosenPost-img-slide" src={Loading} alt="" />
                         )
                      }
                   </SwiperSlide>

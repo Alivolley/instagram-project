@@ -10,7 +10,7 @@ import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
 import SharePost from "../SharePost/SharePost";
-import backUp from "../../backUp.png";
+import Loading from "../../Loading02.gif";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -259,7 +259,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                                        </>
                                     )
                                  ) : (
-                                    <img style={{ maxHeight: winHeight }} className="chosenPost-img-slide" src={backUp} alt="" />
+                                    <img style={{ maxHeight: winHeight }} className="chosenPost-img-slide" src={Loading} alt="" />
                                  )
                               }
                            </SwiperSlide>
