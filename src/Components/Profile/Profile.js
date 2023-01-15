@@ -20,10 +20,10 @@ export default function Profile() {
    let navigation = useNavigate();
 
    useEffect(() => {
-      const cancelToken = axios.CancelToken.source();
+      // const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get("/profile/", {
-            cancelToken: cancelToken.token,
+            // cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -33,9 +33,9 @@ export default function Profile() {
          })
          .catch((err) => console.log(err));
 
-      return () => {
-         cancelToken.cancel();
-      };
+      // return () => {
+      //    cancelToken.cancel();
+      // };
    }, []);
 
    const uploadeProfileImg = (e) => {

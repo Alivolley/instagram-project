@@ -5,33 +5,40 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import HomePostCard from "../HomePostCard/HomePostCard";
 import { v4 as uuidv4 } from "uuid";
-
-import "swiper/css";
-import "swiper/css/navigation";
 import axiosInstance from "../../Utils/axios";
 import Cookies from "js-cookie";
 import { Spinner } from "react-bootstrap";
 import axios from "axios";
 
+import "swiper/css";
+import "swiper/css/navigation";
+
 export default function Home() {
    const [homePosts, setHomePosts] = useState();
    const [suggestions, setSuggestions] = useState();
+   const [scrollResult, setScrollResult] = useState(0);
+   const [nextUrl, setNextUrl] = useState();
+   const [loadingNew, setLoadingNew] = useState(false);
+   const [allowedReq, setAllowedReq] = useState(true);
 
    useEffect(() => {
-      const cancelToken = axios.CancelToken.source();
+      // const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`post/post-of-followings/`, {
-            cancelToken: cancelToken.token,
+            // cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => setHomePosts(res.data))
+         .then((res) => {
+            setNextUrl(res.data.next);
+            setHomePosts(res.data.results);
+         })
          .catch((err) => console.log(err));
 
       axiosInstance
          .get(`suggestion/`, {
-            cancelToken: cancelToken.token,
+            // cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -39,10 +46,32 @@ export default function Home() {
          .then((res) => setSuggestions(res.data))
          .catch((err) => console.log(err));
 
-      return () => {
-         cancelToken.cancel();
-      };
+      // return () => {
+      //    cancelToken.cancel();
+      // };
    }, []);
+
+   useEffect(() => {
+      if ((scrollResult === 99 || scrollResult === 100) && allowedReq && nextUrl) {
+         setLoadingNew(true);
+         setAllowedReq(false);
+
+         axiosInstance
+            .get(nextUrl, {
+               headers: {
+                  Authorization: `Bearer ${Cookies.get("access")}`,
+               },
+            })
+            .then((res) => {
+               console.log(res.data);
+               setHomePosts((prev) => [...prev, ...res.data.results]);
+               res.data.next ? setNextUrl(res.data.next) : setNextUrl(null);
+               setLoadingNew(false);
+               setAllowedReq(true);
+            })
+            .catch((err) => console.log(err));
+      }
+   }, [scrollResult]);
 
    const reload = () => {
       axiosInstance
@@ -55,8 +84,21 @@ export default function Home() {
          .catch((err) => console.log(err));
    };
 
-   // console.log(suggestions);
-   // console.log(homePosts);
+   window.addEventListener("scroll", () => {
+      let scrollTop = window.scrollY;
+
+      let documentHeight = document.body.clientHeight;
+
+      let windowHeight = window.innerHeight;
+
+      let scrollPercent = scrollTop / (documentHeight - windowHeight);
+
+      let scrollPercentRounded = Math.round(scrollPercent * 100);
+
+      setScrollResult(scrollPercentRounded);
+   });
+
+   console.log(homePosts);
 
    return (
       <div className="container">
@@ -248,6 +290,7 @@ export default function Home() {
          ) : (
             <Spinner className="spiner--handle" animation="border" variant="primary" />
          )}
+         {loadingNew && <Spinner className="spiner--handle" animation="border" variant="primary" />}
       </div>
    );
 }

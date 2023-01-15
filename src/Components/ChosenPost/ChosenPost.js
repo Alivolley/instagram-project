@@ -33,10 +33,10 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
    let winHeight = window.innerHeight - 50;
 
    useEffect(() => {
-      const cancelToken = axios.CancelToken.source();
+      // const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`post/detail-and-comments/${id}/`, {
-            cancelToken: cancelToken.token,
+            // cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -50,9 +50,9 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
          })
          .catch((err) => console.log(err));
 
-      return () => {
-         cancelToken.cancel();
-      };
+      // return () => {
+      //    cancelToken.cancel();
+      // };
    }, []);
 
    const playPauseHandler = (e) => {

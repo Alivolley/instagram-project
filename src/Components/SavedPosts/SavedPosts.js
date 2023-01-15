@@ -12,10 +12,10 @@ export default function SavedPosts() {
    const [ChosenPostId, setChosenPostId] = useState();
 
    useEffect(() => {
-      const cancelToken = axios.CancelToken.source();
+      // const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get("/saved/", {
-            cancelToken: cancelToken.token,
+            // cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -25,9 +25,9 @@ export default function SavedPosts() {
          })
          .catch((err) => console.log(err));
 
-      return () => {
-         cancelToken.cancel();
-      };
+      // return () => {
+      //    cancelToken.cancel();
+      // };
    }, []);
 
    const openPost = (id) => {

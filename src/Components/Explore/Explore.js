@@ -13,20 +13,20 @@ export default function Explore() {
    const [postId, setPostId] = useState(false);
 
    useEffect(() => {
-      const cancelToken = axios.CancelToken.source();
+      // const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`post/global/`, {
-            cancelToken: cancelToken.token,
+            // cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
          })
-         .then((res) => setExplorePosts(res.data))
+         .then((res) => setExplorePosts(res.data.results))
          .catch((err) => console.log(err));
 
-      return () => {
-         cancelToken.cancel();
-      };
+      // return () => {
+      //    cancelToken.cancel();
+      // };
    }, []);
 
    const openPost = (id) => {
@@ -46,6 +46,8 @@ export default function Explore() {
          .then((res) => setExplorePosts(res.data))
          .catch((err) => console.log(err));
    };
+
+   console.log(explorePosts);
 
    return (
       <div className="container">

@@ -10,10 +10,10 @@ export default function Followers({ show, onHide, username, myPro }) {
    const [followerData, setFollowerData] = useState();
 
    useEffect(() => {
-      const cancelToken = axios.CancelToken.source();
+      // const cancelToken = axios.CancelToken.source();
       axiosInstance
          .get(`${username}/followers/`, {
-            cancelToken: cancelToken.token,
+            // cancelToken: cancelToken.token,
             headers: {
                Authorization: `Bearer ${Cookies.get("access")}`,
             },
@@ -21,9 +21,9 @@ export default function Followers({ show, onHide, username, myPro }) {
          .then((res) => res.status === 200 && setFollowerData(res.data))
          .catch((err) => console.log(err));
 
-      return () => {
-         cancelToken.cancel();
-      };
+      // return () => {
+      //    cancelToken.cancel();
+      // };
    }, []);
 
    window.addEventListener("click", (e) => {
