@@ -3,7 +3,6 @@ import "./ChosenPost.css";
 import Modal from "react-bootstrap/Modal";
 import axiosInstance from "../../Utils/axios";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
@@ -11,6 +10,7 @@ import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
 import SharePost from "../SharePost/SharePost";
+import backUp from "../../backUp.png";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -226,38 +226,41 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                         return (
                            <SwiperSlide key={file.id}>
                               {({ isActive }) =>
-                                 isActive &&
-                                 (file.extension === "image" ? (
-                                    <img
-                                       style={{ maxHeight: winHeight }}
-                                       className="chosenPost-img-slide"
-                                       src={`https://djangoinsta.pythonanywhere.com${file.page}`}
-                                       alt=""
-                                       onDoubleClick={likeWithClick}
-                                    />
-                                 ) : (
-                                    <>
-                                       {!playPause && (
-                                          <div className="chosenPost-video__cover">
-                                             <FaPlay className="chosenPost-video__cover--btn" />
-                                          </div>
-                                       )}
-                                       <video
+                                 isActive ? (
+                                    file.extension === "image" ? (
+                                       <img
                                           style={{ maxHeight: winHeight }}
-                                          loop
-                                          autoPlay
-                                          ref={videoRef}
-                                          onClick={playPauseHandler}
-                                          className="chosenPost-video-slide"
+                                          className="chosenPost-img-slide"
                                           src={`https://djangoinsta.pythonanywhere.com${file.page}`}
-                                       ></video>
-                                       {volume ? (
-                                          <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />
-                                       ) : (
-                                          <BiVolumeMute className="chosenPost-volume" onClick={changeVolume} />
-                                       )}
-                                    </>
-                                 ))
+                                          alt=""
+                                          onDoubleClick={likeWithClick}
+                                       />
+                                    ) : (
+                                       <>
+                                          {!playPause && (
+                                             <div className="chosenPost-video__cover">
+                                                <FaPlay className="chosenPost-video__cover--btn" />
+                                             </div>
+                                          )}
+                                          <video
+                                             style={{ maxHeight: winHeight }}
+                                             loop
+                                             autoPlay
+                                             ref={videoRef}
+                                             onClick={playPauseHandler}
+                                             className="chosenPost-video-slide"
+                                             src={`https://djangoinsta.pythonanywhere.com${file.page}`}
+                                          ></video>
+                                          {volume ? (
+                                             <BiVolumeFull className="chosenPost-volume" onClick={changeVolume} />
+                                          ) : (
+                                             <BiVolumeMute className="chosenPost-volume" onClick={changeVolume} />
+                                          )}
+                                       </>
+                                    )
+                                 ) : (
+                                    <img style={{ maxHeight: winHeight }} className="chosenPost-img-slide" src={backUp} alt="" />
+                                 )
                               }
                            </SwiperSlide>
                         );
