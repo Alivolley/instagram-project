@@ -52,7 +52,7 @@ export default function Home() {
    }, []);
 
    useEffect(() => {
-      if ((scrollResult === 99 || scrollResult === 100) && allowedReq && nextUrl) {
+      if (95 < scrollResult < 100 && allowedReq && nextUrl) {
          setLoadingNew(true);
          setAllowedReq(false);
 
