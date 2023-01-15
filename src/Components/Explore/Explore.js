@@ -37,7 +37,7 @@ export default function Explore() {
    }, []);
 
    useEffect(() => {
-      if ((scrollResult === 98 || scrollResult === 99) && allowedReq && nextUrl) {
+      if ((scrollResult === 98 || scrollResult === 99 || scrollResult === 100) && allowedReq && nextUrl) {
          setLoadingNew(true);
          setAllowedReq(false);
 
@@ -48,11 +48,14 @@ export default function Explore() {
                },
             })
             .then((res) => {
-               console.log(res.data);
-               setExplorePosts((prev) => [...prev, ...res.data.results]);
-               res.data.next ? setNextUrl(res.data.next) : setNextUrl(null);
-               setLoadingNew(false);
-               setAllowedReq(true);
+               if (res.status === 200) {
+                  console.log(res.data);
+                  console.log(res.data.results);
+                  setExplorePosts((prev) => [...prev, ...res.data.results]);
+                  res.data.next ? setNextUrl(res.data.next) : setNextUrl(null);
+                  setLoadingNew(false);
+                  setAllowedReq(true);
+               }
             })
             .catch((err) => console.log(err));
       }
@@ -90,7 +93,7 @@ export default function Explore() {
       setScrollResult(scrollPercentRounded);
    });
 
-   console.log(explorePosts);
+   // console.log(explorePosts);
 
    return (
       <div className="container">

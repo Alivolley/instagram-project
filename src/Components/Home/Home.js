@@ -63,11 +63,12 @@ export default function Home() {
                },
             })
             .then((res) => {
-               console.log(res.data);
-               setHomePosts((prev) => [...prev, ...res.data.results]);
-               res.data.next ? setNextUrl(res.data.next) : setNextUrl(null);
-               setLoadingNew(false);
-               setAllowedReq(true);
+               if (res.status === 200) {
+                  setHomePosts((prev) => [...prev, ...res.data.results]);
+                  res.data.next ? setNextUrl(res.data.next) : setNextUrl(null);
+                  setLoadingNew(false);
+                  setAllowedReq(true);
+               }
             })
             .catch((err) => console.log(err));
       }
@@ -98,7 +99,7 @@ export default function Home() {
       setScrollResult(scrollPercentRounded);
    });
 
-   console.log(homePosts);
+   // console.log(homePosts);
 
    return (
       <div className="container">
