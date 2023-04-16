@@ -228,7 +228,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
             <div className="row chosenPost-row">
                <div className="col-12 col-lg-8 chosenPost-left-side">
                   <Swiper navigation={true} modules={[Navigation, Pagination]} className="mySwiper" pagination={true}>
-                     {chosenPostData.files.map((file) => {
+                     {chosenPostData?.files.map((file) => {
                         // debugger;
                         return (
                            <SwiperSlide key={file.id}>
@@ -277,15 +277,22 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                <div className="col-12 col-lg-4 chosenPost-right-side">
                   <div className="chosenPost-wrapper">
                      <div className="chosenPost-header">
-                        <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`}>
-                           <img src={`https://djangoinsta.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-header__img" />
+                        <a href={`/${!chosenPostData?.has_own ? chosenPostData?.user.username : "profile/posts"}`}>
+                           <img
+                              src={`https://djangoinsta.pythonanywhere.com${chosenPostData?.user.profile_photo}`}
+                              alt=""
+                              className="chosenPost-header__img"
+                           />
                         </a>
-                        <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`} className="chosenPost-header__name">
-                           {chosenPostData.user.name}
+                        <a
+                           href={`/${!chosenPostData?.has_own ? chosenPostData?.user.username : "profile/posts"}`}
+                           className="chosenPost-header__name"
+                        >
+                           {chosenPostData?.user.name}
                         </a>
                         {ownPost ? (
                            <MdOutlineDeleteForever className="chosenPost-header__delete" onClick={() => setShowDeleteModal(true)} />
-                        ) : chosenPostData.is_following ? (
+                        ) : chosenPostData?.is_following ? (
                            <p className="chosenPost-header__followed-btn">Followed</p>
                         ) : (
                            <p className="chosenPost-header__follow-btn">Follow</p>
@@ -295,27 +302,38 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                      <div className="chosenPost-comments">
                         <div className="chosenPost-caption">
                            <div className="chosenPost-caption__wrapper">
-                              <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`}>
-                                 <img src={`https://djangoinsta.pythonanywhere.com${chosenPostData.user.profile_photo}`} alt="" className="chosenPost-caption__img" />
+                              <a href={`/${!chosenPostData?.has_own ? chosenPostData?.user.username : "profile/posts"}`}>
+                                 <img
+                                    src={`https://djangoinsta.pythonanywhere.com${chosenPostData?.user.profile_photo}`}
+                                    alt=""
+                                    className="chosenPost-caption__img"
+                                 />
                               </a>
-                              <a href={`/${!chosenPostData.has_own ? chosenPostData.user.username : "profile/posts"}`} className="chosenPost-caption__username">
-                                 {chosenPostData.user.name}
+                              <a
+                                 href={`/${!chosenPostData?.has_own ? chosenPostData?.user.username : "profile/posts"}`}
+                                 className="chosenPost-caption__username"
+                              >
+                                 {chosenPostData?.user.name}
                               </a>
                            </div>
-                           <p className="chosenPost-comment__text">{chosenPostData.caption}</p>
+                           <p className="chosenPost-comment__text">{chosenPostData?.caption}</p>
                         </div>
-                        {chosenPostData.comments.map((item) => (
+                        {chosenPostData?.comments.map((item) => (
                            <div key={item.id} className="chosenPost-comment">
                               <div className="chosenPost-comment__wrapper">
-                                 <a href={`/${chosenPostData.auth_username === item.user.username ? "profile/posts" : item.user.username}`}>
+                                 <a href={`/${chosenPostData?.auth_username === item.user.username ? "profile/posts" : item.user.username}`}>
                                     <img
-                                       src={item.user.profile_photo ? `https://djangoinsta.pythonanywhere.com${item.user.profile_photo}` : "/pics/no-bg.jpg"}
+                                       src={
+                                          item.user.profile_photo
+                                             ? `https://djangoinsta.pythonanywhere.com${item.user.profile_photo}`
+                                             : "/pics/no-bg.jpg"
+                                       }
                                        alt=""
                                        className="chosenPost-comment__img"
                                     />
                                  </a>
                                  <a
-                                    href={`/${chosenPostData.auth_username === item.user.username ? "profile/posts" : item.user.username}`}
+                                    href={`/${chosenPostData?.auth_username === item.user.username ? "profile/posts" : item.user.username}`}
                                     className="chosenPost-comment__username"
                                  >
                                     {item.user.name}
@@ -372,7 +390,13 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                               width="24"
                               onClick={focusOnInput}
                            >
-                              <path d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></path>
+                              <path
+                                 d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 strokeLinejoin="round"
+                                 strokeWidth="2"
+                              ></path>
                            </svg>
                            <svg
                               aria-label="Share Post"
@@ -385,7 +409,16 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                               width="24"
                               onClick={() => setShowShare(true)}
                            >
-                              <line fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" x1="22" x2="9.218" y1="3" y2="10.083"></line>
+                              <line
+                                 fill="none"
+                                 stroke="currentColor"
+                                 strokeLinejoin="round"
+                                 strokeWidth="2"
+                                 x1="22"
+                                 x2="9.218"
+                                 y1="3"
+                                 y2="10.083"
+                              ></line>
                               <polygon
                                  fill="none"
                                  points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
@@ -432,7 +465,7 @@ export default function ChosenPost({ show, handleClose, id, ownPost }) {
                               </svg>
                            )}
                         </div>
-                        <p className="chosenPost-footer__likes-count">{chosenPostData.likes_count} likes</p>
+                        <p className="chosenPost-footer__likes-count">{chosenPostData?.likes_count} likes</p>
                         <hr />
                         <form className="chosenPost-footer__form" onSubmit={createComment}>
                            <input
